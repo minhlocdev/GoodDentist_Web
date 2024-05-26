@@ -17,6 +17,7 @@ jobs:
             bun-version: latest # You can also use a specific version
       - run: bun install # Only needed if you have any dependenciesrun: |
       - run: npm run format
-      - run: npm run format
+      - run: npm run start
+      - run: npm run test
           
         
