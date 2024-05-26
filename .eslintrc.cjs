@@ -13,6 +13,7 @@ module.exports = {
     "postcss.config.js",
     "tailwind.config.js",
     "prettier.config.ts",
+    "vitest.config.ts"
   ], // Add postcss.config.js here
   parser: "@typescript-eslint/parser",
   parserOptions: {
