@@ -8,6 +8,7 @@ function App() {
       Hello world!
     </h1>
     <h3 className="text-2xl font-semibold text-neutral-800">Hello Again</h3>
+    <h3 className="text-2xl font-semibold text-neutral-800">Hello Again</h3>
     </div>
   );
 }
