@@ -2,8 +2,9 @@ name: Test Bun # Name it however you want
 
 on:
   push:
-    branches:
-      - main # Execute on every push
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch: # Execute on manual trigger
 
 jobs:
