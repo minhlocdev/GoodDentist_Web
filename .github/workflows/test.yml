@@ -1,4 +1,4 @@
-name: Test Bun # Name it however you want
+name: GoodDentist CI # Name it however you want
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
       matrix:
         node-version: [20.x, 22.x]
     steps:
-      - uses: actions/checkout@v3 # Checkout repo
+      - uses: actions/checkout@v4 # Checkout repo
       - uses: oven-sh/setup-bun@v1 # Setup bun
         with:
             bun-version: latest # You can also use a specific version
