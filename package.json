@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write src *.yml *.json *.md",
     "dev": "vite",
-    "build": "tsc && vite build && esbuild --target=node20 --outfile=dist/setup/index.js --bundle --minify --platform=node --format=cjs && esbuild --target=node20 --outfile=dist/cache-save/index.js --bundle --minify --platform=node --format=cjs src/cache-save.ts",
+    "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "start": "npm run build && node dist/setup/index.js",
     "test": "vitest run --coverage",
