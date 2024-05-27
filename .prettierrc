@@ -1,4 +1,8 @@
 {
+  "printWidth": 100,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "tabWidth": 4,
   "plugins": [
     "prettier-plugin-svelte",
     "prettier-plugin-organize-imports",
