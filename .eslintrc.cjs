@@ -11,7 +11,7 @@ module.exports = {
         'dist',
         '.eslintrc.cjs',
         'postcss.config.js',
-        'tailwind.config.js',
+        'tailwind.config.ts',
         'prettier.config.ts',
         'vitest.config.ts'
     ], // Add postcss.config.js here
