@@ -1,0 +1,36 @@
+body, html{
+    background-color: #000;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 150px;
+}
+
+nav {
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+h1{
+    color: #fff;
+    font-size: 4rem;
+    display: inline-flex;
+    justify-content: flex-start;
+}
+.i{
+    color: yellow;
+}
+ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+li{
+    font-size: 1.5rem;
+    margin-right: 30px;
+    list-style-type: none;
+}

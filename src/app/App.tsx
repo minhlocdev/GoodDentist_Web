@@ -1,8 +1,8 @@
-import { Sidebar } from '../components/admin-panel/sidebar';
 import './App.css';
+import DashboardPage from './pages/dashboard/dashboard';
 
 function App() {
-    return <Sidebar />;
+    return <DashboardPage />;
 }
 
 export default App;
