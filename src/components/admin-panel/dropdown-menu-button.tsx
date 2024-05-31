@@ -31,7 +31,6 @@ interface CollapseMenuButtonProps {
 export function CollapseMenuButton({
     icon: Icon,
     label,
-    active,
     submenus,
     isOpen
 }: CollapseMenuButtonProps) {
@@ -73,7 +72,7 @@ export function CollapseMenuButton({
                 </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                {submenus.map(({ href, label, active }, index) => (
+                {submenus.map(({ href, label }, index) => (
                     <Button key={index} className="mb-1 h-10 w-full justify-start" asChild>
                         <a href={href}>
                             <span className="ml-2 mr-4">
@@ -100,7 +99,7 @@ export function CollapseMenuButton({
                 <Tooltip delayDuration={100}>
                     <TooltipTrigger asChild>
                         <DropdownMenuTrigger asChild>
-                            <Button className="mb-1 h-10 w-full justify-start">
+                            <Button className="mb-1 h-10 w-full justify-center">
                                 <div className="flex w-full items-center justify-between">
                                     <div className="flex items-center">
                                         <span className={cn(isOpen === false ? '' : 'mr-4')}>

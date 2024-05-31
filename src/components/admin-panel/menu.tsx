@@ -20,7 +20,7 @@ const Menu: React.FC<MenuProbs> = ({ isOpen }) => {
                     {menuList.map(({ groupLabel, menus }, index) => (
                         <li className={cn('w-full', groupLabel ? 'pt-5' : '')} key={index}>
                             {(isOpen && groupLabel) ?? isOpen === undefined ? (
-                                <p className="text-muted-foreground max-w-[248px] truncate px-4 pb-2 text-sm font-medium">
+                                <p className="max-w-[248px] truncate px-4 pb-2 text-sm font-medium text-muted-foreground">
                                     {groupLabel}
                                 </p>
                             ) : !isOpen && isOpen !== undefined && groupLabel ? (

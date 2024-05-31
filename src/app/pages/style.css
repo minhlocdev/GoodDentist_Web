@@ -1,4 +1,5 @@
-body, html{
+body,
+html {
     background-color: #000;
 }
 .container {
@@ -15,13 +16,13 @@ nav {
     justify-content: space-between;
     align-items: center;
 }
-h1{
+h1 {
     color: #fff;
     font-size: 4rem;
     display: inline-flex;
     justify-content: flex-start;
 }
-.i{
+.i {
     color: yellow;
 }
 ul {
@@ -29,7 +30,7 @@ ul {
     flex-direction: row;
     align-items: center;
 }
-li{
+li {
     font-size: 1.5rem;
     margin-right: 30px;
     list-style-type: none;

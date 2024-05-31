@@ -10,12 +10,12 @@ interface SideBarToggleProps {
 
 export const SideBarToggle: React.FC<SideBarToggleProps> = ({ isOpen, setIsOpen }) => {
     return (
-        <div className="dark:bg-primary-foreground invisible absolute -right-[16px] top-[12px] z-20 bg-white lg:visible">
+        <div className="invisible absolute -right-[16px] top-[12px] z-20 bg-white dark:bg-primary-foreground lg:visible">
             <Button
                 onClick={() => setIsOpen?.()}
-                className="border-input
-                bg-background hover:bg-accent hover:text-accent-foreground h-8 w-8 rounded-md
-                border shadow-sm"
+                className="h-8
+                w-8 rounded-md border border-input bg-background shadow-sm
+                hover:bg-accent hover:text-accent-foreground"
             >
                 <ChevronLeft
                     className={cn(
