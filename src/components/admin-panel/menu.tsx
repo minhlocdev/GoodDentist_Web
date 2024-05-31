@@ -1,9 +1,9 @@
-import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { Ellipsis, LucideIcon } from 'lucide-react';
+import { Ellipsis, LogOut, LucideIcon } from 'lucide-react';
 
 import { getMenuList } from '../../lib/menu-list';
 import { cn } from '../../lib/utils';
 import { Button } from '../ui/button';
+import { ScrollArea } from '../ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { CollapseMenuButton } from './dropdown-menu-button';
 
@@ -14,7 +14,7 @@ interface MenuProbs {
 const Menu: React.FC<MenuProbs> = ({ isOpen }) => {
     const menuList = getMenuList('/dashboard');
     return (
-        <ScrollArea>
+        <ScrollArea className="[&>div>div[style]]:!block">
             <nav className="mt-8 h-full w-full">
                 <ul className="flex flex-col items-start space-y-1 px-2">
                     {menuList.map(({ groupLabel, menus }, index) => (
@@ -48,6 +48,7 @@ const Menu: React.FC<MenuProbs> = ({ isOpen }) => {
                                                     <Button
                                                         className="mb-1 h-10 w-full justify-start"
                                                         asChild
+                                                        variant={active ? 'secondary' : 'ghost'}
                                                     >
                                                         <a href={href}>
                                                             <span
@@ -92,6 +93,36 @@ const Menu: React.FC<MenuProbs> = ({ isOpen }) => {
                             )}
                         </li>
                     ))}
+                    <li className="flex w-full grow items-end">
+                        <TooltipProvider disableHoverableContent>
+                            <Tooltip delayDuration={100}>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        // onClick={() => {}}
+                                        variant="outline"
+                                        className="mt-5 h-10 w-full justify-center"
+                                    >
+                                        <span className={cn(isOpen === false ? '' : 'mr-4')}>
+                                            <LogOut size={18} />
+                                        </span>
+                                        <p
+                                            className={cn(
+                                                'whitespace-nowrap',
+                                                isOpen === false
+                                                    ? 'hidden opacity-0'
+                                                    : 'opacity-100'
+                                            )}
+                                        >
+                                            Sign out
+                                        </p>
+                                    </Button>
+                                </TooltipTrigger>
+                                {isOpen === false && (
+                                    <TooltipContent side="right">Sign out</TooltipContent>
+                                )}
+                            </Tooltip>
+                        </TooltipProvider>
+                    </li>
                 </ul>
             </nav>
         </ScrollArea>

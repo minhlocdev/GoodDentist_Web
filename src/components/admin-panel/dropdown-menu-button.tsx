@@ -32,6 +32,7 @@ export function CollapseMenuButton({
     icon: Icon,
     label,
     submenus,
+    active,
     isOpen
 }: CollapseMenuButtonProps) {
     const isSubmenuActive = submenus.some((submenu) => submenu.active);
@@ -43,7 +44,10 @@ export function CollapseMenuButton({
                 className="mb-1 [&[data-state=open]>div>div>svg]:rotate-180"
                 asChild
             >
-                <Button className="h-10 w-full justify-start">
+                <Button
+                    variant={active ? 'secondary' : 'ghost'}
+                    className="h-10 w-full justify-start"
+                >
                     <div className="flex w-full items-center justify-between">
                         <div className="flex items-center">
                             <span className="mr-4">
@@ -72,8 +76,13 @@ export function CollapseMenuButton({
                 </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                {submenus.map(({ href, label }, index) => (
-                    <Button key={index} className="mb-1 h-10 w-full justify-start" asChild>
+                {submenus.map(({ href, label, active }, index) => (
+                    <Button
+                        key={index}
+                        variant={active ? 'secondary' : 'ghost'}
+                        className="mb-1 h-10 w-full justify-start"
+                        asChild
+                    >
                         <a href={href}>
                             <span className="ml-2 mr-4">
                                 <Dot size={18} />
@@ -99,7 +108,10 @@ export function CollapseMenuButton({
                 <Tooltip delayDuration={100}>
                     <TooltipTrigger asChild>
                         <DropdownMenuTrigger asChild>
-                            <Button className="mb-1 h-10 w-full justify-center">
+                            <Button
+                                variant={active ? 'secondary' : 'ghost'}
+                                className="mb-1 h-10 w-full justify-center"
+                            >
                                 <div className="flex w-full items-center justify-between">
                                     <div className="flex items-center">
                                         <span className={cn(isOpen === false ? '' : 'mr-4')}>

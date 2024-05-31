@@ -5,7 +5,7 @@ export default function DashboardPage() {
     return (
         <AdminPanelLayout>
             <ContentLayout title="Dashboard">
-                <div></div>
+                <h1 className="text-secondary-foreground">Hello World</h1>
             </ContentLayout>
         </AdminPanelLayout>
     );

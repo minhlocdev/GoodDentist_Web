@@ -6,7 +6,7 @@ import { cn } from '../../lib/utils';
 
 import { Button } from '../ui/button';
 import Menu from './menu';
-import { SideBarToggle } from './side-bar-toggle';
+import { SidebarToggle } from './side-bar-toggle';
 
 export const Sidebar = () => {
     const sidebar = useStore(useSidebarToggle, (state) => state);
@@ -20,13 +20,14 @@ export const Sidebar = () => {
                 sidebar?.isOpen === false ? 'w-[90px]' : 'w-72'
             )}
         >
-            <SideBarToggle isOpen={sidebar?.isOpen} setIsOpen={sidebar?.setIsOpen} />
+            <SidebarToggle isOpen={sidebar?.isOpen} setIsOpen={sidebar?.setIsOpen} />
             <div className="relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md dark:shadow-zinc-800">
                 <Button
                     className={cn(
                         'mb-1 transition-transform duration-300 ease-in-out',
                         sidebar?.isOpen === false ? 'translate-x-1' : 'translate-x-0'
                     )}
+                    variant={'link'}
                     asChild
                 >
                     <a>
