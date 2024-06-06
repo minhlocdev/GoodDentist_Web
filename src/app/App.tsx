@@ -1,8 +1,9 @@
 import './App.css';
-import DashboardPage from './pages/dashboard/dashboard';
+import Router from './Router';
 
 function App() {
-    return <DashboardPage />;
+    //TODO: Router
+    return <Router />;
 }
 
 export default App;
