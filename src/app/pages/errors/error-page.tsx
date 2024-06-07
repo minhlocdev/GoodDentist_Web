@@ -1,5 +1,5 @@
 import { useRouteError } from 'react-router-dom';
-import { ErrorWithStatus } from '../../../lib/interfaces/IErrorPage';
+import { ErrorWithStatus } from '../../../lib/interfaces/IErrorStatus';
 
 export default function ErrorPage() {
     const error = useRouteError();

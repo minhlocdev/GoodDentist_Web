@@ -5,8 +5,8 @@ interface IProtectedRoute {
     children: JSX.Element;
     path: string;
 }
-
 const ProtectedRoute = ({ children, path }: IProtectedRoute) => {
+    //TODO: user Authen
     const isLogin = true;
 
     if (
