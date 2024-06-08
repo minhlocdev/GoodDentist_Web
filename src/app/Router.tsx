@@ -1,32 +1,26 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import DashboardPage from './pages/dashboard/dashboard';
-import ErrorPage from './pages/errors/error-page';
+
 import Layout from './pages/layout';
-import ServicePage from './pages/service/service';
-import StaffPage from './pages/staff/staff';
+import ErrorPage from './pages/errors/error-page';
+import routerMeta from '../lib/routerMeta';
+
+const routes = Object.values(routerMeta).map((route) => ({
+    path: route.path,
+    element: route.element,
+    errorElement: <ErrorPage />
+}));
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: '',
         element: <Layout />,
         errorElement: <ErrorPage />,
-        children: [
-            {
-                path: 'dashboard',
-                element: <DashboardPage />
-            },
-            {
-                path: 'services',
-                element: <ServicePage />
-            },
-            {
-                path: 'staffs',
-                element: <StaffPage />
-            }
-        ]
+        children: routes
     }
 ]);
+
 const Router = () => {
     return <RouterProvider router={router} />;
 };
+
 export default Router;
