@@ -55,6 +55,6 @@
     }
     body {
         @apply bg-background text-foreground;
-        @apply overflow-hidden;
+        @apply overflow-y-auto;
     }
 }
