@@ -1,4 +1,5 @@
 import { Ellipsis, LogOut, LucideIcon } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 import { getMenuList } from '../../lib/menu-list';
 import { cn } from '../../lib/utils';
@@ -12,7 +13,9 @@ interface MenuProbs {
 }
 
 const Menu: React.FC<MenuProbs> = ({ isOpen }) => {
-    const menuList = getMenuList('/dashboard');
+    const { pathname } = useLocation();
+    const menuList = getMenuList(pathname);
+
     return (
         <ScrollArea className="[&>div>div[style]]:!block">
             <nav className="mt-8 h-full w-full">

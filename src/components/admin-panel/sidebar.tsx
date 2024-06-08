@@ -1,7 +1,7 @@
 import { PanelsTopLeft } from 'lucide-react';
+import { useStore } from 'zustand';
 
 import { useSidebarToggle } from '../../hooks/use-sidebar-toggle';
-import { useStore } from '../../hooks/use-store';
 import { cn } from '../../lib/utils';
 
 import { Button } from '../ui/button';
