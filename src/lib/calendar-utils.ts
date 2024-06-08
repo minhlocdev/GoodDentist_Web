@@ -1,12 +1,6 @@
-import {
-    endOfMonth,
-    endOfWeek,
-    startOfMonth,
-    startOfWeek,
-    subDays
-} from 'date-fns';
-import { DateRange } from 'react-day-picker';
+import { endOfMonth, endOfWeek, startOfMonth, startOfWeek, subDays } from 'date-fns';
 import { vi } from 'date-fns/locale';
+import { DateRange } from 'react-day-picker';
 
 export const handleTagClick = (tag: string) => {
     const today = new Date();

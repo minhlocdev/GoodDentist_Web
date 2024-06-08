@@ -90,11 +90,7 @@ export default function RevenueChart() {
                             stroke="#8884d8"
                             activeDot={{ r: 8 }}
                         />
-                        <Line
-                            type="monotone"
-                            dataKey="Income"
-                            stroke="#82ca9d"
-                        />
+                        <Line type="monotone" dataKey="Income" stroke="#82ca9d" />
                     </LineChart>
                 </ResponsiveContainer>
             </div>

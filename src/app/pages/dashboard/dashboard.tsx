@@ -16,7 +16,7 @@ export default function DashboardPage() {
 
     return (
         <ContentLayout title="Trang chủ">
-            <div className="flex flex-row mb-4 h-12">
+            <div className="mb-4 flex h-12 flex-row">
                 <DatePickerWithRange />
             </div>
             <div className="mb-3 grid gap-4 md:grid-cols-1 lg:grid-cols-2">
