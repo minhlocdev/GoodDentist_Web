@@ -1,3 +1,7 @@
+import AppointmentPage from '../app/pages/appoinment/appointment';
+import PendingAppointment from '../app/pages/appoinment/pending-appointment';
+import ClinicChain from '../app/pages/clinic-chain/clinic-chain';
+import CustomerPage from '../app/pages/customer/customer';
 import DashboardPage from '../app/pages/dashboard/dashboard';
 import ErrorPage from '../app/pages/errors/error-page';
 import ServicePage from '../app/pages/service/service';
@@ -34,22 +38,22 @@ const routerMeta: RouterMetaType = {
     Customers: {
         name: 'Customer Management',
         path: '/customers',
-        element: <StaffPage />
+        element: <CustomerPage />
     },
     Calendars: {
         name: 'Calendar Management',
         path: '/calendars',
-        element: <StaffPage />
+        element: <AppointmentPage />
     },
     PendingAppointment: {
         name: 'Pending Appointment',
         path: '/calendars/pending-appointment',
-        element: <StaffPage />
+        element: <PendingAppointment />
     },
     ClinicChain: {
         name: 'Clinic Chain Management',
         path: '/clinic-chain',
-        element: <StaffPage />
+        element: <ClinicChain />
     },
     MaterialDentals: {
         name: 'Material Dentals',
