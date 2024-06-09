@@ -72,9 +72,9 @@ export function getMenuList(pathname: string): Group[] {
                             active: pathname === '/calendars'
                         },
                         {
-                            href: '/calendars/pending-appoinment',
+                            href: '/calendars/pending-appointment',
                             label: 'Lịch hẹn lại & Booking',
-                            active: pathname === '/calendars/pending-appoinment'
+                            active: pathname === '/calendars/pending-appointment'
                         }
                     ]
                 },

@@ -18,7 +18,13 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "__tests__/**/*.ts", "__tests__/**/*.tsx"],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "__tests__/**/*.ts",
+        "__tests__/**/*.tsx",
+        "src/components/ui/local"
+    ],
     "exclude": ["node_modules", "dist"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -31,6 +31,7 @@ module.exports = {
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
         'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
     }
 };

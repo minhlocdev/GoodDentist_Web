@@ -45,3 +45,23 @@ export const handleTagClick = (tag: string) => {
     }
     return newDate;
 };
+
+export function generateTimeSlots() {
+    const timeSlots = [];
+    const startTime = new Date();
+    startTime.setHours(7, 0, 0, 0); // Set start time to 7:00
+
+    const endTime = new Date();
+    endTime.setHours(23, 0, 0, 0); // Set end time to 23:00
+
+    while (startTime <= endTime) {
+        const timeSlot = {
+            time: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            value: startTime.getTime() // Optional: You can store the time value as milliseconds
+        };
+        timeSlots.push(timeSlot);
+        startTime.setMinutes(startTime.getMinutes() + 15); // Increment time by 15 minutes
+    }
+
+    return timeSlots;
+}
