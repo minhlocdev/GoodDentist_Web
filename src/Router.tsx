@@ -7,6 +7,7 @@ import AppointmentPage from './app/pages/appoinment/appointment';
 import PendingAppointment from './app/pages/appoinment/pending-appointment';
 import CustomerPage from './app/pages/customer/customer';
 import DashboardPage from './app/pages/dashboard/dashboard';
+import TestPage from './app/pages/TestPage';
 
 // const routes = Object.values(routerMeta).map((route) => ({
 //     path: route.path,
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
             {
                 path: '/pending-appointment',
                 element: <PendingAppointment />,
+                errorElement: <ErrorPage />
+            },
+            {
+                path: '/test',
+                element: <TestPage />,
                 errorElement: <ErrorPage />
             }
         ]
