@@ -3,9 +3,10 @@ import ErrorPage from './app/pages/errors/error-page';
 import Layout from './app/pages/layout';
 import StaffPage from './app/pages/staff/staff';
 // import routerMeta from './lib/routerMeta';
-import CustomerPage from './app/pages/customer/customer';
 import AppointmentPage from './app/pages/appoinment/appointment';
 import PendingAppointment from './app/pages/appoinment/pending-appointment';
+import CustomerPage from './app/pages/customer/customer';
+import DashboardPage from './app/pages/dashboard/dashboard';
 
 // const routes = Object.values(routerMeta).map((route) => ({
 //     path: route.path,
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
         element: <Layout />,
         errorElement: <ErrorPage />,
         children: [
+            {
+                path: '/',
+                element: <DashboardPage />,
+                errorElement: <ErrorPage />
+            },
             {
                 path: '/staffs',
                 element: <StaffPage />,
