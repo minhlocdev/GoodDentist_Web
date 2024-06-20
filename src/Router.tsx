@@ -3,6 +3,7 @@ import ErrorPage from './app/pages/errors/error-page';
 import Layout from './app/pages/layout';
 import Login from './app/pages/login/login';
 import routerMeta from './lib/routerMeta';
+import LoginPage from './app/pages/login/login';
 
 const routes = Object.values(routerMeta).map((route) => ({
     path: route.path,
@@ -20,8 +21,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/login',
-        element: <Login />,
-        errorElement: <ErrorPage />
+        element: <LoginPage />
     }
 ]);
 
