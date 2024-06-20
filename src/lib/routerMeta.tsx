@@ -95,16 +95,6 @@ const routerMeta: RouterMetaType = {
         path: '/profile/:username/*',
         element: <StaffPage />
     },
-    SignIn: {
-        name: 'Sign in',
-        path: '/login',
-        element: <StaffPage />
-    },
-    SignUp: {
-        name: 'Sign up',
-        path: '/register',
-        element: <StaffPage />
-    },
     NotFound: {
         path: '/*',
         element: <ErrorPage />

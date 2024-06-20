@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './app/pages/errors/error-page';
 import Layout from './app/pages/layout';
 import routerMeta from './lib/routerMeta';
+import LoginPage from './app/pages/login/login';
 
 const routes = Object.values(routerMeta).map((route) => ({
     path: route.path,
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
         element: <Layout />,
         errorElement: <ErrorPage />,
         children: routes
+    },
+    {
+        path: '/login',
+        element: <LoginPage />
     }
 ]);
 
