@@ -1,10 +1,10 @@
-import AppointmentLayout from './appointment-layout';
+import { CalendarContentLayout } from '../../../components/admin-panel/calendar-content-layout';
 
 const PendingAppointment = () => {
     return (
-        <AppointmentLayout title="Lịch hẹn lại và Booking">
+        <CalendarContentLayout title="Lịch hẹn lại và Booking">
             <div>Hello pending</div>
-        </AppointmentLayout>
+        </CalendarContentLayout>
     );
 };
 

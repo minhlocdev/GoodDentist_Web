@@ -28,86 +28,91 @@ const routerMeta: RouterMetaType = {
         name: 'Staff Management',
         path: '/staffs',
         element: <StaffPage />,
-        isAuth: true
+        isAuth: true,
+        isCommon: true
     },
     Service: {
         name: 'Services',
         path: '/services',
-        element: <ServicePage />
+        element: <ServicePage />,
+        isCommon: true
     },
     Customers: {
         name: 'Customer Management',
         path: '/customers',
-        element: <CustomerPage />
+        element: <CustomerPage />,
+        isCommon: true
     },
     Calendars: {
         name: 'Calendar Management',
         path: '/calendars',
-        element: <AppointmentPage />
+        element: <AppointmentPage />,
+        isCommon: false
     },
     PendingAppointment: {
         name: 'Pending Appointment',
         path: '/calendars/pending-appointment',
-        element: <PendingAppointment />
+        element: <PendingAppointment />,
+        isCommon: false
     },
     ClinicChain: {
         name: 'Clinic Chain Management',
         path: '/clinic-chain',
-        element: <ClinicChain />
+        element: <ClinicChain />,
+        isCommon: true
     },
     MaterialDentals: {
         name: 'Material Dentals',
         path: '/material-dentals',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     Medicines: {
         name: 'Medicines',
         path: '/medicines',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     RevenueStatistical: {
         name: 'Revenue Statistical',
         path: '/revenue-statistical',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     AppointmentStatistical: {
         name: 'Appointment Statistical',
         path: '/appointment-statistical',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     CustomerStatistical: {
         name: 'Customer Statistical',
         path: '/customer-statistical',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     ActivityLog: {
         name: 'Activity Log',
         path: '/activity-log',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     Account: {
         name: 'Account',
         path: '/account',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     Profile: {
         name: 'Profile',
         path: '/profile/:username/*',
-        element: <StaffPage />
-    },
-    SignIn: {
-        name: 'Sign in',
-        path: '/login',
-        element: <StaffPage />
-    },
-    SignUp: {
-        name: 'Sign up',
-        path: '/register',
-        element: <StaffPage />
+        element: <StaffPage />,
+        isCommon: true
     },
     NotFound: {
         path: '/*',
-        element: <ErrorPage />
+        element: <ErrorPage />,
+        isCommon: true
     }
 };
 

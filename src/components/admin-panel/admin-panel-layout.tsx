@@ -1,7 +1,6 @@
 import { useStore } from 'zustand';
 import { useSidebarToggle } from '../../hooks/use-sidebar-toggle';
 import { cn } from '../../lib/utils';
-import { Footer } from './footer';
 import { Sidebar } from './sidebar';
 
 export default function AdminPanelLayout({ children }: { children: React.ReactNode }) {
@@ -20,14 +19,14 @@ export default function AdminPanelLayout({ children }: { children: React.ReactNo
             >
                 {children}
             </main>
-            <footer
+            {/* <footer
                 className={cn(
                     'transition-[margin-left] duration-300 ease-in-out',
                     sidebar?.isOpen === false ? 'lg:ml-[90px]' : 'lg:ml-72'
                 )}
             >
                 <Footer />
-            </footer>
+            </footer> */}
         </>
     );
 }
