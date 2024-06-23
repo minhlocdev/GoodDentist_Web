@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 'use client';
 
 import { ChevronDownIcon } from '@radix-ui/react-icons';

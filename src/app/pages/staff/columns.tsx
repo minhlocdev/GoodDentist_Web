@@ -8,7 +8,7 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from '../../../components/ui/tooltip';
-import { IUser } from '../../../lib/interfaces/IUser';
+import { IUser } from '../../../lib/interfaces/user-types/IUser';
 import { NewStaffModal } from './new-staff-modal';
 
 export const columns: ColumnDef<IUser>[] = [

@@ -1,4 +1,4 @@
-import { IRole } from "../IRole";
+import { IRole } from '../IRole';
 
 export interface IUser {
     id: number;
@@ -24,12 +24,12 @@ const users: IUser[] = [
         address: '123 Đường Chính, Hà Nội',
         status: 1,
         role: {
-          id: 1,
-          name: 'Admin',
-          description: 'Administrator role'
+            id: 1,
+            name: 'Admin',
+            description: 'Administrator role'
         }
-      },
-      {
+    },
+    {
         id: 2,
         user_name: 'Trần Thị Bình',
         password: 'password123',
@@ -40,12 +40,12 @@ const users: IUser[] = [
         address: '124 Phố Lớn, TP. Hồ Chí Minh',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 3,
         user_name: 'Lê Văn Cường',
         password: 'password123',
@@ -56,12 +56,12 @@ const users: IUser[] = [
         address: '125 Đường Nhỏ, Đà Nẵng',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 4,
         user_name: 'Phạm Thị Dung',
         password: 'password123',
@@ -72,12 +72,12 @@ const users: IUser[] = [
         address: '126 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 5,
         user_name: 'Ngô Văn Đức',
         password: 'password123',
@@ -88,12 +88,12 @@ const users: IUser[] = [
         address: '127 Đường Nhỏ, Đà Nẵng',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 6,
         user_name: 'Hoàng Thị Hoa',
         password: 'password123',
@@ -104,12 +104,12 @@ const users: IUser[] = [
         address: '128 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 7,
         user_name: 'Trần Văn Hùng',
         password: 'password123',
@@ -120,12 +120,12 @@ const users: IUser[] = [
         address: '129 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 8,
         user_name: 'Lê Thị Hương',
         password: 'password123',
@@ -136,12 +136,12 @@ const users: IUser[] = [
         address: '130 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 9,
         user_name: 'Nguyễn Văn Khoa',
         password: 'password123',
@@ -152,12 +152,12 @@ const users: IUser[] = [
         address: '131 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 10,
         user_name: 'Trần Thị Lan',
         password: 'password123',
@@ -168,12 +168,12 @@ const users: IUser[] = [
         address: '132 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 11,
         user_name: 'Lê Văn Minh',
         password: 'password123',
@@ -184,12 +184,12 @@ const users: IUser[] = [
         address: '133 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 12,
         user_name: 'Phạm Thị Nga',
         password: 'password123',
@@ -200,12 +200,12 @@ const users: IUser[] = [
         address: '134 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 13,
         user_name: 'Nguyễn Văn Phong',
         password: 'password123',
@@ -216,12 +216,12 @@ const users: IUser[] = [
         address: '135 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 14,
         user_name: 'Trần Thị Quỳnh',
         password: 'password123',
@@ -232,12 +232,12 @@ const users: IUser[] = [
         address: '136 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      },
-      {
+    },
+    {
         id: 15,
         user_name: 'Lê Văn Sơn',
         password: 'password123',
@@ -248,11 +248,11 @@ const users: IUser[] = [
         address: '137 Phố Mới, Cần Thơ',
         status: 1,
         role: {
-          id: 2,
-          name: 'User',
-          description: 'Regular user role'
+            id: 2,
+            name: 'User',
+            description: 'Regular user role'
         }
-      }
+    }
 ];
 
 export default users;

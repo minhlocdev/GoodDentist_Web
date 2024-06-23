@@ -72,7 +72,7 @@
 }
 
 .rbc-time-header-cell .rbc-today {
-    background-color: hsl(var(--muted))!important;
+    background-color: hsl(var(--muted)) !important;
 }
 
 .rbc-time-slot {

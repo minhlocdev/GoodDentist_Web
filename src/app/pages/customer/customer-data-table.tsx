@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 'use client';
 
 import { ChevronDownIcon } from '@radix-ui/react-icons';
@@ -68,7 +67,7 @@ export function CustomerDataTable() {
         data: users ?? defaultData,
         columns,
         // pageCount: dataQuery.data?.pageCount ?? -1, //you can now pass in `rowCount` instead of pageCount and `pageCount` will be calculated internally (new in v8.13.0)
-        rowCount: 30,//  dataQuery.data?.rowCount,new in v8.13.0 - alternatively, just pass in `pageCount` directly
+        rowCount: 30, //  dataQuery.data?.rowCount,new in v8.13.0 - alternatively, just pass in `pageCount` directly
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),

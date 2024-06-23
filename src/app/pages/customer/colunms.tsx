@@ -10,8 +10,8 @@ import {
     TooltipTrigger
 } from '../../../components/ui/tooltip';
 import { ICustomer } from '../../../lib/interfaces/ICustomer';
-import { NewStaffModal } from '../staff/new-staff-modal';
 import { IUser } from '../../../lib/interfaces/user-types/IUser';
+import { NewStaffModal } from '../staff/new-staff-modal';
 
 export const columns: ColumnDef<ICustomer>[] = [
     {

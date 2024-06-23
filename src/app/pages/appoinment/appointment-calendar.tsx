@@ -59,7 +59,7 @@ const AppointmentCalendar = () => {
     return (
         <div
             className={cn(
-                'w-[calc(100vw-2%)] h-screen flex-col gap-2 md:flex md:h-[calc(100vh-56px)] md:w-[100%]',
+                'h-screen w-[calc(100vw-2%)] flex-col gap-2 md:flex md:h-[calc(100vh-56px)] md:w-[100%]',
                 calendar.selectedEvent ? 'hidden' : ''
             )}
         >

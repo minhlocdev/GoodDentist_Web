@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 
 const Collapsible = CollapsiblePrimitive.Root;

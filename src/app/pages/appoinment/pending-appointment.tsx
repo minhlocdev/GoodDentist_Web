@@ -11,7 +11,7 @@ const PendingAppointment = () => {
     return (
         <CalendarContentLayout title="Lịch hẹn lại và Booking">
             <div className="flex flex-col items-start justify-start overflow-hidden md:flex-row md:overflow-auto">
-                <CalendarAside mode="pending"/>
+                <CalendarAside mode="pending" />
                 <AppointmentCalendar />
             </div>
         </CalendarContentLayout>

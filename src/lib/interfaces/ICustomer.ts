@@ -1,4 +1,4 @@
-import { IUser } from "./user-types/IUser";
+import { IUser } from './user-types/IUser';
 
 export interface ICustomer extends IUser {
     examination_id?: string;

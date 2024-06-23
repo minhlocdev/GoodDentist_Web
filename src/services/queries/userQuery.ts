@@ -12,6 +12,6 @@ export const userService: IUserService = {
                 return await getUsers().then((res) => res.data);
             },
             staleTime: 20000,
-            placeholderData: keepPreviousData,
+            placeholderData: keepPreviousData
         })
 };

@@ -36,7 +36,7 @@ const CalendarCollapsible: React.FC<CollapsibleSectionProps> = ({ title, content
                 </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="flex flex-col gap-y-2 overflow-hidden px-2 data-[state=open]:animate-collapsible-down">
-                <div className='py-3'>{content}</div>
+                <div className="py-3">{content}</div>
             </CollapsibleContent>
         </Collapsible>
     );

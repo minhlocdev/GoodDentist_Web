@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { format, getDay, parse, startOfWeek } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import {
