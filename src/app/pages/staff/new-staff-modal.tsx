@@ -25,7 +25,7 @@ import { Input } from '../../../components/ui/input';
 import { SquarePen } from 'lucide-react';
 import { DatePicker } from '../../../components/ui/date-picker';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/tab';
-import { IUser } from '../../../lib/interfaces/IUser';
+import { IUser } from '../../../lib/interfaces/user-types/IUser';
 
 const formSchema = z
     .object({
@@ -39,7 +39,7 @@ const formSchema = z
         email: z.string().email({
             message: 'Invalid email address.'
         }),
-        gender: z.enum(['Male', 'Female', 'Other'], {
+        gender: z.enum(['Nam', 'Nữ', 'Khác'], {
             message: 'Gender is required.'
         }),
         address: z.string().optional(),
@@ -186,9 +186,9 @@ export const NewStaffModal = ({ staff }: StaffFormProps) => {
                                                 <FormLabel>Gender</FormLabel>
                                                 <FormControl>
                                                     <select {...field} className="w-full">
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
-                                                        <option value="other">Other</option>
+                                                        <option value="Nam">Nam</option>
+                                                        <option value="Nữ">Nữ</option>
+                                                        <option value="Khác">Khác</option>
                                                     </select>
                                                 </FormControl>
                                                 <FormMessage />

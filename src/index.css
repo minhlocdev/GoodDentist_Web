@@ -54,14 +54,17 @@
 }
 
 .rbc-header {
-    color: white;
+    color: hsl(var(--ring));
     font-size: 14px !important;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-height: 40px;
-    background: hsl(221.2, 83.2%, 53.3%);
+    min-height: 30px;
+}
+
+.rbc-month-row {
+    height: 100px;
 }
 
 .rbc-allday-cell {
@@ -69,24 +72,26 @@
 }
 
 .rbc-time-header-cell .rbc-today {
-    background-color: #04aa6d !important;
+    background-color: hsl(var(--muted))!important;
 }
 
 .rbc-time-slot {
     color: #8c9ba4;
-    z-index: 1;
+    z-index: -1;
 }
 
 .rbc-time-slot:not(.rbc-today .rbc-time-slot) {
     background-color: #ffffff;
+    z-index: 1;
 }
 
 /*Event Styles*/
 .rbc-event,
 .rbc-background-event {
-    z-index: 2;
+    z-index: 1;
     padding: 0px !important;
     border: none !important;
+    background-color: unset !important;
 }
 
 .rbc-event-label {

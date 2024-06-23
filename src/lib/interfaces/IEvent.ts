@@ -6,15 +6,10 @@ export interface Appointment {
     address: string;
 }
 
-export interface Blockout {
-    id: number;
-    name: string;
-}
-
 export interface EventItem {
     start?: Date;
     end?: Date;
-    data?: { appointment?: Appointment; blockout?: Blockout };
+    data?: { appointment?: Appointment };
     isDraggable?: boolean;
     resourceId?: number;
 }

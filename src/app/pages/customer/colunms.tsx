@@ -1,7 +1,7 @@
 import { CaretSortIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { SquarePen, Trash } from 'lucide-react';
+import { Trash } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import {
     Tooltip,
@@ -10,6 +10,8 @@ import {
     TooltipTrigger
 } from '../../../components/ui/tooltip';
 import { ICustomer } from '../../../lib/interfaces/ICustomer';
+import { NewStaffModal } from '../staff/new-staff-modal';
+import { IUser } from '../../../lib/interfaces/user-types/IUser';
 
 export const columns: ColumnDef<ICustomer>[] = [
     {
@@ -74,23 +76,35 @@ export const columns: ColumnDef<ICustomer>[] = [
         header: 'Thao tác',
         id: 'actions',
         enableHiding: false,
-        cell: () => {
-            // const user = row.original;
+        cell: ({ row }) => {
+            const user: IUser = row.original;
             return (
-                <TooltipProvider>
-                    <Tooltip delayDuration={100}>
-                        <TooltipTrigger className="w-full">
-                            {/* <NewStaffModal staff={user}/> */}
-                            <div className="flex flex-row items-center gap-x-4">
-                                <SquarePen className="h-5 w-5 text-primary" />
-                                <Trash className="h-5 w-5 text-destructive" />
-                            </div>
-                        </TooltipTrigger>
-                        <TooltipContent side="bottom">
-                            <p>Chỉnh sửa</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
+                <div className="flex items-center gap-3">
+                    <TooltipProvider>
+                        <Tooltip delayDuration={100}>
+                            <TooltipTrigger className="w-full">
+                                <div className="flex flex-row items-center gap-x-4">
+                                    <NewStaffModal staff={user} />
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom">
+                                <p>Chỉnh sửa</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                        <Tooltip delayDuration={100}>
+                            <TooltipTrigger className="w-full">
+                                <div className="flex flex-row items-center gap-x-4">
+                                    <Trash className="h-5 w-5 text-destructive" />
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom" className="!bg-destructive">
+                                <p>Xóa</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </div>
             );
         }
     }

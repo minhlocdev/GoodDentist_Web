@@ -1,5 +1,5 @@
 import { ContentLayout } from '../../../components/admin-panel/content-layout';
-import users from '../../../lib/interfaces/IUser';
+import users from '../../../lib/interfaces/user-types/IUser';
 import { columns } from './columns';
 import { StaffDataTable } from './staff-data-table';
 

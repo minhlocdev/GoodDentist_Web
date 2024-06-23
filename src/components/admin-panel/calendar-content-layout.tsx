@@ -1,4 +1,3 @@
-import { useStore } from 'zustand';
 import { useCalendarStore } from '../../hooks/use-calendar-store';
 import { CalendarNavbar } from './calendar-nav';
 
@@ -8,7 +7,7 @@ interface ContentLayoutProps {
 }
 
 export function CalendarContentLayout({ children }: ContentLayoutProps) {
-    const calendar = useStore(useCalendarStore, (state) => state);
+    const calendar = useCalendarStore();
 
     if (!calendar) return null;
     return (
