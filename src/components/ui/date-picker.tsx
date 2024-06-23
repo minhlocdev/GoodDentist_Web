@@ -45,10 +45,13 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
             <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                     mode="single"
+                    captionLayout="dropdown-buttons"
                     selected={date}
                     onSelect={handleDateChange}
                     initialFocus
                     locale={vi}
+                    fromYear={1960}
+                    toYear={2030}
                 />
             </PopoverContent>
         </Popover>
