@@ -71,7 +71,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                         </TabsList>
 
                         <TabsContent value="reschedule" className="flex flex-col gap-y-6">
-                            henj laij
+                            <p className="text-center">Không có lịch</p>
                         </TabsContent>
                     </Tabs>
                 </div>

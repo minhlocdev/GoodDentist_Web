@@ -7,6 +7,7 @@ import {
     SquareActivity,
     SquarePen,
     User,
+    UserCog,
     Users
 } from 'lucide-react';
 
@@ -145,8 +146,15 @@ export function getMenuList(pathname: string): Group[] {
             groupLabel: 'Cài đặt',
             menus: [
                 {
+                    href: '/permissions',
+                    label: 'Phân quyền',
+                    active: pathname.includes('/permissions'),
+                    icon: UserCog,
+                    submenus: []
+                },
+                {
                     href: '/account',
-                    label: 'Account',
+                    label: 'Tài khoản',
                     active: pathname.includes('/account'),
                     icon: CircleUser,
                     submenus: []

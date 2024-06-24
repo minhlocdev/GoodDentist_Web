@@ -4,6 +4,7 @@ import ClinicChain from '../app/pages/clinic-chain/clinic-chain';
 import CustomerPage from '../app/pages/customer/customer';
 import DashboardPage from '../app/pages/dashboard/dashboard';
 import ErrorPage from '../app/pages/errors/error-page';
+import MedicincePage from '../app/pages/medicine/medicine';
 import ServicePage from '../app/pages/service/service';
 import StaffPage from '../app/pages/staff/staff';
 
@@ -70,7 +71,7 @@ const routerMeta: RouterMetaType = {
     Medicines: {
         name: 'Medicines',
         path: '/medicines',
-        element: <StaffPage />,
+        element: <MedicincePage />,
         isCommon: true
     },
     RevenueStatistical: {
@@ -94,6 +95,12 @@ const routerMeta: RouterMetaType = {
     ActivityLog: {
         name: 'Activity Log',
         path: '/activity-log',
+        element: <StaffPage />,
+        isCommon: true
+    },
+    Permission: {
+        name: 'Permission',
+        path: '/Permission',
         element: <StaffPage />,
         isCommon: true
     },

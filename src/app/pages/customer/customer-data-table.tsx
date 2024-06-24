@@ -216,7 +216,7 @@ export function CustomerDataTable() {
                     }}
                 >
                     <SelectTrigger className="w-[100px]">
-                        <SelectValue placeholder="Theme" />
+                        <SelectValue placeholder="hàng" />
                     </SelectTrigger>
                     <SelectContent>
                         {[10, 20, 30, 40, 50].map((pageSize) => (

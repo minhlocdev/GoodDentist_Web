@@ -24,6 +24,13 @@ import { Input } from '../../../components/ui/input';
 
 import { SquarePen } from 'lucide-react';
 import { DatePicker } from '../../../components/ui/date-picker';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from '../../../components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/tab';
 import { IUser } from '../../../lib/interfaces/user-types/IUser';
 
@@ -114,7 +121,7 @@ export const NewStaffModal = ({ staff }: StaffFormProps) => {
                                 <TabsTrigger value="account">Thông tin tài khoản</TabsTrigger>
                             </TabsList>
 
-                            <TabsContent value="basic" className="flex flex-col gap-y-6">
+                            <TabsContent value="basic" className="flex flex-col gap-y-1 md:gap-y-6">
                                 {/* Username */}
                                 <FormField
                                     control={form.control}
@@ -132,41 +139,29 @@ export const NewStaffModal = ({ staff }: StaffFormProps) => {
                                     )}
                                 />
                                 {/* DOB */}
-                                <FormField
-                                    control={form.control}
-                                    name="dob"
-                                    render={({ field }) => (
-                                        <FormItem className="flex flex-col">
-                                            <FormLabel>Ngày sinh</FormLabel>
-                                            <FormControl>
-                                                <DatePicker
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <div className="flex flex-row flex-wrap justify-between">
+                                <div className="flex items-start justify-between">
                                     <FormField
                                         control={form.control}
-                                        name="phone"
+                                        name="dob"
                                         render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Phone Number</FormLabel>
+                                            <FormItem className="flex flex-col">
+                                                <FormLabel>Ngày sinh</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="0123456789" {...field} />
+                                                    <DatePicker
+                                                        value={field.value}
+                                                        onChange={field.onChange}
+                                                    />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
                                         )}
                                     />
+
                                     <FormField
                                         control={form.control}
                                         name="email"
                                         render={({ field }) => (
-                                            <FormItem>
+                                            <FormItem className="flex flex-col">
                                                 <FormLabel>Email</FormLabel>
                                                 <FormControl>
                                                     <Input
@@ -178,44 +173,94 @@ export const NewStaffModal = ({ staff }: StaffFormProps) => {
                                             </FormItem>
                                         )}
                                     />
+                                </div>
+                                <div className="flex flex-row justify-between">
                                     <FormField
                                         control={form.control}
-                                        name="gender"
+                                        name="phone"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Gender</FormLabel>
+                                                <FormLabel>Số điện thoại</FormLabel>
                                                 <FormControl>
-                                                    <select {...field} className="w-full">
-                                                        <option value="Nam">Nam</option>
-                                                        <option value="Nữ">Nữ</option>
-                                                        <option value="Khác">Khác</option>
-                                                    </select>
+                                                    <Input placeholder="0123456789" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
                                         )}
                                     />
+
+                                    <div className="flex flex-row justify-between gap-x-5">
+                                        <FormField
+                                            control={form.control}
+                                            name="gender"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Gender</FormLabel>
+                                                    <FormControl>
+                                                        <Select {...field}>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Giới tính" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="Nam">
+                                                                    Nam
+                                                                </SelectItem>
+                                                                <SelectItem value="Nữ">
+                                                                    Nữ
+                                                                </SelectItem>
+                                                                <SelectItem value="Khác">
+                                                                    Khác
+                                                                </SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="role"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Vai trò</FormLabel>
+                                                    <FormControl>
+                                                        <Select {...field}>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Vai trò" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="Staff">
+                                                                    Nhân viên
+                                                                </SelectItem>
+                                                                <SelectItem value="Admin">
+                                                                    Admin
+                                                                </SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="w-full">
                                     <FormField
                                         control={form.control}
                                         name="address"
                                         render={({ field }) => (
-                                            <FormItem>
+                                            <FormItem className="flex flex-col gap-y-2">
                                                 <FormLabel>Address</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="123 Main St" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="role"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Role</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Staff Role" {...field} />
+                                                    <textarea
+                                                        rows={4}
+                                                        cols={50}
+                                                        placeholder="Nhập địa chỉ"
+                                                        {...field}
+                                                        className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                    ></textarea>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
