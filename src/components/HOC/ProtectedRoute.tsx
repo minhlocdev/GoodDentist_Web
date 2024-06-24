@@ -8,13 +8,13 @@ interface IProtectedRoute {
 }
 const ProtectedRoute = ({ children, path }: IProtectedRoute) => {
     //TODO
-    const { accessToken } = useAuth();
-    const isLogin = !!accessToken;
+    const { accessToken, user } = useAuth();
+    const isLogin = !!(accessToken && user);
     if (!isLogin) {
-        return <Navigate to={"/login"} replace={true} />;
+        return <Navigate to={'/login'} replace={true} />;
     }
 
-    if (isLogin && path === "/login") {
+    if (isLogin && path === '/login') {
         return <Navigate to={'/'} replace={true} />;
     }
     return children;

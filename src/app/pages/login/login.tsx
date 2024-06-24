@@ -25,6 +25,8 @@ import { userService } from '../../../services/queries/userQuery';
 const loginSchema = z.object({
     username: z.string().min(1, 'Please input username.'),
     password: z.string().min(1, 'Please input password.')
+    username: z.string().min(1, 'Please input username.'),
+    password: z.string().min(1, 'Please input password.')
 });
 
 interface LoginFormProps {
@@ -152,3 +154,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

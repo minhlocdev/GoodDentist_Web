@@ -15,7 +15,7 @@ export interface IUserService {
         sortOrder?: string
     ) => UseQueryResult<IUser[]>;
     PostLoginUser: (user: ILoginUser) => Promise<AxiosResponse>;
-    GetLoginUser: () => UseQueryResult<IUser | null>;
+    GetLoginUser: (jwtToken: string) => Promise<AxiosResponse<ApiResponse<IUser>>>;
     GetTotalUser: () => UseQueryResult<number>;
     PostUser: () => UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser>;
     GetUsersByClinic: (

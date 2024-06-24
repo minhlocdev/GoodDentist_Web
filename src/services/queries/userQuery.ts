@@ -5,6 +5,7 @@ import {
     useMutation,
     useQuery
 } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 import { ApiResponse } from '../../lib/api';
 import { ILoginUser } from '../../lib/interfaces/user-types/ILoginUser';
 import { IPostUser } from '../../lib/interfaces/user-types/IPostUser';
@@ -20,7 +21,6 @@ import {
     postUser,
     putUser
 } from '../users';
-
 export const userService: IUserService = {
     GetUsers: (
         pageNumber,
@@ -66,14 +66,9 @@ export const userService: IUserService = {
         return postLogin(user);
     },
 
-    GetLoginUser: (): UseQueryResult<IUser | null> =>
-        useQuery<IUser | null, Error>({
-            queryKey: ['loginUser'],
-            queryFn: async (): Promise<IUser | null> => {
-                return await getLoginUser().then((res) => res.data.result);
-            },
-            staleTime: 20000
-        }),
+    GetLoginUser: (jwtToken: string): Promise<AxiosResponse<ApiResponse<IUser>>> => {
+        return getLoginUser(jwtToken);
+    },
 
     PostUser: (): UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser> =>
         useMutation<ApiResponse<IPostUser>, Error, IPostUser>({
@@ -117,7 +112,7 @@ export const userService: IUserService = {
             placeholderData: keepPreviousData,
             enabled: clinicId !== ''
         }),
-        
+
     GetDentistsByClinic: (
         clinicId,
         pageNumber,

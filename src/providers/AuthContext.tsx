@@ -6,20 +6,28 @@ interface AuthContextProps {
     accessToken: string | null;
     setAccessToken: (token: string | null) => void;
     user: IUser | null;
+    setUser: (loginUser: IUser | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export type Props = Record<string, any>;
 
 export const AuthContextProvider = (props: Props) => {
-    const user = null;
     const [accessToken, setAccessToken] = useState<string | null>(
         typeof window !== 'undefined' ? sessionStorage.getItem(ACCESS_TOKEN_KEY) : null
     );
+    const [user, setUser] = useState<IUser | null>(() => {
+        if (typeof window !== 'undefined') {
+            const storedUser = sessionStorage.getItem('loginUser');
+            return storedUser ? (JSON.parse(storedUser) as IUser) : null;
+        }
+        return null;
+    });
     const value = {
         accessToken,
         setAccessToken,
-        user
+        user,
+        setUser
     };
 
     return <AuthContext.Provider value={value} {...props} />;

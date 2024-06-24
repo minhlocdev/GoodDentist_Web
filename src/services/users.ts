@@ -44,10 +44,13 @@ export const postLogin = async (
     });
 };
 
-export const getLoginUser = async (): Promise<AxiosResponse<ApiResponse<IUser | null>>> => {
+export const getLoginUser = async (jwtToken:string): Promise<AxiosResponse<ApiResponse<IUser>>> => {
     return await apiClient({
         method: 'get',
-        url: '/api/login'
+        url: '/api/login/users',
+        headers: {
+            Authorization: `Bearer ${jwtToken}`
+        }
     });
 };
 
