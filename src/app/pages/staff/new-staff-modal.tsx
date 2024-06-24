@@ -197,11 +197,11 @@ export const NewStaffModal = ({ staff }: StaffFormProps) => {
                                                 <FormItem>
                                                     <FormLabel>Gender</FormLabel>
                                                     <FormControl>
-                                                        <Select {...field}>
+                                                        <Select>
                                                             <SelectTrigger>
                                                                 <SelectValue placeholder="Giới tính" />
                                                             </SelectTrigger>
-                                                            <SelectContent>
+                                                            <SelectContent  {...field}>
                                                                 <SelectItem value="Nam">
                                                                     Nam
                                                                 </SelectItem>
@@ -226,11 +226,11 @@ export const NewStaffModal = ({ staff }: StaffFormProps) => {
                                                 <FormItem>
                                                     <FormLabel>Vai trò</FormLabel>
                                                     <FormControl>
-                                                        <Select {...field}>
+                                                        <Select>
                                                             <SelectTrigger>
                                                                 <SelectValue placeholder="Vai trò" />
                                                             </SelectTrigger>
-                                                            <SelectContent>
+                                                            <SelectContent  {...field}>
                                                                 <SelectItem value="Staff">
                                                                     Nhân viên
                                                                 </SelectItem>
