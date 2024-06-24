@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
+import { Toaster } from './components/ui/toast.tsx';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -21,6 +22,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <App />
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    classNames: {
+                        error: 'text-destructive',
+                        success: 'text-green-600'
+                    }
+                }}
+            />
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     </React.StrictMode>

@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-query';
+import {
+    UseQueryResult,
+    keepPreviousData,
+    useQuery
+} from '@tanstack/react-query';
 import { IUser } from '../../lib/interfaces/user-types/IUser';
 import { IUserService } from '../../lib/interfaces/user-types/IUserService';
 import { getUsers } from '../users';
@@ -13,5 +17,6 @@ export const userService: IUserService = {
             },
             staleTime: 20000,
             placeholderData: keepPreviousData
-        })
+        }),
+
 };
