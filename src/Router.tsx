@@ -1,8 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './app/pages/errors/error-page';
 import Layout from './app/pages/layout';
-import routerMeta from './lib/routerMeta';
 import LoginPage from './app/pages/login/login';
+import routerMeta from './lib/routerMeta';
 
 const routes = Object.values(routerMeta).map((route) => ({
     path: route.path,

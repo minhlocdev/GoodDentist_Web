@@ -1,8 +1,9 @@
-import loginImage from '../../../assets/img/background_img_login.png';
-import logo from '../../../assets/img/logo.svg';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import loginImage from '../../../assets/img/background_img_login.png';
+import logo from '../../../assets/img/logo.svg';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../../../components/ui/button';
 import {
     Form,
@@ -13,11 +14,10 @@ import {
     FormMessage
 } from '../../../components/ui/form';
 import { Input } from '../../../components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const loginSchema = z.object({
-    username: z.string().min(1,('Please input username.')),
-    password: z.string().min(1,('Please input password.'))
+    username: z.string().min(1, 'Please input username.'),
+    password: z.string().min(1, 'Please input password.')
 });
 
 interface LoginFormProps {
@@ -38,7 +38,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Username</FormLabel>
-                            <FormControl className='border border-gray-500'>
+                            <FormControl className="border border-gray-500">
                                 <Input placeholder="Your username" {...field} />
                             </FormControl>
                             <FormMessage />
@@ -51,7 +51,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Password</FormLabel>
-                            <FormControl className='border border-gray-500'>
+                            <FormControl className="border border-gray-500">
                                 <Input type="password" placeholder="Your password" {...field} />
                             </FormControl>
                             <FormMessage />
@@ -59,12 +59,10 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
                     )}
                 />
                 <div className="mt-6 text-right">
-                <a
-                        href="#"
-                    >
-                        Forgot Password?
-                    </a>
-                    <Button className='w-full mt-4' type="submit">Sign In</Button>
+                    <a href="#">Forgot Password?</a>
+                    <Button className="mt-4 w-full" type="submit">
+                        Sign In
+                    </Button>
                 </div>
             </form>
         </Form>
@@ -92,26 +90,23 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="w-full flex items-center justify-center min-h-screen"
-        style={{
-            backgroundImage: 'linear-gradient(to bottom left, #fff, #E3D9F9)',
-        }}>
-        <div className="w-1/2 p-8 h-full">
-            <div className='w-3/5 mx-auto shadow-lg bg-white rounded-lg p-8 h-max'>
-                <img className='mx-auto mb-4' src={logo} alt="Logo" />
-                <LoginForm onSubmit={handleLoginSubmit} />
+        <div
+            className="flex min-h-screen w-full items-center justify-center"
+            style={{
+                backgroundImage: 'linear-gradient(to bottom left, #fff, #E3D9F9)'
+            }}
+        >
+            <div className="h-full w-1/2 p-8">
+                <div className="mx-auto h-max w-3/5 rounded-lg bg-white p-8 shadow-lg">
+                    <img className="mx-auto mb-4" src={logo} alt="Logo" />
+                    <LoginForm onSubmit={handleLoginSubmit} />
+                </div>
+            </div>
+            <div className="hidden h-full w-1/2 lg:block">
+                <img src={loginImage} alt="Login" className="h-full w-4/5 object-cover" />
             </div>
         </div>
-        <div className="w-1/2 h-full hidden lg:block">
-            <img
-                src={loginImage}
-                alt="Login"
-                className="object-cover w-4/5 h-full"
-            />
-        </div>
-    </div>
     );
 };
-
 
 export default LoginPage;

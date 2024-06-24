@@ -25,7 +25,7 @@ const AppointmentPage = () => {
         // </AppointmentLayout>
 
         <AppointmentLayout title="Danh sách lịch hẹn">
-            <div className="flex flex-col relative">
+            <div className="relative flex flex-col">
                 <div className="flex items-center justify-between bg-white p-4">
                     <div className="flex space-x-2">
                         <Button variant="outline">Ngày</Button>
