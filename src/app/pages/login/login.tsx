@@ -4,7 +4,8 @@ import loginImage from '../../../assets/img/background_img_login.png';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoaderCircle, PanelsTopLeft } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Button } from '../../../components/ui/button';
 import {
@@ -16,10 +17,10 @@ import {
     FormMessage
 } from '../../../components/ui/form';
 import { Input } from '../../../components/ui/input';
+import { useAuth } from '../../../hooks/use-auth';
 import { ACCESS_TOKEN_KEY } from '../../../lib/token';
 import { cn } from '../../../lib/utils';
-import { postLogin } from '../../../services/users';
-import { useNavigate } from 'react-router-dom';
+import { userService } from '../../../services/queries/userQuery';
 
 const loginSchema = z.object({
     username: z.string().min(1, 'Please input username.'),
@@ -42,7 +43,7 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="h-full w-full">
+            <form onSubmit={form.handleSubmit(onSubmit)}>
                 <FormField
                     control={form.control}
                     name="username"
@@ -81,27 +82,32 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
 };
 
 const LoginPage = () => {
+    const { accessToken, setAccessToken } = useAuth();
     const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        sessionStorage.removeItem(ACCESS_TOKEN_KEY)
+    }, [accessToken, navigate]);
+    
     const handleLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
-        console.log('Login submitted:', values);
         setLoading(true);
-        await postLogin(values)
+        await userService
+            .PostLoginUser(values)
             .then((res) => {
                 if (res.status !== 200 || res?.data.isSuccess === false) {
                     toast.error('Đăng nhập thất bại');
-                    throw new Error('Login failed');
                 }
                 if (res?.data !== null && res?.data.isSuccess === true) {
                     //TODO
                     toast.success('Đăng nhập thành công');
                     sessionStorage.setItem(ACCESS_TOKEN_KEY, res?.data?.accessToken as string);
-                    navigate('/')
+                    setAccessToken(res?.data?.accessToken as string);
+                    navigate('/');
                 }
             })
-            .catch((error) => {
+            .catch(() => {
                 toast.error('Đăng nhập thất bại');
-                console.error('Error during login:', error);
             })
             .finally((): void => {
                 setLoading(false);
@@ -115,8 +121,8 @@ const LoginPage = () => {
                 backgroundImage: 'linear-gradient(to bottom left, #fff, #E3D9F9)'
             }}
         >
-            <div className="h-full w-1/2 p-8">
-                <div className="mx-auto w-3/5 rounded-lg bg-white p-8 shadow-lg">
+            <div className="h-full w-full md:w-1/2 p-8">
+                <div className="mx-auto rounded-lg bg-white p-8 shadow-lg">
                     <div className="m-3 flex w-full items-center justify-center">
                         <Button
                             className={cn('mb-1 transition-transform duration-300 ease-in-out')}
@@ -124,10 +130,10 @@ const LoginPage = () => {
                             asChild
                         >
                             <a>
-                                <PanelsTopLeft className="mr-1 h-12 w-12" />
+                                <PanelsTopLeft className="mr-1 h-6 w-6 md:h-12 md:w-12" />
                                 <h1
                                     className={cn(
-                                        'whitespace-nowrap text-3xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out'
+                                        'whitespace-nowrap text-xl md:text-3xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out'
                                     )}
                                 >
                                     Good Dentist
