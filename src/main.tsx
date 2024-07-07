@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { Toaster } from './components/ui/toast.tsx';
 import './index.css';
+import AuthProvider from './providers/AuthProvider.tsx';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -21,7 +22,10 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-            <App />
+            <AuthProvider>
+                <App />
+            </AuthProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
             <Toaster
                 position="top-right"
                 toastOptions={{
@@ -31,7 +35,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     }
                 }}
             />
-            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     </React.StrictMode>
 );

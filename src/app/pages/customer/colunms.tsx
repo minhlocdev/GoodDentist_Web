@@ -19,7 +19,7 @@ export const columns: ColumnDef<ICustomer>[] = [
         header: 'Mã hồ sơ'
     },
     {
-        accessorKey: 'user_name',
+        accessorKey: 'name',
         header: ({ column }) => {
             return (
                 <Button
@@ -27,6 +27,21 @@ export const columns: ColumnDef<ICustomer>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                 >
                     Họ tên
+                    <CaretSortIcon className="h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue('name')}</div>
+    },
+    {
+        accessorKey: 'userName',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    Tài khoản
                     <CaretSortIcon className="h-4 w-4" />
                 </Button>
             );
@@ -59,8 +74,8 @@ export const columns: ColumnDef<ICustomer>[] = [
     },
     {
         header: 'Số điện thoại',
-        accessorKey: 'phone_number',
-        cell: ({ row }) => <div className="capitalize">{row.getValue('phone_number')}</div>
+        accessorKey: 'phoneNumber',
+        cell: ({ row }) => <div className="capitalize">{row.getValue('phoneNumber')}</div>
     },
     {
         header: 'Địa chỉ',

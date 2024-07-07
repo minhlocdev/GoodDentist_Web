@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { BASE_URL } from '../lib/api';
-import token, { ACCESS_TOKEN_KEY } from '../lib/token';
+import { ACCESS_TOKEN_KEY } from '../lib/token';
 
 const apiClient = axios.create({
     baseURL: BASE_URL
@@ -13,9 +13,8 @@ const logOnDev = (message: string, log: string) => {
 };
 
 apiClient.interceptors.request.use((request) => {
-    const jwtToken = token.getToken(ACCESS_TOKEN_KEY);
+    const jwtToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
     const { method, url } = request;
-
     if (jwtToken) {
         request.headers.Authorization = `Bearer ${jwtToken}`;
     }

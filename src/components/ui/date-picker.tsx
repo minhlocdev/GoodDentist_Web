@@ -28,7 +28,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
                 <Button
                     variant={'outline'}
                     className={cn(
-                        'w-[240px] justify-start text-left font-normal',
+                        'w-full justify-start text-left font-normal',
                         !date && 'text-muted-foreground'
                     )}
                 >

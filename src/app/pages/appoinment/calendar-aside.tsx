@@ -51,7 +51,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                 </div>
                             </div>
                         </div>
-                        <ScrollArea className=" z-0 h-[calc(100vh-156px)] overflow-y-auto">
+                        <ScrollArea className=" z-0 h-[calc(100vh-200px)] overflow-y-auto">
                             <div className="flex flex-col gap-y-1">
                                 <MemoizedCollapseInfo />
                                 <MemoizedCollapseAppointment />
@@ -63,15 +63,19 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                     </div>
                 </div>
             )}
-            {mode === 'pending' && (
-                <div className="h-[calc(100vh-56px)] w-screen bg-white p-3 md:w-[300px]">
+            {mode === 'pending' && calendar?.selectedEvent === null && (
+                <div className="h-[calc(100vh-90px)] w-screen bg-white p-3 md:h-[calc(100vh-56px)] md:w-[300px]">
                     <Tabs defaultValue="reschedule">
                         <TabsList className="flex w-full items-center justify-center">
                             <TabsTrigger value="reschedule">Lịch hẹn lại</TabsTrigger>
                         </TabsList>
 
                         <TabsContent value="reschedule" className="flex flex-col gap-y-6">
-                            <p className="text-center">Không có lịch</p>
+                            <ScrollArea className=" z-0 h-[calc(100vh-140px)] overflow-y-auto">
+                                <div className="flex flex-col gap-y-1">
+                                    <p className="text-center">Không có lịch</p>
+                                </div>
+                            </ScrollArea>
                         </TabsContent>
                     </Tabs>
                 </div>

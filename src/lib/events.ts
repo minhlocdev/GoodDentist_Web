@@ -28,6 +28,11 @@ export const RESOURCES = [
         id: 4,
         name: 'Dr Smith',
         photo: 'https://plus.unsplash.com/premium_photo-1683134635410-7409eb4f6d44?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    },
+    {
+        id: 5,
+        name: 'Dr Nam',
+        photo: 'https://images.unsplash.com/photo-1614910268017-4fb9a8bfb0b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8M3x8fGVufDB8fHx8fA%3D%3D'
     }
 ];
 

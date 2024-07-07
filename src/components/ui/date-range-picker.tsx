@@ -28,7 +28,6 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
         'Tháng trước'
     ];
 
-    console.log('date ', date);
     return (
         <div className={cn('grid gap-2', className)}>
             <Popover>

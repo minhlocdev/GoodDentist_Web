@@ -1,12 +1,15 @@
-import AppointmentPage from '../app/pages/appoinment/appointment';
-import PendingAppointment from '../app/pages/appoinment/pending-appointment';
-import ClinicChain from '../app/pages/clinic-chain/clinic-chain';
-import CustomerPage from '../app/pages/customer/customer';
-import DashboardPage from '../app/pages/dashboard/dashboard';
-import ErrorPage from '../app/pages/errors/error-page';
-import MedicincePage from '../app/pages/medicine/medicine';
-import ServicePage from '../app/pages/service/service';
-import StaffPage from '../app/pages/staff/staff';
+/* eslint-disable react-refresh/only-export-components */
+import { lazy } from 'react';
+
+const AppointmentPage = lazy(() => import('../app/pages/appoinment/appointment'));
+const PendingAppointment = lazy(() => import('../app/pages/appoinment/pending-appointment'));
+const ClinicChain = lazy(() => import('../app/pages/clinic-chain/clinic-chain'));
+const CustomerPage = lazy(() => import('../app/pages/customer/customer'));
+const DashboardPage = lazy(() => import('../app/pages/dashboard/dashboard'));
+const ErrorPage = lazy(() => import('../app/pages/errors/error-page'));
+const MedicincePage = lazy(() => import('../app/pages/medicine/medicine'));
+const ServicePage = lazy(() => import('../app/pages/service/service'));
+const StaffPage = lazy(() => import('../app/pages/staff/staff'));
 
 export interface IRouterMeta {
     name?: string;
@@ -15,7 +18,7 @@ export interface IRouterMeta {
     isCommon?: boolean;
     isAuth?: boolean;
 }
-
+//TODO
 export type RouterMetaType = Record<string, IRouterMeta>;
 
 const routerMeta: RouterMetaType = {

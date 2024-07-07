@@ -1,2 +1,9 @@
-// export const BASE_URL = 'https://66763d32a8d2b4d072f2c846.mockapi.io';
-export const BASE_URL = 'https://gooddentist.azurewebsites.net/';
+export const BASE_URL = 'https://localhost:7078/';
+// export const BASE_URL = 'https://gooddentist.azurewebsites.net/';
+
+export interface ApiResponse<T> {
+    message: string;
+    statusCode: number;
+    isSuccess: boolean;
+    result: T;
+}

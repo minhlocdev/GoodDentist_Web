@@ -81,6 +81,10 @@ const AppointmentCalendar = () => {
                     timeslots={1}
                     formats={formats as Formats}
                     onSelectEvent={(e) => calendar.setEvent(e)}
+                    onSelectSlot={(slotInfo) => {
+                        console.log(slotInfo);
+                    }}
+                    selectable
                 />
             </div>
         </div>

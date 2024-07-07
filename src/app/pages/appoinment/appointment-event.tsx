@@ -84,7 +84,7 @@ const AppointmentEvent = ({
                     </div>
                 </TooltipTrigger>
                 <TooltipContent side="top">
-                    <div className="z-10 flex w-fit flex-col gap-y-2">
+                    <div className="z-10 flex w-fit max-w-32 flex-col gap-y-2">
                         <p>{resource}</p>
                         <p>{location}</p>
                         <p>{address}</p>

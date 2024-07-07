@@ -87,9 +87,9 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        sessionStorage.removeItem(ACCESS_TOKEN_KEY)
+        sessionStorage.removeItem(ACCESS_TOKEN_KEY);
     }, [accessToken, navigate]);
-    
+
     const handleLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
         setLoading(true);
         await userService
@@ -121,7 +121,7 @@ const LoginPage = () => {
                 backgroundImage: 'linear-gradient(to bottom left, #fff, #E3D9F9)'
             }}
         >
-            <div className="h-full w-full md:w-1/2 p-8">
+            <div className="h-full w-full p-8 md:w-1/3">
                 <div className="mx-auto rounded-lg bg-white p-8 shadow-lg">
                     <div className="m-3 flex w-full items-center justify-center">
                         <Button
@@ -133,7 +133,7 @@ const LoginPage = () => {
                                 <PanelsTopLeft className="mr-1 h-6 w-6 md:h-12 md:w-12" />
                                 <h1
                                     className={cn(
-                                        'whitespace-nowrap text-xl md:text-3xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out'
+                                        'whitespace-nowrap text-xl font-bold transition-[transform,opacity,display] duration-300 ease-in-out md:text-3xl'
                                     )}
                                 >
                                     Good Dentist

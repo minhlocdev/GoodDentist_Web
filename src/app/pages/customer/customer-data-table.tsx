@@ -50,7 +50,6 @@ import { userService } from '../../../services/queries/userQuery';
 import { columns } from './colunms';
 
 export function CustomerDataTable() {
-    const { data: users, error, isLoading }: UseQueryResult<IUser[]> = userService.GetUsers();
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -61,6 +60,7 @@ export function CustomerDataTable() {
         pageSize: 10
     });
 
+    const { data: users, error, isLoading }: UseQueryResult<IUser[]> = userService.GetUsers(pagination.pageIndex + 1, pagination.pageSize);
     const defaultData = React.useMemo(() => [], []);
 
     const table = useReactTable({

@@ -11,8 +11,10 @@ import {
     DropdownMenuTrigger
 } from '../ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { useNavigate } from 'react-router-dom';
 
 export function UserNav() {
+    const navigate = useNavigate();
     return (
         <DropdownMenu>
             <TooltipProvider disableHoverableContent>
@@ -56,9 +58,9 @@ export function UserNav() {
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="hover:cursor-pointer">
-                    <LogOut className="mr-3 h-4 w-4 text-muted-foreground" />
-                    Sign out
+                <DropdownMenuItem className="hover:cursor-pointer" onClick={()=>navigate("/login")}>
+                        <LogOut className="mr-3 h-4 w-4 text-muted-foreground" />
+                        Sign out
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
