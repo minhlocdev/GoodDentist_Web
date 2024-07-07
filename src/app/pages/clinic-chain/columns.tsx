@@ -1,13 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { IClinic } from '../../../lib/interfaces/IClinic';
+import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
 
 export const columns: ColumnDef<IClinic>[] = [
     {
-        accessorKey: 'clinic_id',
-        header: 'Mã phòng khám'
-    },
-    {
-        accessorKey: 'clinic_name',
+        accessorKey: 'clinicName',
         header: 'Tên phòng khám'
     },
     {
@@ -15,7 +11,7 @@ export const columns: ColumnDef<IClinic>[] = [
         header: 'Địa chỉ'
     },
     {
-        accessorKey: 'phone_number',
+        accessorKey: 'phoneNumber',
         header: 'Số điện thoại'
     },
     {

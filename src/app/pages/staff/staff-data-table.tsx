@@ -2,8 +2,8 @@
 
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import {
-    ColumnDef,
     ColumnFiltersState,
+    PaginationState,
     SortingState,
     VisibilityState,
     flexRender,
@@ -15,6 +15,7 @@ import {
 } from '@tanstack/react-table';
 import * as React from 'react';
 
+import { UseQueryResult } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/button';
 import {
     DropdownMenu,
@@ -38,22 +39,36 @@ import {
     TableHeader,
     TableRow
 } from '../../../components/ui/table';
+import { IUser } from '../../../lib/interfaces/user-types/IUser';
+import { userService } from '../../../services/queries/userQuery';
+import { columns } from './columns';
 import { NewStaffModal } from './new-staff-modal';
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
-}
-
-export function StaffDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function StaffDataTable() {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = React.useState({});
+    const [pagination, setPagination] = React.useState<PaginationState>({
+        pageIndex: 0,
+        pageSize: 10
+    });
+    const {
+        data: users,
+        error,
+        isLoading
+    }: UseQueryResult<IUser[]> = userService.GetUsers(
+        pagination.pageIndex + 1,
+        pagination.pageSize,
+    );
+
+    const { data: total } = userService.GetTotalUser();
+    const defaultData = React.useMemo(() => [], []);
 
     const table = useReactTable({
-        data,
+        data: users ?? defaultData,
         columns,
+        rowCount: total ?? 1,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
@@ -62,24 +77,29 @@ export function StaffDataTable<TData, TValue>({ columns, data }: DataTableProps<
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
+        onPaginationChange: setPagination,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
-            rowSelection
+            rowSelection,
+            pagination
         }
     });
+
+    if (isLoading) return <div className="text-center">Loading</div>;
+    if (error) return <div className="text-center">Error loading users</div>;
 
     return (
         <div className="w-full">
             <div className="flex items-center gap-x-3 py-4">
                 <Input
-                    placeholder="Tìm theo email, số điện..."
+                    placeholder="Tìm theo email, số điện thoại, địa chỉ, v.v."
                     value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
                     onChange={(event) =>
                         table.getColumn('email')?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm"
+                    className="max-w-lg"
                 />
                 <Select>
                     <SelectTrigger className="w-[150px] p-2 md:w-fit">
@@ -185,6 +205,23 @@ export function StaffDataTable<TData, TValue>({ columns, data }: DataTableProps<
                         Next
                     </Button>
                 </div>
+                <Select
+                    value={table.getState().pagination.pageSize.toString()}
+                    onValueChange={(value: string) => {
+                        table.setPageSize(Number.parseInt(value) ?? 5);
+                    }}
+                >
+                    <SelectTrigger className="w-[100px]">
+                        <SelectValue placeholder="hàng" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {[10, 20, 30, 40, 50].map((pageSize) => (
+                            <SelectItem key={pageSize} value={pageSize.toString()}>
+                                {pageSize} hàng
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </div>
         </div>
     );

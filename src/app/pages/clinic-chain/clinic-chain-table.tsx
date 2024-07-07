@@ -1,6 +1,5 @@
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
-import { clinics } from '../../../lib/interfaces/IClinic';
 import { columns } from './columns';
 
 import { Button } from '../../../components/ui/button';
@@ -12,12 +11,15 @@ import {
     TableHeader,
     TableRow
 } from '../../../components/ui/table';
+import { clinicService } from '../../../services/queries/clinicQuery';
 const ClinicChainTable = () => {
+    const {data} = clinicService.GetClinics();
+
     const [rowSelection, setRowSelection] = React.useState({});
 
     const defaultData = React.useMemo(() => [], []);
     const table = useReactTable({
-        data: clinics ?? defaultData,
+        data: data ?? defaultData,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
         onRowSelectionChange: setRowSelection,
