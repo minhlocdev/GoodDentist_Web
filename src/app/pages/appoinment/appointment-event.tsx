@@ -43,7 +43,7 @@ const AppointmentEvent = ({
                     >
                         <div
                             className={cn(
-                                'p-1d flex h-[100%] w-[100%] items-start justify-between',
+                                'p-1 flex h-[100%] w-[100%] items-start justify-between',
                                 selectedEvent?.data?.appointment?.id === appointment.id
                                     ? 'border border-primary'
                                     : ''

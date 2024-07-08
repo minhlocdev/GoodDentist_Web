@@ -49,11 +49,11 @@ export const EVENT_STATUS_COLORS = {
 export const EVENTS: EventItem[] = [
     {
         start: addHours(
-            startOfHour(parse('2024-06-21T10:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
+            startOfHour(parse('2024-07-14T10:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
             0
         ),
         end: addHours(
-            startOfHour(parse('2024-06-21T11:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
+            startOfHour(parse('2024-07-14T11:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
             1
         ),
         data: {
@@ -69,11 +69,11 @@ export const EVENTS: EventItem[] = [
     },
     {
         start: addHours(
-            startOfHour(parse('2024-06-21T12:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
+            startOfHour(parse('2024-07-08T12:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
             0
         ),
         end: addHours(
-            startOfHour(parse('2024-06-21T13:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
+            startOfHour(parse('2024-07-08T13:00:00', "yyyy-MM-dd'T'HH:mm:ss", new Date())),
             1
         ),
         data: {
@@ -86,5 +86,5 @@ export const EVENTS: EventItem[] = [
             }
         },
         resourceId: 2
-    }
+    },
 ];
