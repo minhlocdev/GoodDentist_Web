@@ -1,12 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 import { Button } from '../../../components/ui/button';
 import { DialogClose, DialogFooter } from '../../../components/ui/dialog';
 import { ScrollArea } from '../../../components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/tab';
 import { StaffFormSchema } from '../../../lib/form-schema';
+import { IPostUser } from '../../../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../../../lib/interfaces/user-types/IUser';
+import { userService } from '../../../services/queries/userQuery';
 import AccountInfoForm from './account-form';
 import BasicInfoForm from './info-form';
 
@@ -15,20 +19,22 @@ interface StaffFormProps {
 }
 
 export const StaffForm = ({ staff }: StaffFormProps) => {
+    const postUser = userService.PostUser();
     const form = useForm<z.infer<typeof StaffFormSchema>>({
         resolver: zodResolver(StaffFormSchema),
         defaultValues: staff
             ? {
-                  username: staff.userName,
-                  avatar: staff.avatar ?? "",
+                  userName: staff.userName,
+                  avatar: staff.avatar ?? '',
                   name: staff.name,
                   dob: staff.dob,
-                  phone: staff.phoneNumber,
+                  phoneNumber: staff.phoneNumber,
                   email: staff.email,
                   address: staff.address,
                   password: staff.password,
                   gender: staff.gender,
-                  role: staff.roleId,
+                  roleId: staff.roleId,
+                  status: true
               }
             : undefined,
         shouldFocusError: true,
@@ -38,9 +44,32 @@ export const StaffForm = ({ staff }: StaffFormProps) => {
 
     async function onSubmit(values: z.infer<typeof StaffFormSchema>) {
         try {
-            console.log(values);
-            const result = await Promise.resolve('value');
-            console.log('Form submitted successfully:', result);
+            const newUser: IPostUser = {
+                userName: values.userName,
+                name: values.name,
+                dob: values.dob,
+                phoneNumber: values.phoneNumber,
+                email: values.email,
+                gender: values.gender,
+                address: values.address,
+                roleId: values.roleId,
+                password: values.password,
+                clinicId: values.clinicId,
+                status: values.status,
+                avatar: values.avatar
+            };
+            await postUser.mutateAsync(newUser, {
+                onSuccess: () => {
+                    toast.success('Tạo mới thành công');
+                },
+                onError: (error) => {
+                    if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {
+                        toast.error(error.response.data.message[0] as React.ReactNode);
+                    } else {
+                        toast.error('Tạo mới thất bại');
+                    }
+                }
+            });
         } catch (error) {
             console.error(error);
         }
@@ -66,7 +95,7 @@ export const StaffForm = ({ staff }: StaffFormProps) => {
                 </ScrollArea>
                 <DialogFooter className="flex flex-row justify-between border-t border-neutral-300 p-5">
                     <Button type="submit" className="flex-1">
-                        Thêm mới
+                        {staff ? 'Cập nhật' : 'Thêm mới'}
                     </Button>
                     <DialogClose className="flex-1">
                         <Button variant={'secondary'} className="w-full hover:bg-neutral-200">

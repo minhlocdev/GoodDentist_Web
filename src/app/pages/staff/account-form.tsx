@@ -16,7 +16,7 @@ const AccountInfoForm = () => {
         <>
             <FormField
                 control={control}
-                name="username"
+                name="userName"
                 render={({ field }) => (
                     <FormItem>
                         <FormLabel>

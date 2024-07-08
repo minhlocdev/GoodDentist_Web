@@ -2,6 +2,7 @@ import { CaretSortIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { Button } from '../../../components/ui/button';
+import { Checkbox } from '../../../components/ui/checkbox';
 import {
     Tooltip,
     TooltipContent,
@@ -12,6 +13,19 @@ import { IUser } from '../../../lib/interfaces/user-types/IUser';
 import { NewStaffModal } from './new-staff-modal';
 
 export const columns: ColumnDef<IUser>[] = [
+    {
+        accessorKey: 'status',
+        header: () => <div className="w-full text-center">Đang làm việc</div>,
+        cell: ({ row }) => (
+            <div className="w-full text-center">
+                <Checkbox
+                    checked={row.getValue('status')}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            </div>
+        )
+    },
     {
         accessorKey: 'name',
         header: ({ column }) => {
@@ -64,7 +78,15 @@ export const columns: ColumnDef<IUser>[] = [
     {
         header: 'Vai trò',
         accessorKey: 'roleId',
-        cell: ({ row }) => <div>{row.getValue('roleId') === 2 ? 'Admin' : 'Nhân viên'}</div>
+        cell: ({ row }) => (
+            <div>
+                {row.getValue('roleId') === 1
+                    ? 'Admin'
+                    : row.getValue('roleId') === 2
+                      ? 'Bác sỹ'
+                      : 'Nhân viên'}
+            </div>
+        )
     },
     {
         header: 'Giới tính',
@@ -80,11 +102,6 @@ export const columns: ColumnDef<IUser>[] = [
         header: 'Địa chỉ',
         accessorKey: 'address',
         cell: ({ row }) => <div className="capitalize">{row.getValue('address')}</div>
-    },
-    {
-        accessorKey: 'status',
-        header: 'Tình trạng',
-        cell: ({ row }) => <div>{row.getValue('status') ? 'Đang làm việc' : 'Đã nghỉ'}</div>
     },
     {
         id: 'actions',

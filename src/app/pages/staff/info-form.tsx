@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { LoaderCircle } from 'lucide-react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { DatePicker } from '../../../components/ui/date-picker';
 import { FormControl, FormItem, FormLabel, FormMessage } from '../../../components/ui/form';
@@ -13,11 +14,9 @@ import {
 } from '../../../components/ui/select';
 import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
 import { clinicService } from '../../../services/queries/clinicQuery';
-import { LoaderCircle } from 'lucide-react';
 
 const BasicInfoForm = () => {
     const { data: clinics, isLoading } = clinicService.GetClinics();
-    console.log(clinics);
     const {
         control,
         setValue,
@@ -146,7 +145,7 @@ const BasicInfoForm = () => {
                 />
                 <Controller
                     control={control}
-                    name="phone"
+                    name="phoneNumber"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Số điện thoại</FormLabel>
@@ -154,7 +153,9 @@ const BasicInfoForm = () => {
                                 <Input placeholder="0123456789" {...field} />
                             </FormControl>
                             <FormMessage>
-                                {errors.phone && <p>{errors.phone.message?.toString()}</p>}
+                                {errors.phoneNumber && (
+                                    <p>{errors.phoneNumber.message?.toString()}</p>
+                                )}
                             </FormMessage>
                         </FormItem>
                     )}
@@ -164,7 +165,7 @@ const BasicInfoForm = () => {
                 <div className="flex flex-row justify-between">
                     <Controller
                         control={control}
-                        name="role"
+                        name="roleId"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Vai trò</FormLabel>
@@ -183,7 +184,7 @@ const BasicInfoForm = () => {
                                     </Select>
                                 </FormControl>
                                 <FormMessage>
-                                    {errors.role && <p>{errors.role.message?.toString()}</p>}
+                                    {errors.roleId && <p>{errors.roleId.message?.toString()}</p>}
                                 </FormMessage>
                             </FormItem>
                         )}
@@ -213,13 +214,43 @@ const BasicInfoForm = () => {
                                                     </SelectItem>
                                                 ))
                                             ) : (
-                                                <div className='flex justify-center p-2'><LoaderCircle className="animate-spin" /></div>
+                                                <div className="flex justify-center p-2">
+                                                    <LoaderCircle className="animate-spin" />
+                                                </div>
                                             )}
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
                                 <FormMessage>
-                                    {errors.role && <p>{errors.role.message?.toString()}</p>}
+                                    {errors.clinicId && (
+                                        <p>{errors.clinicId.message?.toString()}</p>
+                                    )}
+                                </FormMessage>
+                            </FormItem>
+                        )}
+                    />
+                    <Controller
+                        control={control}
+                        name="status"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Trạng thái</FormLabel>
+                                <FormControl>
+                                    <Select
+                                        onValueChange={(value) => field.onChange(value === 'true')}
+                                        value={field.value ? 'true' : 'false'}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Chọn trạng thái" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value={'true'}>Đang làm việc</SelectItem>
+                                            <SelectItem value={'false'}>Đã nghỉ</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage>
+                                    {errors.status && <p>{errors.status.message?.toString()}</p>}
                                 </FormMessage>
                             </FormItem>
                         )}

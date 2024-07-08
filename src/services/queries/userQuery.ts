@@ -1,8 +1,10 @@
-import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-query';
+import { UseMutationResult, UseQueryResult, keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { ILoginUser } from '../../lib/interfaces/user-types/ILoginUser';
 import { IUser } from '../../lib/interfaces/user-types/IUser';
 import { IUserService } from '../../lib/interfaces/user-types/IUserService';
-import { getLoginUser, getTotalUser, getUsers, postLogin } from '../users';
+import { getLoginUser, getTotalUser, getUsers, postLogin, postUser } from '../users';
+import { IPostUser } from '../../lib/interfaces/user-types/IPostUser';
+import { ApiResponse } from '../../lib/api';
 
 export const userService: IUserService = {
     GetUsers: (
@@ -56,5 +58,13 @@ export const userService: IUserService = {
                 return await getLoginUser().then((res) => res.data.result);
             },
             staleTime: 20000
-        })
+        }),
+    
+        PostUser: () : UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser> =>
+            useMutation<ApiResponse<IPostUser>, Error, IPostUser>({
+                mutationFn: async (user:IPostUser): Promise<ApiResponse<IPostUser>> => {
+                    const response = await postUser(user);
+                    return response.data;
+                }
+            })
 };

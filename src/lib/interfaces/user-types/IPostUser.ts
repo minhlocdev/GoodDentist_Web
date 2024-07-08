@@ -1,5 +1,4 @@
-export interface IUser {
-    id: number;
+export interface IPostUser {
     name: string
     userName: string;
     password?: string;
@@ -11,10 +10,5 @@ export interface IUser {
     status?: boolean;
     roleId?: number;
     avatar?: string | File;
-    clinicId?: string;
+    clinicId: string;
 }
-const users: IUser[] = [
-    
-];
-
-export default users;
