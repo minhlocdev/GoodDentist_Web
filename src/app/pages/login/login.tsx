@@ -51,7 +51,7 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
                         <FormItem>
                             <FormLabel>Tài khoản</FormLabel>
                             <FormControl className="border border-gray-500">
-                                <Input placeholder="Your username" {...field} />
+                                <Input placeholder="Your username" {...field} disabled={isLoading}/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -64,7 +64,7 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
                         <FormItem>
                             <FormLabel>Mật khẩu</FormLabel>
                             <FormControl className="border border-gray-500">
-                                <Input type="password" placeholder="Your password" {...field} />
+                                <Input type="password" placeholder="Your password" {...field} disabled={isLoading}/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>

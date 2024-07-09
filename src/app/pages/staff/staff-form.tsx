@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
+import { LoaderCircle } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -86,16 +87,22 @@ export const StaffForm = ({ staff }: StaffFormProps) => {
                         </TabsList>
 
                         <TabsContent value="basic" className="flex flex-col gap-y-6">
-                            <BasicInfoForm />
+                            <BasicInfoForm isPending={postUser?.isPending}/>
                         </TabsContent>
                         <TabsContent value="account" className="flex flex-col gap-y-6">
-                            <AccountInfoForm />
+                            <AccountInfoForm isPending={postUser?.isPending}/>
                         </TabsContent>
                     </Tabs>
                 </ScrollArea>
                 <DialogFooter className="flex flex-row justify-between border-t border-neutral-300 p-5">
                     <Button type="submit" className="flex-1">
-                        {staff ? 'Cập nhật' : 'Thêm mới'}
+                        {postUser?.isPending ? (
+                            <LoaderCircle className="animate-spin" />
+                        ) : staff ? (
+                            'Cập nhật'
+                        ) : (
+                            'Thêm mới'
+                        )}
                     </Button>
                     <DialogClose className="flex-1">
                         <Button variant={'secondary'} className="w-full hover:bg-neutral-200">

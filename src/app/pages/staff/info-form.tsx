@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { LoaderCircle } from 'lucide-react';
+import { FC } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { DatePicker } from '../../../components/ui/date-picker';
 import { FormControl, FormItem, FormLabel, FormMessage } from '../../../components/ui/form';
@@ -15,7 +16,11 @@ import {
 import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
 import { clinicService } from '../../../services/queries/clinicQuery';
 
-const BasicInfoForm = () => {
+interface BasicInfoProps {
+    isPending?: boolean;
+}
+
+const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
     const { data: clinics, isLoading } = clinicService.GetClinics();
     const {
         control,
@@ -67,6 +72,7 @@ const BasicInfoForm = () => {
                             </FormMessage>
                         </FormItem>
                     )}
+                    disabled={isPending}
                 />
                 <div className="flex flex-auto flex-col gap-y-6">
                     <Controller
@@ -85,6 +91,7 @@ const BasicInfoForm = () => {
                                 </FormMessage>
                             </FormItem>
                         )}
+                        disabled={isPending}
                     />
                     <Controller
                         control={control}
@@ -100,6 +107,7 @@ const BasicInfoForm = () => {
                                 </FormMessage>
                             </FormItem>
                         )}
+                        disabled={isPending}
                     />
                     <Controller
                         control={control}
@@ -124,6 +132,7 @@ const BasicInfoForm = () => {
                                 </FormMessage>
                             </FormItem>
                         )}
+                        disabled={isPending}
                     />
                 </div>
             </div>
@@ -142,6 +151,7 @@ const BasicInfoForm = () => {
                             </FormMessage>
                         </FormItem>
                     )}
+                    disabled={isPending}
                 />
                 <Controller
                     control={control}
@@ -159,6 +169,7 @@ const BasicInfoForm = () => {
                             </FormMessage>
                         </FormItem>
                     )}
+                    disabled={isPending}
                 />
             </div>
             <div className="flex flex-col gap-y-6">
@@ -188,6 +199,7 @@ const BasicInfoForm = () => {
                                 </FormMessage>
                             </FormItem>
                         )}
+                        disabled={isPending}
                     />
                     <Controller
                         control={control}
@@ -228,6 +240,7 @@ const BasicInfoForm = () => {
                                 </FormMessage>
                             </FormItem>
                         )}
+                        disabled={isPending}
                     />
                     <Controller
                         control={control}
@@ -254,6 +267,7 @@ const BasicInfoForm = () => {
                                 </FormMessage>
                             </FormItem>
                         )}
+                        disabled={isPending}
                     />
                 </div>
                 <Controller
@@ -276,6 +290,7 @@ const BasicInfoForm = () => {
                             </FormMessage>
                         </FormItem>
                     )}
+                    disabled={isPending}
                 />
             </div>
         </>

@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
     FormControl,
@@ -9,7 +10,11 @@ import {
 import { Input } from '../../../components/ui/input';
 import { PasswordInput } from '../../../components/ui/local/password-input';
 
-const AccountInfoForm = () => {
+interface AccountInfoProbs {
+    isPending?: boolean;
+}
+
+const AccountInfoForm: FC<AccountInfoProbs> = ({ isPending = false }) => {
     const { control } = useFormContext();
 
     return (
@@ -28,6 +33,7 @@ const AccountInfoForm = () => {
                         <FormMessage />
                     </FormItem>
                 )}
+                disabled={isPending}
             />
             <FormField
                 control={control}
@@ -41,6 +47,7 @@ const AccountInfoForm = () => {
                         <FormMessage />
                     </FormItem>
                 )}
+                disabled={isPending}
             />
             <FormField
                 control={control}
@@ -54,6 +61,7 @@ const AccountInfoForm = () => {
                         <FormMessage />
                     </FormItem>
                 )}
+                disabled={isPending}
             />
         </>
     );
