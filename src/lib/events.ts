@@ -7,7 +7,6 @@ export const VIEW_OPTIONS = [
     { id: Views.WEEK, label: 'Week' },
     { id: Views.MONTH, label: 'Month' }
 ];
-
 export const RESOURCES = [
     {
         id: 1,

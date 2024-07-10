@@ -74,3 +74,27 @@ export const putUserAvatar = async (
         url: '/api/users/new-user'
     });
 };
+
+export const getUsersByClinic = async (
+    clinicId: string,
+    pageNumber: number,
+    rowsPerPage: number,
+    filterField?: string,
+    filterValue?: string,
+    sortField?: string,
+    sortOrder?: string
+): Promise<AxiosResponse<ApiResponse<IUser[]>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/api/users/all-users`,
+        params: {
+            clinicId,
+            pageNumber,
+            rowsPerPage,
+            filterField,
+            filterValue,
+            sortField,
+            sortOrder
+        }
+    });
+};

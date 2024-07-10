@@ -8,6 +8,7 @@ import { EVENTS, RESOURCES } from '../../../lib/events';
 import { EventItem } from '../../../lib/interfaces/IEvent';
 import { cn } from '../../../lib/utils';
 import AppointmentEvent from './appointment-event';
+import AppointmentModal from './appointment-modal';
 import { CustomResource, CustomTimeGutterHeader } from './customize-calendar';
 
 const AppointmentCalendar = () => {
@@ -82,10 +83,12 @@ const AppointmentCalendar = () => {
                     formats={formats as Formats}
                     onSelectEvent={(e) => calendar.setEvent(e)}
                     onSelectSlot={(slotInfo) => {
-                        console.log(slotInfo);
+                        calendar.setSlot(slotInfo);
+                        calendar.setOpenDialog();
                     }}
                     selectable
                 />
+                <AppointmentModal />
             </div>
         </div>
     );

@@ -8,12 +8,14 @@ export const StaffFormSchema = z
         name: z.string().min(2, {
             message: 'Tên là bắt buộc và phải có ít nhất 2 ký tự.'
         }),
-        dob: z.date()
+        dob: z
+            .date()
             .max(new Date(), {
                 message: 'Ngày sinh nằm ngoài phạm vi hợp lý.'
             })
             .optional(),
-        phoneNumber: z.string()
+        phoneNumber: z
+            .string()
             .min(10, {
                 message: 'Số điện thoại là bắt buộc và phải có ít nhất 10 chữ số.'
             })
@@ -30,7 +32,8 @@ export const StaffFormSchema = z
         roleId: z.number().min(0, {
             message: 'Vai trò là bắt buộc.'
         }),
-        password: z.string()
+        password: z
+            .string()
             .min(8, {
                 message: 'Mật khẩu là bắt buộc và phải có ít nhất 8 ký tự.'
             })
@@ -65,6 +68,30 @@ export const StaffFormSchema = z
         status: z.boolean()
     })
     .refine((data) => data.password === data.confirmPassword, {
-        message: "Mật khẩu không khớp",
+        message: 'Mật khẩu không khớp',
         path: ['confirmPassword']
     });
+
+export const AppointmentFormSchema = z.object({
+    customerId: z.string(),
+    phoneNumber: z.string(),
+    dentistId: z.string(),
+    clinicId: z.string(),
+    mode: z.string(),
+    examinationProfileId: z.string().optional(),
+    dayStart: z.date(),
+    timeStart: z.string().time(),
+    duration: z.string(),
+    notes: z.string().optional(),
+    status: z.number()
+});
+
+export const CustomerFormSchema = z.object({
+    customerId: z.string(),
+    dentistId: z.string(),
+    examinationProfileId: z.string(),
+    timeStart: z.date(),
+    timeEnd: z.date(),
+    notes: z.string().optional(),
+    status: z.number()
+});

@@ -38,7 +38,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
                         ', ' +
                         format(date, 'dd-MM-yyyy', { locale: vi })
                     ) : (
-                        <span>Pick a date</span>
+                        <span>Chọn ngày</span>
                     )}
                 </Button>
             </PopoverTrigger>

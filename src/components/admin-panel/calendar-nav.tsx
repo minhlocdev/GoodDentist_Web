@@ -1,5 +1,4 @@
 import { CalendarDays, List } from 'lucide-react';
-import { useStore } from 'zustand';
 import { useCalendarStore } from '../../hooks/use-calendar-store';
 import { cn } from '../../lib/utils';
 import { DatePicker } from '../ui/date-picker';
@@ -7,8 +6,7 @@ import { SheetMenu } from './sheet-menu';
 import { UserNav } from './user-nav';
 
 export function CalendarNavbar() {
-    const calendar = useStore(useCalendarStore, (state) => state);
-
+    const calendar = useCalendarStore();
     if (!calendar) return null;
 
     return (
@@ -62,13 +60,25 @@ export function CalendarNavbar() {
                     <div className="ml-5 inline-flex rounded-md shadow-sm" role="group">
                         <button
                             type="button"
-                            className="rounded-s-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-blue-700 focus:z-10 focus:bg-blue-100 focus:text-blue-700 focus:ring-1 focus:ring-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500"
+                            className={cn(
+                                'rounded-s-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500',
+                                calendar?.mode === 'calendar'
+                                    ? 'z-10 bg-blue-100 text-blue-700 ring-1 ring-blue-400 '
+                                    : ''
+                            )}
+                            onClick={() => calendar?.setMode('calendar')}
                         >
                             <CalendarDays className="h-4 w-4" />
                         </button>
                         <button
                             type="button"
-                            className="rounded-e-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:bg-blue-100 focus:text-blue-700 focus:ring-1 focus:ring-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500"
+                            className={cn(
+                                'rounded-e-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500',
+                                calendar?.mode === 'list'
+                                    ? 'z-10 bg-blue-100 text-blue-700 ring-1 ring-blue-400 '
+                                    : ''
+                            )}
+                            onClick={() => calendar?.setMode('list')}
                         >
                             <List className="h-4 w-4" />
                         </button>
@@ -78,7 +88,8 @@ export function CalendarNavbar() {
                     <UserNav />
                 </div>
             </div>
-            <div className="flex md:hidden justify-center items-center gap-2 p-3 flex-wrap border border-neutral-200">
+            {/* mobile */}
+            <div className="flex flex-wrap items-center justify-center gap-2 border border-neutral-200 p-3 md:hidden">
                 <div>
                     <DatePicker value={calendar?.selectedDate} onChange={calendar?.setDate} />
                 </div>
@@ -123,13 +134,25 @@ export function CalendarNavbar() {
                 <div className="ml-5 inline-flex rounded-md shadow-sm" role="group">
                     <button
                         type="button"
-                        className="rounded-s-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-blue-700 focus:z-10 focus:bg-blue-100 focus:text-blue-700 focus:ring-1 focus:ring-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500"
+                        className={cn(
+                            'rounded-s-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500',
+                            calendar?.mode === 'calendar'
+                                ? 'z-10 bg-blue-100 text-blue-700 ring-1 ring-blue-400 '
+                                : ''
+                        )}
+                        onClick={() => calendar?.setMode('calendar')}
                     >
                         <CalendarDays className="h-4 w-4" />
                     </button>
                     <button
                         type="button"
-                        className="rounded-e-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:bg-blue-100 focus:text-blue-700 focus:ring-1 focus:ring-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500"
+                        className={cn(
+                            'rounded-e-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500',
+                            calendar?.mode === 'list'
+                                ? 'z-10 bg-blue-100 text-blue-700 ring-1 ring-blue-400 '
+                                : ''
+                        )}
+                        onClick={() => calendar?.setMode('list')}
                     >
                         <List className="h-4 w-4" />
                     </button>

@@ -1,10 +1,16 @@
-import { UseMutationResult, UseQueryResult, keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
+import {
+    UseMutationResult,
+    UseQueryResult,
+    keepPreviousData,
+    useMutation,
+    useQuery
+} from '@tanstack/react-query';
+import { ApiResponse } from '../../lib/api';
 import { ILoginUser } from '../../lib/interfaces/user-types/ILoginUser';
+import { IPostUser } from '../../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../../lib/interfaces/user-types/IUser';
 import { IUserService } from '../../lib/interfaces/user-types/IUserService';
-import { getLoginUser, getTotalUser, getUsers, postLogin, postUser } from '../users';
-import { IPostUser } from '../../lib/interfaces/user-types/IPostUser';
-import { ApiResponse } from '../../lib/api';
+import { getLoginUser, getTotalUser, getUsers, getUsersByClinic, postLogin, postUser } from '../users';
 
 export const userService: IUserService = {
     GetUsers: (
@@ -59,12 +65,46 @@ export const userService: IUserService = {
             },
             staleTime: 20000
         }),
-    
-        PostUser: () : UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser> =>
-            useMutation<ApiResponse<IPostUser>, Error, IPostUser>({
-                mutationFn: async (user:IPostUser): Promise<ApiResponse<IPostUser>> => {
-                    const response = await postUser(user);
-                    return response.data;
-                }
-            })
+
+    PostUser: (): UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser> =>
+        useMutation<ApiResponse<IPostUser>, Error, IPostUser>({
+            mutationFn: async (user: IPostUser): Promise<ApiResponse<IPostUser>> => {
+                const response = await postUser(user);
+                return response.data;
+            }
+        }),
+    GetUsersByClinic: (
+        clinicId,
+        pageNumber,
+        rowsPerPage,
+        filterField,
+        filterValue,
+        sortField,
+        sortOrder
+    ): UseQueryResult<IUser[]> =>
+        useQuery<IUser[], Error>({
+            queryKey: [
+                'users-by-clinic',
+                clinicId,
+                pageNumber,
+                rowsPerPage,
+                filterField,
+                filterValue,
+                sortField,
+                sortOrder
+            ],
+            queryFn: async (): Promise<IUser[]> => {
+                return await getUsersByClinic(
+                    clinicId,
+                    pageNumber,
+                    rowsPerPage,
+                    filterField,
+                    filterValue,
+                    sortField,
+                    sortOrder
+                ).then((res) => res.data.result);
+            },
+            staleTime: 20000,
+            placeholderData: keepPreviousData
+        })
 };
