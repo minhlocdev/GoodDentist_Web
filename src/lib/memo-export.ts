@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import CollapseAppointment from '../app/pages/appoinment/collapsible-appoinment';
+import CollapseAppointment from '../app/pages/appoinment/collapsible-appointment';
 import CollapseInfo from '../app/pages/appoinment/collapsible-info';
 import CollapsePayment from '../app/pages/appoinment/collapsible-payment';
 import CollapseTreatment from '../app/pages/appoinment/collapsible-treatment';
