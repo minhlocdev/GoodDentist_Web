@@ -11,16 +11,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui
 import { StaffFormSchema } from '../../../lib/form-schema';
 import { IPostUser } from '../../../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../../../lib/interfaces/user-types/IUser';
+import { extractLastDistrictAndProvince } from '../../../lib/params-util';
+import { queryClient } from '../../../lib/queryClient';
 import { userService } from '../../../services/queries/userQuery';
 import AccountInfoForm from './account-form';
 import BasicInfoForm from './info-form';
 
 interface StaffFormProps {
     staff?: IUser;
+    onCloseModal: () => void;
 }
 
-export const StaffForm = ({ staff }: StaffFormProps) => {
+export const StaffForm = ({ staff, onCloseModal }: StaffFormProps) => {
     const postUser = userService.PostUser();
+    const { address, district, province } = extractLastDistrictAndProvince(staff?.address ?? '');
+    console.log( address, district, province)
     const form = useForm<z.infer<typeof StaffFormSchema>>({
         resolver: zodResolver(StaffFormSchema),
         defaultValues: staff
@@ -31,10 +36,13 @@ export const StaffForm = ({ staff }: StaffFormProps) => {
                   dob: staff.dob,
                   phoneNumber: staff.phoneNumber,
                   email: staff.email,
-                  address: staff.address,
+                  province: province,
+                  district: district,
+                  address: address,
                   password: staff.password,
                   gender: staff.gender,
                   roleId: staff.roleId,
+                  clinicId: staff?.clinics?.[0].clinicId ?? '',
                   status: true
               }
             : undefined,
@@ -52,7 +60,7 @@ export const StaffForm = ({ staff }: StaffFormProps) => {
                 phoneNumber: values.phoneNumber,
                 email: values.email,
                 gender: values.gender,
-                address: values.address,
+                address: values.address + ' - ' + values.district + ' - ' + values.province,
                 roleId: values.roleId,
                 password: values.password,
                 clinicId: values.clinicId,
@@ -60,8 +68,10 @@ export const StaffForm = ({ staff }: StaffFormProps) => {
                 avatar: values.avatar
             };
             await postUser.mutateAsync(newUser, {
-                onSuccess: () => {
+                onSuccess: async () => {
                     toast.success('Tạo mới thành công');
+                    await queryClient.refetchQueries({ queryKey: ['users'] });
+                    onCloseModal();
                 },
                 onError: (error) => {
                     if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {
@@ -87,15 +97,15 @@ export const StaffForm = ({ staff }: StaffFormProps) => {
                         </TabsList>
 
                         <TabsContent value="basic" className="flex flex-col gap-y-6">
-                            <BasicInfoForm isPending={postUser?.isPending}/>
+                            <BasicInfoForm isPending={postUser?.isPending} />
                         </TabsContent>
                         <TabsContent value="account" className="flex flex-col gap-y-6">
-                            <AccountInfoForm isPending={postUser?.isPending}/>
+                            <AccountInfoForm isPending={postUser?.isPending} />
                         </TabsContent>
                     </Tabs>
                 </ScrollArea>
                 <DialogFooter className="flex flex-row justify-between border-t border-neutral-300 p-5">
-                    <Button type="submit" className="flex-1">
+                    <Button type="submit" className="flex-1" disabled={postUser?.isPending}>
                         {postUser?.isPending ? (
                             <LoaderCircle className="animate-spin" />
                         ) : staff ? (

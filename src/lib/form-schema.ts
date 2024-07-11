@@ -2,12 +2,20 @@ import { z } from 'zod';
 
 export const StaffFormSchema = z
     .object({
-        userName: z.string().min(2, {
-            message: 'Tên đăng nhập là bắt buộc và phải có ít nhất 2 ký tự.'
-        }),
-        name: z.string().min(2, {
-            message: 'Tên là bắt buộc và phải có ít nhất 2 ký tự.'
-        }),
+        userName: z
+            .string({
+                required_error: 'Tên đăng nhập là bắt buộc'
+            })
+            .min(2, {
+                message: 'Tên đăng nhập phải có ít nhất 2 ký tự.'
+            }),
+        name: z
+            .string({
+                required_error: 'Tên là bắt buộc'
+            })
+            .min(2, {
+                message: 'Tên phải có ít nhất 2 ký tự.'
+            }),
         dob: z
             .date()
             .max(new Date(), {
@@ -15,9 +23,11 @@ export const StaffFormSchema = z
             })
             .optional(),
         phoneNumber: z
-            .string()
+            .string({
+                required_error: 'Số điện thoại là bắt buộc'
+            })
             .min(10, {
-                message: 'Số điện thoại là bắt buộc và phải có ít nhất 10 chữ số.'
+                message: 'Số điện thoại phải có ít nhất 10 chữ số.'
             })
             .regex(/^[0-9]+$/, {
                 message: 'Số điện thoại phải là số.'
@@ -28,12 +38,18 @@ export const StaffFormSchema = z
         gender: z.enum(['Nam', 'Nữ', 'Khác'], {
             message: 'Giới tính là bắt buộc.'
         }),
-        address: z.string(),
+        province: z.string().optional(),
+        district: z.string().optional(),
+        address: z.string({
+            required_error: 'Địa chỉ là bắt buộc.'
+        }),
         roleId: z.number().min(0, {
             message: 'Vai trò là bắt buộc.'
         }),
         password: z
-            .string()
+            .string({
+                required_error: 'Mật khẩu là bắt buộc.'
+            })
             .min(8, {
                 message: 'Mật khẩu là bắt buộc và phải có ít nhất 8 ký tự.'
             })
@@ -49,9 +65,7 @@ export const StaffFormSchema = z
             .regex(/[!@#$%^&*(),.?":{}|<>]/, {
                 message: 'Mật khẩu phải có ít nhất một ký tự đặc biệt.'
             }),
-        confirmPassword: z.string().min(8, {
-            message: 'Xác nhận mật khẩu là bắt buộc và phải có ít nhất 8 ký tự.'
-        }),
+        confirmPassword: z.string(),
         avatar: z
             .union([
                 z.string().url({
@@ -87,11 +101,35 @@ export const AppointmentFormSchema = z.object({
 });
 
 export const CustomerFormSchema = z.object({
-    customerId: z.string(),
-    dentistId: z.string(),
-    examinationProfileId: z.string(),
-    timeStart: z.date(),
-    timeEnd: z.date(),
-    notes: z.string().optional(),
+    userName: z.string().min(2, {
+        message: 'Tên đăng nhập là bắt buộc và phải có ít nhất 2 ký tự.'
+    }),
+    name: z.string().min(2, {
+        message: 'Tên là bắt buộc và phải có ít nhất 2 ký tự.'
+    }),
+    dob: z
+        .date()
+        .max(new Date(), {
+            message: 'Ngày sinh nằm ngoài phạm vi hợp lý.'
+        })
+        .optional(),
+    phoneNumber: z
+        .string()
+        .min(10, {
+            message: 'Số điện thoại là bắt buộc và phải có ít nhất 10 chữ số.'
+        })
+        .regex(/^[0-9]+$/, {
+            message: 'Số điện thoại phải là số.'
+        }),
+    email: z.string().email({
+        message: 'Email là bắt buộc và phải là địa chỉ email hợp lệ.'
+    }),
+    gender: z.enum(['Nam', 'Nữ', 'Khác'], {
+        message: 'Giới tính là bắt buộc.'
+    }),
+    address: z.string(),
+    clinicId: z.string().min(0, {
+        message: 'Phòng khám là bắt buộc.'
+    }),
     status: z.number()
 });

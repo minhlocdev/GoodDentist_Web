@@ -6,6 +6,8 @@ import { DatePicker } from '../../../components/ui/date-picker';
 import { FormControl, FormItem, FormLabel, FormMessage } from '../../../components/ui/form';
 import { Input } from '../../../components/ui/input';
 import Dropzone from '../../../components/ui/local/drop-zone';
+import SelectDistrict from '../../../components/ui/local/select-district';
+import SelectProvince from '../../../components/ui/local/select-province';
 import {
     Select,
     SelectContent,
@@ -24,6 +26,7 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
     const { data: clinics, isLoading } = clinicService.GetClinics();
     const {
         control,
+        getValues,
         setValue,
         setError,
         clearErrors,
@@ -63,7 +66,7 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                                     classNameWrapper="h-full"
                                     className="h-full"
                                     initialImageUrl={
-                                        field.value instanceof File ? undefined : field.value
+                                        field.value
                                     }
                                 />
                             </FormControl>
@@ -136,7 +139,7 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                     />
                 </div>
             </div>
-            <div className="flex flex-row justify-between">
+            <div className="grid grid-cols-2 gap-x-10">
                 <Controller
                     control={control}
                     name="email"
@@ -173,7 +176,7 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                 />
             </div>
             <div className="flex flex-col gap-y-6">
-                <div className="flex flex-row justify-between">
+                <div className="grid grid-cols-3 gap-x-10">
                     <Controller
                         control={control}
                         name="roleId"
@@ -261,6 +264,48 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                                             <SelectItem value={'false'}>Đã nghỉ</SelectItem>
                                         </SelectContent>
                                     </Select>
+                                </FormControl>
+                                <FormMessage>
+                                    {errors.status && <p>{errors.status.message?.toString()}</p>}
+                                </FormMessage>
+                            </FormItem>
+                        )}
+                        disabled={isPending}
+                    />
+                </div>
+
+                <div className="grid grid-cols-2 gap-x-10">
+                    <Controller
+                        control={control}
+                        name="province"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Tỉnh/Thành phố</FormLabel>
+                                <FormControl>
+                                    <SelectProvince
+                                        selectedProvince={field.value}
+                                        onSelectProvince={field.onChange}
+                                    />
+                                </FormControl>
+                                <FormMessage>
+                                    {errors.status && <p>{errors.status.message?.toString()}</p>}
+                                </FormMessage>
+                            </FormItem>
+                        )}
+                        disabled={isPending}
+                    />
+                    <Controller
+                        control={control}
+                        name="district"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Quận/Huyện</FormLabel>
+                                <FormControl>
+                                    <SelectDistrict
+                                        selectedDistrict={field.value}
+                                        onSelectDistrict={field.onChange}
+                                        selectedProvince={getValues('province')}
+                                    />
                                 </FormControl>
                                 <FormMessage>
                                     {errors.status && <p>{errors.status.message?.toString()}</p>}

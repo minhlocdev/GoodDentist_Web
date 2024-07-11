@@ -1,3 +1,5 @@
+import { IClinic } from "../clinics-types/IClinic";
+
 export interface IUser {
     id: number;
     name: string
@@ -11,7 +13,7 @@ export interface IUser {
     status?: boolean;
     roleId?: number;
     avatar?: string | File;
-    clinicId?: string;
+    clinics?: IClinic[];
 }
 const users: IUser[] = [
     

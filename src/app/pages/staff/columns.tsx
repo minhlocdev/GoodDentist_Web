@@ -9,6 +9,7 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from '../../../components/ui/tooltip';
+import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
 import { IUser } from '../../../lib/interfaces/user-types/IUser';
 import { NewStaffModal } from './new-staff-modal';
 
@@ -102,6 +103,18 @@ export const columns: ColumnDef<IUser>[] = [
         header: 'Địa chỉ',
         accessorKey: 'address',
         cell: ({ row }) => <div className="capitalize">{row.getValue('address')}</div>
+    },
+    {
+        header: 'Cơ sở',
+        accessorKey: 'clinics',
+        cell: ({ row }) => {
+            const clinics = row.getValue<IClinic[]>('clinics');
+            return (
+                <div className="capitalize">
+                    {clinics && clinics.length > 0 ? clinics[0].clinicName : 'N/A'}
+                </div>
+            );
+        }
     },
     {
         id: 'actions',
