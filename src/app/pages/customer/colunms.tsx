@@ -9,15 +9,9 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from '../../../components/ui/tooltip';
-import { ICustomer } from '../../../lib/interfaces/ICustomer';
-import { IUser } from '../../../lib/interfaces/user-types/IUser';
-import { NewStaffModal } from '../staff/new-staff-modal';
+import { ICustomer } from '../../../lib/interfaces/customer-types/ICustomer';
 
 export const columns: ColumnDef<ICustomer>[] = [
-    {
-        accessorKey: 'examination_id',
-        header: 'Mã hồ sơ'
-    },
     {
         accessorKey: 'name',
         header: ({ column }) => {
@@ -32,21 +26,6 @@ export const columns: ColumnDef<ICustomer>[] = [
             );
         },
         cell: ({ row }) => <div className="lowercase">{row.getValue('name')}</div>
-    },
-    {
-        accessorKey: 'userName',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-                >
-                    Tài khoản
-                    <CaretSortIcon className="h-4 w-4" />
-                </Button>
-            );
-        },
-        cell: ({ row }) => <div className="lowercase">{row.getValue('user_name')}</div>
     },
     {
         accessorKey: 'email',
@@ -80,27 +59,24 @@ export const columns: ColumnDef<ICustomer>[] = [
     {
         header: 'Địa chỉ',
         accessorKey: 'address',
-        cell: ({ row }) => <div className="capitalize">{row.getValue('address')}</div>
-    },
-    {
-        accessorKey: 'status',
-        header: 'Tình trạng',
-        cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>
+        cell: ({ row }) => (
+            <div className="max-w-[200px] truncate capitalize" title={row.getValue('address')}>
+                {row.getValue('address')}
+            </div>
+        )
     },
     {
         header: 'Thao tác',
         id: 'actions',
         enableHiding: false,
-        cell: ({ row }) => {
-            const user: IUser = row.original;
+        cell: () => {
+            // const user: IUser = row.original;
             return (
                 <div className="flex items-center gap-3">
                     <TooltipProvider>
                         <Tooltip delayDuration={100}>
                             <TooltipTrigger className="w-full">
-                                <div className="flex flex-row items-center gap-x-4">
-                                    <NewStaffModal staff={user} />
-                                </div>
+                                <div className="flex flex-row items-center gap-x-4"></div>
                             </TooltipTrigger>
                             <TooltipContent side="bottom">
                                 <p>Chỉnh sửa</p>
