@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
-import { ChevronsUpDown } from 'lucide-react';
+import { ChevronsUpDown, PlusIcon } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../components/ui/button';
@@ -15,6 +15,7 @@ import {
 } from '../../../components/ui/form';
 import { Input } from '../../../components/ui/input';
 import { CustomerComboBox } from '../../../components/ui/local/customer-combo-box';
+import TimePickerPopover from '../../../components/ui/local/time-picker';
 import { Popover, PopoverContent, PopoverTrigger } from '../../../components/ui/pop-over';
 import {
     Select,
@@ -24,10 +25,17 @@ import {
     SelectTrigger,
     SelectValue
 } from '../../../components/ui/select';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger
+} from '../../../components/ui/tooltip';
 import { useCalendarStore } from '../../../hooks/use-calendar-store';
+import { floorToNearestFifteen } from '../../../lib/calendar-utils';
 import { AppointmentFormSchema } from '../../../lib/form-schema';
-import { ICustomer } from '../../../lib/interfaces/ICustomer';
 import { cn } from '../../../lib/utils';
+import { ICustomer } from '../../../lib/interfaces/customer-types/ICustomer';
 
 interface AppointmentFormProps {
     customer?: ICustomer;
@@ -55,7 +63,7 @@ const customers = [
     }
 ];
 const AppointmentForm = ({ customer }: AppointmentFormProps) => {
-    const { selectedSlot } = useCalendarStore();
+    const { selectedSlot, view } = useCalendarStore();
 
     const form = useForm<z.infer<typeof AppointmentFormSchema>>({
         resolver: zodResolver(AppointmentFormSchema),
@@ -67,7 +75,10 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
             mode: 'Khám mới',
             examinationProfileId: '',
             dayStart: selectedSlot?.start,
-            timeStart: format(selectedSlot?.start ?? Date.now(), 'HH:mm'),
+            timeStart:
+                view === 'month'
+                    ? floorToNearestFifteen(new Date())
+                    : format(selectedSlot?.start ?? new Date(), 'HH:mm'),
             duration: '15',
             notes: '',
             status: 1
@@ -89,45 +100,63 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
         <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-2 gap-x-2 gap-y-4 px-3">
-                    <div className="w-full">
-                        <FormField
-                            control={form.control}
-                            name="customerId"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-col gap-y-1">
-                                    <FormLabel>
-                                        Khách hàng<span className="text-red-500">*</span>
-                                    </FormLabel>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <FormControl>
-                                                <Button
-                                                    variant="outline"
-                                                    role="combobox"
-                                                    className={cn(
-                                                        'w-full justify-between',
-                                                        !field.value && 'text-muted-foreground'
-                                                    )}
-                                                >
-                                                    {field.value
-                                                        ? customers.find(
-                                                              (customer) =>
-                                                                  customer.value ===
-                                                                  field.value.toString()
-                                                          )?.label
-                                                        : 'Chọn khách hàng...'}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                                </Button>
-                                            </FormControl>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-full p-0">
-                                            <CustomerComboBox />
-                                        </PopoverContent>
-                                    </Popover>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    <div className="flex w-full items-end">
+                        <div className="w-full">
+                            <FormField
+                                control={form.control}
+                                name="customerId"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col gap-y-1">
+                                        <FormLabel>
+                                            Khách hàng<span className="text-red-500">*</span>
+                                        </FormLabel>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                        variant="outline"
+                                                        role="combobox"
+                                                        className={cn(
+                                                            'w-full justify-between rounded-e-none',
+                                                            !field.value && 'text-muted-foreground'
+                                                        )}
+                                                    >
+                                                        {field.value
+                                                            ? customers.find(
+                                                                  (customer) =>
+                                                                      customer.value ===
+                                                                      field.value.toString()
+                                                              )?.label
+                                                            : 'Chọn khách hàng...'}
+                                                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-full p-0">
+                                                <CustomerComboBox />
+                                            </PopoverContent>
+                                        </Popover>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Button
+                                        type="button"
+                                        className="rounded-s-none"
+                                        onClick={(e) => e.preventDefault()}
+                                    >
+                                        <PlusIcon className="h-5 w-5" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <div>Thêm khách hàng mới</div>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     </div>
                     <div className="w-full">
                         <div className="flex flex-col gap-y-1">
@@ -217,15 +246,12 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
                                 render={({ field }) => (
                                     <FormItem className="flex flex-col gap-y-1">
                                         <FormControl>
-                                            <Input
-                                                type="time"
-                                                className="block w-full"
+                                            <TimePickerPopover
                                                 value={field.value}
                                                 onChange={field.onChange}
-                                                aria-label="Time"
-                                                min={'8:00'}
-                                                max={'19:30'}
-                                                step="900"
+                                                minTime="08:00"
+                                                maxTime="19:30"
+                                                step={900}
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -325,17 +351,18 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
                         />
                     </div>
                 </div>
-            </form>
-            <DialogFooter className="flex flex-row justify-between border-t border-neutral-300 p-5">
-                <Button type="submit" className="flex-1">
-                    Thêm mới
-                </Button>
-                <DialogClose className="flex-1" asChild>
-                    <Button variant={'secondary'} className="w-full hover:bg-neutral-200">
-                        Hủy bỏ
+
+                <DialogFooter className="flex flex-row justify-between border-t border-neutral-300 p-5">
+                    <Button type="submit" className="flex-1">
+                        Thêm mới
                     </Button>
-                </DialogClose>
-            </DialogFooter>
+                    <DialogClose className="flex-1" asChild>
+                        <Button variant={'secondary'} className="w-full hover:bg-neutral-200">
+                            Hủy bỏ
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
+            </form>
         </FormProvider>
     );
 };

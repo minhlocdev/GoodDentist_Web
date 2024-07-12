@@ -3,6 +3,7 @@
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import {
     ColumnFiltersState,
+    ColumnPinningState,
     PaginationState,
     SortingState,
     VisibilityState,
@@ -48,9 +49,9 @@ import {
 import { IUser } from '../../../lib/interfaces/user-types/IUser';
 import { userService } from '../../../services/queries/userQuery';
 import { columns } from './colunms';
+import { getCommonPinningStyles } from '../../../lib/column-pinning-style';
 
 export function CustomerDataTable() {
-
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -59,8 +60,19 @@ export function CustomerDataTable() {
         pageIndex: 0,
         pageSize: 10
     });
+    const [columnPinning, setColumnPinning] = React.useState<ColumnPinningState>({
+        left: [],
+        right: ['actions']
+    });
 
-    const { data: users, error, isLoading }: UseQueryResult<IUser[]> = userService.GetUsers(pagination.pageIndex + 1, pagination.pageSize);
+    const {
+        data: users,
+        error,
+        isLoading
+    }: UseQueryResult<IUser[]> = userService.GetUsers(
+        pagination.pageIndex + 1,
+        pagination.pageSize
+    );
     const defaultData = React.useMemo(() => [], []);
 
     const table = useReactTable({
@@ -77,13 +89,15 @@ export function CustomerDataTable() {
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         onPaginationChange: setPagination,
+        onColumnPinningChange: setColumnPinning,
         debugTable: true,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
             rowSelection,
-            pagination
+            pagination,
+            columnPinning
         }
     });
     if (isLoading) return <div>Loading...</div>;
@@ -149,8 +163,13 @@ export function CustomerDataTable() {
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
+                                    const { column } = header;
                                     return (
-                                        <TableHead key={header.id} className=" text-white">
+                                        <TableHead
+                                            key={header.id}
+                                            className=" text-white"
+                                            style={{ ...getCommonPinningStyles(column) }}
+                                        >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -170,14 +189,21 @@ export function CustomerDataTable() {
                                     key={row.id}
                                     data-state={row.getIsSelected() && 'selected'}
                                 >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </TableCell>
-                                    ))}
+                                    {row.getVisibleCells().map((cell) => {
+                                        const { column } = cell;
+                                        return (
+                                            <TableCell
+                                                key={cell.id}
+                                                className="max-w-full truncate"
+                                                style={{ ...getCommonPinningStyles(column) }}
+                                            >
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </TableCell>
+                                        );
+                                    })}
                                 </TableRow>
                             ))
                         ) : (

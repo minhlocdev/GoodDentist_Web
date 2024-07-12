@@ -1,4 +1,5 @@
 import { X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avatar';
 import { Button } from '../../../components/ui/button';
 import { ScrollArea } from '../../../components/ui/scroll-area';
@@ -17,6 +18,7 @@ interface CalendarAsideProps {
 }
 const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
     const calendar = useCalendarStore();
+    const navigate = useNavigate();
     return (
         <div>
             {calendar.selectedEvent != undefined && (
@@ -35,7 +37,15 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                         <div className="flex h-[100px] items-center justify-center">
                             <div className="flex h-[100%] flex-1 items-center !justify-start gap-4 !bg-white pl-3">
                                 <div className="resource-photo">
-                                    <Avatar className="h-20 w-20 rounded-full bg-slate-100">
+                                    <Avatar
+                                        className="h-20 w-20 cursor-pointer rounded-full bg-slate-100 hover:bg-white hover:opacity-50"
+                                        onClick={() => {
+                                            navigate(
+                                                `/patient-record/` +
+                                                    `${calendar.selectedEvent?.data?.appointment?.resource}`
+                                            );
+                                        }}
+                                    >
                                         <AvatarImage src={'#'} alt="Avatar" />
                                         <AvatarFallback className="text-[10px] font-bold">
                                             {calendar?.selectedEvent.data?.appointment?.resource}
@@ -44,9 +54,15 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                 </div>
                                 <div className="resource-name flex flex-col ">
                                     <span className="text-md font-bold">69082816</span>
-                                    <span className="text-md font-bold text-primary">
+                                    <a
+                                        href={
+                                            `/patient-record/` +
+                                            `${calendar.selectedEvent?.data?.appointment?.resource}`
+                                        }
+                                        className="text-md cursor-pointer font-bold text-primary hover:opacity-50"
+                                    >
                                         {calendar?.selectedEvent.data?.appointment?.resource}
-                                    </span>
+                                    </a>
                                     <span className="text-[13px]">1999 Nam</span>
                                 </div>
                             </div>
