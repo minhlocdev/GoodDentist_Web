@@ -16,6 +16,7 @@ import {
 import * as React from 'react';
 
 import { UseQueryResult } from '@tanstack/react-query';
+import { LoaderCircle } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import {
     DropdownMenu,
@@ -39,7 +40,9 @@ import {
     TableHeader,
     TableRow
 } from '../../../components/ui/table';
+import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
 import { IUser } from '../../../lib/interfaces/user-types/IUser';
+import { clinicService } from '../../../services/queries/clinicQuery';
 import { userService } from '../../../services/queries/userQuery';
 import { columns } from './columns';
 import { NewStaffModal } from './new-staff-modal';
@@ -60,11 +63,14 @@ export function StaffDataTable() {
     }: UseQueryResult<IUser[]> = userService.GetUsers(
         pagination.pageIndex + 1,
         pagination.pageSize,
+        columnFilters.length > 0 ? columnFilters[0].id : undefined,
+        columnFilters.length > 0 ? (columnFilters[0].value as string) : undefined,
+        sorting.length > 0 ? sorting[0].id : undefined,
+        sorting.length > 0 ? (sorting[0].desc ? 'desc' : 'asc') : undefined
     );
-
+    const { data: clinics, isLoading: clinicLoading } = clinicService.GetClinics();
     const { data: total } = userService.GetTotalUser();
     const defaultData = React.useMemo(() => [], []);
-
     const table = useReactTable({
         data: users ?? defaultData,
         columns,
@@ -78,6 +84,9 @@ export function StaffDataTable() {
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         onPaginationChange: setPagination,
+        manualFiltering: true,
+        manualPagination: true,
+        manualSorting: true,
         state: {
             sorting,
             columnFilters,
@@ -89,31 +98,59 @@ export function StaffDataTable() {
 
     if (isLoading) return <div className="text-center">Loading</div>;
     if (error) return <div className="text-center">Error loading users</div>;
-
     return (
         <div className="w-full">
             <div className="flex items-center gap-x-3 py-4">
                 <Input
                     placeholder="Tìm theo email, số điện thoại, địa chỉ, v.v."
-                    value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
+                    value={columnFilters.find((filter) => filter.id === 'search')?.value as string}
                     onChange={(event) =>
-                        table.getColumn('email')?.setFilterValue(event.target.value)
+                        setColumnFilters([{ id: 'search', value: event.target.value }])
                     }
                     className="max-w-lg"
                 />
-                <Select>
-                    <SelectTrigger className="w-[150px] p-2 md:w-fit">
+                <Select
+                    defaultValue="all"
+                    onValueChange={(value) =>
+                        setColumnFilters([
+                            { id: 'status', value: value === 'all' ? null : value === 'true' }
+                        ])
+                    }
+                >
+                    <SelectTrigger className="w-[150px] min-w-[150px] p-2 md:w-fit">
                         <SelectValue placeholder="Tình trạng làm việc" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="all">Tất cả</SelectItem>
-                        <SelectItem value="in-progress">Đang làm việc</SelectItem>
-                        <SelectItem value="quit">Đã nghỉ</SelectItem>
+                        <SelectItem value="true">Đang làm việc</SelectItem>
+                        <SelectItem value="false">Đã nghỉ</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Select
+                    defaultValue="all"
+                    onValueChange={(value) => setColumnFilters([{ id: 'clinic', value: value }])}
+                >
+                    <SelectTrigger className="ml-auto w-[150px] min-w-[150px] p-2 md:w-fit">
+                        <SelectValue placeholder="Chọn phòng khám" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">Tất cả</SelectItem>
+                        {!clinicLoading ? (
+                            clinics?.map((clinic: IClinic) => (
+                                <SelectItem key={clinic.clinicId} value={clinic.clinicId}>
+                                    {clinic.clinicName}
+                                </SelectItem>
+                            ))
+                        ) : (
+                            <div className="flex justify-center p-2">
+                                <LoaderCircle className="animate-spin" />
+                            </div>
+                        )}
                     </SelectContent>
                 </Select>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto">
+                        <Button variant="outline">
                             Cột <ChevronDownIcon className="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>

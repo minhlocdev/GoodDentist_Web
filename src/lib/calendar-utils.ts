@@ -65,3 +65,9 @@ export function generateTimeSlots() {
 
     return timeSlots;
 }
+
+export const floorToNearestFifteen = (date: Date): string => {
+    const minutes = date.getMinutes();
+    const flooredMinutes = Math.floor(minutes / 15) * 15;
+    return `${date.getHours().toString().padStart(2, '0')}:${flooredMinutes.toString().padStart(2, '0')}`;
+};

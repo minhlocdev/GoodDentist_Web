@@ -22,7 +22,7 @@ interface BasicInfoProps {
     isPending?: boolean;
 }
 
-const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
+const EditBasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
     const { data: clinics, isLoading } = clinicService.GetClinics();
     const {
         control,
@@ -252,7 +252,6 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                                 <FormLabel>Trạng thái</FormLabel>
                                 <FormControl>
                                     <Select
-                                        defaultValue="true"
                                         onValueChange={(value) => field.onChange(value === 'true')}
                                         value={field.value ? 'true' : 'false'}
                                         disabled
@@ -346,4 +345,4 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
     );
 };
 
-export default BasicInfoForm;
+export default EditBasicInfoForm;

@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { ApiResponse } from '../lib/api';
 import { ILoginUser } from '../lib/interfaces/user-types/ILoginUser';
+import { IPostUser } from '../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../lib/interfaces/user-types/IUser';
 import apiClient from './api-client';
-import { IPostUser } from '../lib/interfaces/user-types/IPostUser';
 
 export const getUsers = async (
     pageNumber: number,
@@ -34,7 +34,9 @@ export const getTotalUser = async (): Promise<AxiosResponse<ApiResponse<number>>
     });
 };
 
-export const postLogin = async (user: ILoginUser): Promise<AxiosResponse<ApiResponse<IPostUser>>> => {
+export const postLogin = async (
+    user: ILoginUser
+): Promise<AxiosResponse<ApiResponse<IPostUser>>> => {
     return await apiClient({
         method: 'post',
         data: user,
@@ -96,5 +98,16 @@ export const getUsersByClinic = async (
             sortField,
             sortOrder
         }
+    });
+};
+
+export const putUser = async (user: IPostUser): Promise<AxiosResponse<ApiResponse<IPostUser>>> => {
+    return await apiClient({
+        method: 'put',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        url: '/api/users/user',
+        data: user
     });
 };

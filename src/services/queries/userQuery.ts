@@ -10,7 +10,15 @@ import { ILoginUser } from '../../lib/interfaces/user-types/ILoginUser';
 import { IPostUser } from '../../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../../lib/interfaces/user-types/IUser';
 import { IUserService } from '../../lib/interfaces/user-types/IUserService';
-import { getLoginUser, getTotalUser, getUsers, getUsersByClinic, postLogin, postUser } from '../users';
+import {
+    getLoginUser,
+    getTotalUser,
+    getUsers,
+    getUsersByClinic,
+    postLogin,
+    postUser,
+    putUser
+} from '../users';
 
 export const userService: IUserService = {
     GetUsers: (
@@ -106,5 +114,13 @@ export const userService: IUserService = {
             },
             staleTime: 20000,
             placeholderData: keepPreviousData
+        }),
+        
+    PutUser: (): UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser> =>
+        useMutation<ApiResponse<IPostUser>, Error, IPostUser>({
+            mutationFn: async (user: IPostUser): Promise<ApiResponse<IPostUser>> => {
+                const response = await putUser(user);
+                return response.data;
+            }
         })
 };

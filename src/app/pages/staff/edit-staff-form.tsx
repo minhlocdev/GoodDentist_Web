@@ -8,30 +8,50 @@ import { Button } from '../../../components/ui/button';
 import { DialogClose, DialogFooter } from '../../../components/ui/dialog';
 import { ScrollArea } from '../../../components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/tab';
-import { StaffFormSchema } from '../../../lib/form-schema';
+import { EditStaffFormSchema } from '../../../lib/form-schema';
 import { IPostUser } from '../../../lib/interfaces/user-types/IPostUser';
+import { IUser } from '../../../lib/interfaces/user-types/IUser';
+import { extractLastDistrictAndProvince } from '../../../lib/params-util';
 import { queryClient } from '../../../lib/queryClient';
 import { userService } from '../../../services/queries/userQuery';
-import AccountInfoForm from './account-form';
-import BasicInfoForm from './info-form';
+import EditAccountInfoForm from './edit-account-form';
+import EditBasicInfoForm from './edit-info-form';
 
 interface StaffFormProps {
+    staff?: IUser;
     onCloseModal: () => void;
 }
 
-export const StaffForm = ({ onCloseModal }: StaffFormProps) => {
-    const postUser = userService.PostUser();
-    const form = useForm<z.infer<typeof StaffFormSchema>>({
-        resolver: zodResolver(StaffFormSchema),
-        defaultValues: {
-            status: true
-        },
+export const EditStaffForm = ({ staff, onCloseModal }: StaffFormProps) => {
+    const putUser = userService.PutUser();
+    const { address, district, province } = extractLastDistrictAndProvince(staff?.address ?? '');
+    const form = useForm<z.infer<typeof EditStaffFormSchema>>({
+        resolver: zodResolver(EditStaffFormSchema),
+        defaultValues: staff
+            ? {
+                  userName: staff.userName,
+                  avatar: staff.avatar ?? '',
+                  imageUrl: (staff.avatar as string) ?? '',
+                  name: staff.name,
+                  dob: staff.dob ? new Date(staff.dob) : undefined,
+                  phoneNumber: staff.phoneNumber,
+                  email: staff.email,
+                  province: province,
+                  district: district,
+                  address: address,
+                  gender: staff.gender,
+                  roleId: staff.roleId,
+                  clinicId: staff?.clinics?.[0].clinicId ?? '',
+                  status: staff?.status,
+                  reset: false
+              }
+            : undefined,
         shouldFocusError: true,
         shouldUnregister: false,
         shouldUseNativeValidation: false
     });
 
-    async function onSubmit(values: z.infer<typeof StaffFormSchema>) {
+    async function onSubmit(values: z.infer<typeof EditStaffFormSchema>) {
         try {
             const newUser: IPostUser = {
                 userName: values.userName,
@@ -42,23 +62,27 @@ export const StaffForm = ({ onCloseModal }: StaffFormProps) => {
                 gender: values.gender,
                 address: values.address + ' - ' + values.district + ' - ' + values.province,
                 roleId: values.roleId,
-                password: values.password,
                 clinicId: values.clinicId,
                 status: values.status,
-                avatar: values.avatar,
-                imageUrl: null,
+                avatar: values.avatar instanceof File ? values.avatar : undefined,
+                reset: values.reset,
+                imageUrl: staff?.avatar as string
             };
-            await postUser.mutateAsync(newUser, {
-                onSuccess: async () => {
-                    toast.success('Tạo mới thành công');
-                    await queryClient.refetchQueries({ queryKey: ['users'] });
-                    onCloseModal();
+            await putUser.mutateAsync(newUser, {
+                onSuccess: async (res) => {
+                    if (res.isSuccess) {
+                        toast.success('Cập nhật thành công');
+                        await queryClient.refetchQueries({ queryKey: ['users'] });
+                        onCloseModal();
+                    } else {
+                        toast.error('Cập nhật thất bại ' + res.message);
+                    }
                 },
                 onError: (error) => {
                     if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {
                         toast.error(error.response.data.message[0] as React.ReactNode);
                     } else {
-                        toast.error('Tạo mới thất bại');
+                        toast.error('Cập nhật thất bại');
                     }
                 }
             });
@@ -78,19 +102,19 @@ export const StaffForm = ({ onCloseModal }: StaffFormProps) => {
                         </TabsList>
 
                         <TabsContent value="basic" className="flex flex-col gap-y-6">
-                            <BasicInfoForm isPending={postUser?.isPending} />
+                            <EditBasicInfoForm isPending={putUser?.isPending} />
                         </TabsContent>
                         <TabsContent value="account" className="flex flex-col gap-y-6">
-                            <AccountInfoForm isPending={postUser?.isPending} />
+                            <EditAccountInfoForm isPending={putUser?.isPending} />
                         </TabsContent>
                     </Tabs>
                 </ScrollArea>
                 <DialogFooter className="flex flex-row justify-between border-t border-neutral-300 p-5">
-                    <Button type="submit" className="flex-1" disabled={postUser?.isPending}>
-                        {postUser?.isPending ? (
+                    <Button type="submit" className="flex-1" disabled={putUser?.isPending}>
+                        {putUser?.isPending ? (
                             <LoaderCircle className="animate-spin" />
                         ) : (
-                            'Thêm mới'
+                            'Cập nhật'
                         )}
                     </Button>
                     <DialogClose className="flex-1">

@@ -1,5 +1,5 @@
 export interface IPostUser {
-    name: string
+    name: string;
     userName: string;
     password?: string;
     dob?: Date;
@@ -10,5 +10,7 @@ export interface IPostUser {
     status?: boolean;
     roleId?: number;
     avatar?: string | File;
+    reset?: boolean;
+    imageUrl?: string | null;
     clinicId: string;
 }

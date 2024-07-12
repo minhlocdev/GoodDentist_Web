@@ -27,4 +27,5 @@ export interface IUserService {
         sortField?: string,
         sortOrder?: string
     ) => UseQueryResult<IUser[]>;
+    PutUser: () => UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser>;
 }

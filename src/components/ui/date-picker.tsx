@@ -52,6 +52,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
                     locale={vi}
                     fromYear={1960}
                     toYear={2030}
+                    
                 />
             </PopoverContent>
         </Popover>

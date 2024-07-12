@@ -14,7 +14,7 @@ export const provinceDistrictService = {
 
     GetDistrict: (provinceName: string) =>
         useQuery({
-            queryKey: ['districts'],
+            queryKey: ['districts', {"province": provinceName}],
             queryFn: async () => {
                 return await getDistrict(provinceName);
             },
