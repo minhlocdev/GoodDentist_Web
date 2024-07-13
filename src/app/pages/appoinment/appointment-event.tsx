@@ -44,7 +44,7 @@ const AppointmentEvent = ({
                         <div
                             className={cn(
                                 'flex h-[100%] w-[100%] items-start justify-between p-1',
-                                selectedEvent?.data?.appointment?.examinationId ===
+                                selectedEvent?.examinationId ===
                                     examination.examinationId
                                     ? 'border border-primary'
                                     : ''
