@@ -68,7 +68,7 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
     const form = useForm<z.infer<typeof AppointmentFormSchema>>({
         resolver: zodResolver(AppointmentFormSchema),
         defaultValues: {
-            customerId: customer?.id.toString() ?? '',
+            customerId: customer?.userId.toString() ?? '',
             phoneNumber: customer?.phoneNumber ?? '',
             dentistId: (selectedSlot?.resourceId as string) ?? '',
             clinicId: '',
