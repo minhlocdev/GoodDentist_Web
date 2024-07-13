@@ -152,13 +152,13 @@ export const EditStaffFormSchema = z.object({
 export const JobReturnSchema = z.object({
     userName: z.string(),
     clinicId: z.string()
-})
+});
 
 export const JobTranferSchema = z.object({
     userName: z.string(),
     clinicId: z.string(),
     oldClinicId: z.string()
-})
+});
 
 export const AppointmentFormSchema = z.object({
     customerId: z.string(),
@@ -175,12 +175,13 @@ export const AppointmentFormSchema = z.object({
 });
 
 export const CustomerFormSchema = z.object({
-    userName: z.string().min(2, {
-        message: 'Tên đăng nhập là bắt buộc và phải có ít nhất 2 ký tự.'
-    }),
-    name: z.string().min(2, {
-        message: 'Tên là bắt buộc và phải có ít nhất 2 ký tự.'
-    }),
+    name: z
+        .string({
+            required_error: 'Tên là bắt buộc'
+        })
+        .min(2, {
+            message: 'Tên phải có ít nhất 2 ký tự.'
+        }),
     dob: z
         .date()
         .max(new Date(), {
@@ -188,9 +189,11 @@ export const CustomerFormSchema = z.object({
         })
         .optional(),
     phoneNumber: z
-        .string()
+        .string({
+            required_error: 'Số điện thoại là bắt buộc'
+        })
         .min(10, {
-            message: 'Số điện thoại là bắt buộc và phải có ít nhất 10 chữ số.'
+            message: 'Số điện thoại phải có ít nhất 10 chữ số.'
         })
         .regex(/^[0-9]+$/, {
             message: 'Số điện thoại phải là số.'
@@ -201,9 +204,25 @@ export const CustomerFormSchema = z.object({
     gender: z.enum(['Nam', 'Nữ', 'Khác'], {
         message: 'Giới tính là bắt buộc.'
     }),
-    address: z.string(),
+    province: z.string().optional(),
+    district: z.string().optional(),
+    address: z.string({
+        required_error: 'Địa chỉ là bắt buộc.'
+    }),
+    imageUrl: z.string().optional(),
+    avatar: z
+        .union([
+            z.string().url({
+                message: 'Avatar phải là URL hợp lệ.'
+            }),
+            z.instanceof(File).refine((file) => file instanceof File, {
+                message: 'Avatar phải là File.'
+            })
+        ])
+        .optional(),
     clinicId: z.string().min(0, {
         message: 'Phòng khám là bắt buộc.'
     }),
-    status: z.number()
+    status: z.boolean(),
+    anamnesis: z.string().optional()
 });

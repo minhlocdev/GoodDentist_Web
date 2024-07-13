@@ -89,19 +89,18 @@ export function getMenuList(pathname: string): Group[] {
                 {
                     href: '',
                     label: 'Quản lý kho',
-                    active:
-                        pathname.includes('/material-dentals') || pathname.includes('/medicines'),
+                    active: pathname.includes('/medicines') || pathname.includes('/services'),
                     icon: Container,
                     submenus: [
-                        {
-                            href: '/material-dentals',
-                            label: 'Quản lý vật tư',
-                            active: pathname === '/material-dentals'
-                        },
                         {
                             href: '/medicines',
                             label: 'Quản lý thuốc',
                             active: pathname === '/medicines'
+                        },
+                        {
+                            href: '/services',
+                            label: 'Quản lý dịch vụ',
+                            active: pathname === '/services'
                         }
                     ]
                 }

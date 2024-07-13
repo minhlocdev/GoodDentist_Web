@@ -6,7 +6,6 @@ import {
     ColumnPinningState,
     PaginationState,
     SortingState,
-    VisibilityState,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -17,13 +16,7 @@ import {
 import * as React from 'react';
 
 import { UseQueryResult } from '@tanstack/react-query';
-import { Filter } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger
-} from '../../../components/ui/collapsible';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -46,16 +39,15 @@ import {
     TableHeader,
     TableRow
 } from '../../../components/ui/table';
-import { IUser } from '../../../lib/interfaces/user-types/IUser';
-import { userService } from '../../../services/queries/userQuery';
-import { columns } from './colunms';
 import { getCommonPinningStyles } from '../../../lib/column-pinning-style';
+import { ICustomer } from '../../../lib/interfaces/customer-types/ICustomer';
+import { customerService } from '../../../services/queries/customerQuery';
+import { columns } from './colunms';
+import { CustomerModal } from './customer-modal';
 
 export function CustomerDataTable() {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-    const [rowSelection, setRowSelection] = React.useState({});
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: 0,
         pageSize: 10
@@ -66,36 +58,39 @@ export function CustomerDataTable() {
     });
 
     const {
-        data: users,
+        data: customers,
         error,
         isLoading
-    }: UseQueryResult<IUser[]> = userService.GetUsers(
+    }: UseQueryResult<ICustomer[]> = customerService.GetCustomers(
         pagination.pageIndex + 1,
-        pagination.pageSize
+        pagination.pageSize,
+        columnFilters.length > 0 ? columnFilters[0].id : undefined,
+        columnFilters.length > 0 ? (columnFilters[0].value as string) : undefined,
+        sorting.length > 0 ? sorting[0].id : undefined,
+        sorting.length > 0 ? (sorting[0].desc ? 'desc' : 'asc') : undefined
     );
+    const { data: total } = customerService.GetTotalCustomer();
     const defaultData = React.useMemo(() => [], []);
 
     const table = useReactTable({
-        data: users ?? defaultData,
+        data: customers ?? defaultData,
         columns,
-        // pageCount: dataQuery.data?.pageCount ?? -1, //you can now pass in `rowCount` instead of pageCount and `pageCount` will be calculated internally (new in v8.13.0)
-        rowCount: 30, //  dataQuery.data?.rowCount,new in v8.13.0 - alternatively, just pass in `pageCount` directly
+        rowCount: total ?? 1,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
         onPaginationChange: setPagination,
         onColumnPinningChange: setColumnPinning,
         debugTable: true,
+        manualFiltering: true,
+        manualPagination: true,
+        manualSorting: true,
         state: {
             sorting,
             columnFilters,
-            columnVisibility,
-            rowSelection,
             pagination,
             columnPinning
         }
@@ -115,20 +110,6 @@ export function CustomerDataTable() {
                 />
 
                 <div className="ml-auto flex gap-4">
-                    <Collapsible>
-                        <CollapsibleTrigger className="rounded-md border border-blue-500 px-3 py-1 shadow-sm data-[state=open]:bg-blue-100">
-                            <div className="flex flex-row items-center gap-2">
-                                <Filter className="h-4 w-5" /> Bộ lọc
-                            </div>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                            {/* TODO */}
-                            <div className="m-4 w-full border border-neutral-300 p-3">
-                                ngày tạo, lịch hẹn, ngày điều trị, bác sĩ điều trị, tình trạng, tỉnh
-                                thành phố, quận huyện
-                            </div>
-                        </CollapsibleContent>
-                    </Collapsible>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">
@@ -155,6 +136,7 @@ export function CustomerDataTable() {
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <CustomerModal />
                 </div>
             </div>
             <div className="rounded-md border">

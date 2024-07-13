@@ -101,9 +101,11 @@ const AppointmentCalendar = () => {
 
     if (!calendar) return null;
     const onSelectEvent = (e: EventItem) => {
-        const data = details.find((ex) => ex.data?.examinationId === e.data?.appointment?.examinationId);
+        const data = details.find(
+            (ex) => ex.data?.examinationId === e.data?.appointment?.examinationId
+        );
         if (data) {
-            calendar?.setEvent(data.data);
+            calendar.setEvent(data.data ?? null);
         }
     };
     return (

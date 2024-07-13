@@ -15,14 +15,21 @@ const TimePickerPopover: React.FC<TimePickerPopoverProps> = ({
     value,
     onChange,
     minTime = '08:00',
-    maxTime = '19:30',
+    maxTime = '19:00',
     step = 900
 }) => {
     const [selectedHour, setSelectedHour] = useState(parseInt(value.split(':')[0], 10));
     const [selectedMinute, setSelectedMinute] = useState(parseInt(value.split(':')[1], 10));
 
     const handleHourChange = (hour: number) => {
+        const minute = 0;
         if (hour >= 8 && hour <= 19 && hour !== 12 && hour !== 13) {
+            if (hour === 19) {
+                setSelectedMinute(minute);
+                onChange(
+                    `${selectedHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+                );
+            }
             setSelectedHour(hour);
             onChange(
                 `${hour.toString().padStart(2, '0')}:${selectedMinute.toString().padStart(2, '0')}`
@@ -31,10 +38,12 @@ const TimePickerPopover: React.FC<TimePickerPopoverProps> = ({
     };
 
     const handleMinuteChange = (minute: number) => {
-        setSelectedMinute(minute);
-        onChange(
-            `${selectedHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
-        );
+        if (selectedHour < 19 || (selectedHour === 19 && minute === 0)) {
+            setSelectedMinute(minute);
+            onChange(
+                `${selectedHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+            );
+        }
     };
 
     const hours = Array.from({ length: 24 }, (_, i) => i);
@@ -81,9 +90,9 @@ const TimePickerPopover: React.FC<TimePickerPopoverProps> = ({
                         {minutes.map((minute) => (
                             <div
                                 key={minute}
-                                className={`cursor-pointer rounded-sm px-4 py-2 hover:bg-gray-100 ${
+                                className={`rounded-sm px-4 py-2 hover:bg-gray-100 ${
                                     selectedMinute === minute ? 'bg-gray-200' : ''
-                                }`}
+                                } ${selectedHour === 19 && minute > 0 ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer'}`}
                                 onClick={() => handleMinuteChange(minute)}
                             >
                                 {minute.toString().padStart(2, '0')}

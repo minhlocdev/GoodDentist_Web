@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { ICustomer } from '../../../lib/interfaces/customer-types/ICustomer';
 import { Avatar, AvatarFallback, AvatarImage } from '../avatar';
 import {
     Command,
@@ -11,56 +11,45 @@ import {
     CommandList
 } from '../command';
 
-const customers = [
-    {
-        value: 'next.js',
-        label: 'Next.js'
-    },
-    {
-        value: 'sveltekit',
-        label: 'SvelteKit'
-    },
-    {
-        value: 'nuxt.js',
-        label: 'Nuxt.js'
-    },
-    {
-        value: 'remix',
-        label: 'Remix'
-    },
-    {
-        value: 'astro',
-        label: 'Astro'
-    }
-];
+interface CustomerComboBoxProps {
+    customers?: ICustomer[];
+    onSelect: (value: string) => void;
+}
 
-export function CustomerComboBox() {
-    const [value, setValue] = React.useState('');
-
+export function CustomerComboBox({ customers = [], onSelect }: CustomerComboBoxProps) {
+    const handleSelect = (customer: ICustomer) => {
+        onSelect(customer.userId);
+    };
     return (
         <Command>
             <CommandInput placeholder="Tìm theo tên, số điện thoại..." />
-            <CommandEmpty>Không có dữ liệu.</CommandEmpty>
-            <CommandGroup>
-                <CommandList>
-                    {customers.map((customer) => (
-                        <CommandItem
-                            key={customer.value}
-                            onSelect={(currentValue) => {
-                                setValue(currentValue === value ? '' : currentValue);
-                            }}
-                        >
-                            <div className="flex items-center justify-between">
-                                <Avatar className="h-8 w-8">
-                                    <AvatarImage src="#" alt="Avatar" />
-                                    <AvatarFallback className="bg-transparent">JD</AvatarFallback>
-                                </Avatar>
-                                {customer.label}
-                            </div>
-                        </CommandItem>
-                    ))}
-                </CommandList>
-            </CommandGroup>
+            {customers.length === 0 ? (
+                <CommandEmpty>Không có dữ liệu.</CommandEmpty>
+            ) : (
+                <CommandGroup>
+                    <CommandList>
+                        {customers.map((customer) => (
+                            <CommandItem
+                                key={customer.userId}
+                                onSelect={() => handleSelect(customer)}
+                            >
+                                <div className="flex items-center justify-between">
+                                    <Avatar className="h-8 w-8">
+                                        <AvatarImage
+                                            src={customer?.avatar as string}
+                                            alt="Avatar"
+                                        />
+                                        <AvatarFallback className="bg-transparent">
+                                            {customer?.name?.charAt(0)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    {customer?.name}
+                                </div>
+                            </CommandItem>
+                        ))}
+                    </CommandList>
+                </CommandGroup>
+            )}
         </Command>
     );
 }

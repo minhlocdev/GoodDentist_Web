@@ -21,8 +21,9 @@ interface CalendarAsideProps {
 const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
     const calendar = useCalendarStore();
     const examDetail = calendar.selectedEvent;
+    console.log(examDetail)
     const navigate = useNavigate();
-    if (calendar.selectedEvent !== undefined) {
+    if (calendar.selectedEvent) {
         return (
             <div className="h-[calc(100vh-56px)] w-screen bg-white p-3 md:w-[300px]">
                 <div>
@@ -31,7 +32,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                         <Button
                             variant="outline"
                             className=" border-none px-1"
-                            onClick={() => calendar.setEvent(undefined)}
+                            onClick={() => calendar.setEvent(null)}
                         >
                             <X />
                         </Button>

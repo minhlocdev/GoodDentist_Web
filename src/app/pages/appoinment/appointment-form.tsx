@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
-import { ChevronsUpDown, PlusIcon } from 'lucide-react';
+import { ChevronsUpDown, LoaderCircle, PlusIcon } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../../../components/ui/button';
@@ -34,45 +34,30 @@ import {
 import { useCalendarStore } from '../../../hooks/use-calendar-store';
 import { floorToNearestFifteen } from '../../../lib/calendar-utils';
 import { AppointmentFormSchema } from '../../../lib/form-schema';
-import { cn } from '../../../lib/utils';
 import { ICustomer } from '../../../lib/interfaces/customer-types/ICustomer';
+import { IUser } from '../../../lib/interfaces/user-types/IUser';
+import { cn } from '../../../lib/utils';
+import { customerService } from '../../../services/queries/customerQuery';
+import { userService } from '../../../services/queries/userQuery';
 
 interface AppointmentFormProps {
     customer?: ICustomer;
 }
-const customers = [
-    {
-        value: 'next.js',
-        label: 'Next.js'
-    },
-    {
-        value: 'sveltekit',
-        label: 'SvelteKit'
-    },
-    {
-        value: 'nuxt.js',
-        label: 'Nuxt.js'
-    },
-    {
-        value: 'remix',
-        label: 'Remix'
-    },
-    {
-        value: 'astro',
-        label: 'Astro'
-    }
-];
 const AppointmentForm = ({ customer }: AppointmentFormProps) => {
-    const { selectedSlot, view } = useCalendarStore();
-
+    const { selectedSlot, view, selectedClinicId } = useCalendarStore();
+    const { data: customers } = customerService.GetCustomersByClinic(
+        selectedClinicId ?? '',
+        1,
+        200
+    );
     const form = useForm<z.infer<typeof AppointmentFormSchema>>({
         resolver: zodResolver(AppointmentFormSchema),
         defaultValues: {
             customerId: customer?.userId.toString() ?? '',
             phoneNumber: customer?.phoneNumber ?? '',
             dentistId: (selectedSlot?.resourceId as string) ?? '',
-            clinicId: '',
-            mode: 'Khám mới',
+            clinicId: selectedClinicId ?? '',
+            mode: 'new',
             examinationProfileId: '',
             dayStart: selectedSlot?.start,
             timeStart:
@@ -88,6 +73,11 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
         shouldUseNativeValidation: false
     });
 
+    const { data: dentists, isLoading } = userService.GetDentistsByClinic(
+        selectedClinicId ?? '',
+        1,
+        200
+    );
     async function onSubmit(values: z.infer<typeof AppointmentFormSchema>) {
         try {
             await Promise.resolve(values);
@@ -121,19 +111,33 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
                                                             !field.value && 'text-muted-foreground'
                                                         )}
                                                     >
-                                                        {field.value
+                                                        {field.value && customers
                                                             ? customers.find(
                                                                   (customer) =>
-                                                                      customer.value ===
-                                                                      field.value.toString()
-                                                              )?.label
+                                                                      customer.userId ===
+                                                                      field.value
+                                                              )?.name
                                                             : 'Chọn khách hàng...'}
                                                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                     </Button>
                                                 </FormControl>
                                             </PopoverTrigger>
                                             <PopoverContent className="w-full p-0">
-                                                <CustomerComboBox />
+                                                {customers && (
+                                                    <CustomerComboBox
+                                                        customers={customers}
+                                                        onSelect={(value) => {
+                                                            field.onChange(value);
+                                                            form.setValue(
+                                                                'phoneNumber',
+                                                                customers.find(
+                                                                    (customer) =>
+                                                                        customer.userId === value
+                                                                )?.phoneNumber ?? ''
+                                                            );
+                                                        }}
+                                                    />
+                                                )}
                                             </PopoverContent>
                                         </Popover>
                                         <FormMessage />
@@ -159,10 +163,26 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
                         </TooltipProvider>
                     </div>
                     <div className="w-full">
-                        <div className="flex flex-col gap-y-1">
-                            <p>Số điện thoại</p>
-                            <Input type="text" placeholder="Số điện thoại" disabled />
-                        </div>
+                        <FormField
+                            control={form.control}
+                            name="phoneNumber"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col gap-y-1">
+                                    <FormLabel>
+                                        Số điện thoại<span className="text-red-500">*</span>
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="text"
+                                            placeholder="Số điện thoại"
+                                            value={field.value}
+                                            disabled
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                     </div>
                     <div className="w-full">
                         <FormField
@@ -179,9 +199,20 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
                                                 <SelectValue placeholder="Chọn bác sỹ" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="Nam">Nam</SelectItem>
-                                                <SelectItem value="Nữ">Nữ</SelectItem>
-                                                <SelectItem value="Khác">Khác</SelectItem>
+                                                {!isLoading ? (
+                                                    dentists?.map((dentist: IUser) => (
+                                                        <SelectItem
+                                                            key={dentist.userId}
+                                                            value={dentist.userId}
+                                                        >
+                                                            {dentist.name}
+                                                        </SelectItem>
+                                                    ))
+                                                ) : (
+                                                    <div className="flex justify-center p-2">
+                                                        <LoaderCircle className="animate-spin" />
+                                                    </div>
+                                                )}
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
@@ -202,14 +233,14 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
                                     <FormControl>
                                         <Select
                                             onValueChange={field.onChange}
-                                            value={field.value ?? 'Khám mới'}
+                                            value={field.value ?? 'new'}
                                         >
                                             <SelectTrigger>
                                                 <SelectValue />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="Khám mới">Khám mới</SelectItem>
-                                                <SelectItem value="Tái khám">Tái khám</SelectItem>
+                                                <SelectItem value="new">Khám mới</SelectItem>
+                                                <SelectItem value="old">Tái khám</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </FormControl>

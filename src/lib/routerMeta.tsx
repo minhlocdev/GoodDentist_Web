@@ -1,5 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from 'react';
+import ExaminationProfile from '../app/pages/examination-profile/examination-profile';
+import UserPermission from '../app/pages/permission/user-permission';
 
 const AppointmentPage = lazy(() => import('../app/pages/appoinment/appointment'));
 const PendingAppointment = lazy(() => import('../app/pages/appoinment/pending-appointment'));
@@ -65,12 +67,6 @@ const routerMeta: RouterMetaType = {
         element: <ClinicChain />,
         isCommon: true
     },
-    MaterialDentals: {
-        name: 'Material Dentals',
-        path: '/material-dentals',
-        element: <StaffPage />,
-        isCommon: true
-    },
     Medicines: {
         name: 'Medicines',
         path: '/medicines',
@@ -103,14 +99,20 @@ const routerMeta: RouterMetaType = {
     },
     Permission: {
         name: 'Permission',
-        path: '/Permission',
-        element: <StaffPage />,
+        path: '/permissions',
+        element: <UserPermission />,
         isCommon: true
     },
     Account: {
         name: 'Account',
         path: '/account',
         element: <StaffPage />,
+        isCommon: true
+    },
+    ExaminationProfile: {
+        name: 'Examination Profile',
+        path: '/examination-profile/:code',
+        element: <ExaminationProfile />,
         isCommon: true
     },
     Profile: {

@@ -6,11 +6,11 @@ interface useCalendarStoreProps {
     view: View;
     mode: 'calendar' | 'list';
     selectedDate: Date;
-    selectedEvent: IExamination | undefined;
+    selectedEvent: IExamination | null;
     dialogOpen: boolean;
     selectedSlot: SlotInfo | null;
     selectedClinicId: string | null;
-    setEvent: (e: IExamination | undefined) => void;
+    setEvent: (e: IExamination | null) => void;
     setDate: (date: Date | undefined) => void;
     setView: (newView: View) => void;
     setMode: (newMode: 'calendar' | 'list') => void;
@@ -23,7 +23,7 @@ export const useCalendarStore = create<useCalendarStoreProps>((set) => ({
     view: 'month',
     mode: 'calendar',
     selectedDate: new Date(),
-    selectedEvent: undefined,
+    selectedEvent: null,
     dialogOpen: false,
     selectedSlot: null,
     selectedClinicId: null,
