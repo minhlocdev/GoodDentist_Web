@@ -1,15 +1,9 @@
-export interface Appointment {
-    id: number;
-    status: string;
-    location: string;
-    resource: string;
-    address: string;
-}
+import { IExamination } from "./examination-types/IExamination";
 
 export interface EventItem {
     start?: Date;
     end?: Date;
-    data?: { appointment?: Appointment };
+    data?: { appointment?: IExamination };
     isDraggable?: boolean;
-    resourceId?: number;
+    dentistId?: string;
 }

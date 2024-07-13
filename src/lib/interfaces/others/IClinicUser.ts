@@ -3,7 +3,7 @@ import { IUser } from "../user-types/IUser";
 
 export default interface ICLinicUser {
     clinicUserId: string,
-    userId: IUser["id"],
+    userId: IUser["userId"],
     clinicId: IClinic["clinicId"],
     status: number,
 }

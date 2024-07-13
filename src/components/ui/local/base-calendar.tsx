@@ -26,8 +26,6 @@ export default function BaseCalendar(props: Omit<CalendarProps, 'localizer'>) {
             {...props}
             localizer={localizer}
             views={[Views.DAY, Views.WEEK, Views.MONTH]}
-            min={new Date(2024, 10, 0, 8, 0, 0)}
-            max={new Date(2024, 10, 0, 19, 30, 0)} 
         />
     );
 }

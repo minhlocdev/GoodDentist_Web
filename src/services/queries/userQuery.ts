@@ -113,9 +113,10 @@ export const userService: IUserService = {
                 ).then((res) => res.data.result);
             },
             staleTime: 20000,
-            placeholderData: keepPreviousData
+            placeholderData: keepPreviousData,
+            enabled: clinicId !== ''
         }),
-        
+
     PutUser: (): UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser> =>
         useMutation<ApiResponse<IPostUser>, Error, IPostUser>({
             mutationFn: async (user: IPostUser): Promise<ApiResponse<IPostUser>> => {

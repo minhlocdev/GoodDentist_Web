@@ -9,12 +9,14 @@ interface useCalendarStoreProps {
     selectedEvent: EventItem | null;
     dialogOpen: boolean;
     selectedSlot: SlotInfo | null;
+    selectedClinicId: string | null;
     setEvent: (e: EventItem | null) => void;
     setDate: (date: Date | undefined) => void;
     setView: (newView: View) => void;
     setMode: (newMode: 'calendar' | 'list') => void;
     setOpenDialog: () => void;
     setSlot: (newSlot: SlotInfo) => void;
+    setClinic: (newClinic: string) => void;
 }
 
 export const useCalendarStore = create<useCalendarStoreProps>((set) => ({
@@ -24,10 +26,12 @@ export const useCalendarStore = create<useCalendarStoreProps>((set) => ({
     selectedEvent: null,
     dialogOpen: false,
     selectedSlot: null,
+    selectedClinicId: null,
     setEvent: (event) => set({ selectedEvent: event }),
     setDate: (date) => set({ selectedDate: date }),
     setView: (newView) => set({ view: newView }),
     setMode: (newMode) => set({ mode: newMode }),
     setOpenDialog: () => set((state) => ({ dialogOpen: !state.dialogOpen })),
-    setSlot: (newSlot) => set({ selectedSlot: newSlot })
+    setSlot: (newSlot) => set({ selectedSlot: newSlot }),
+    setClinic: (newClinic) => set({ selectedClinicId: newClinic })
 }));

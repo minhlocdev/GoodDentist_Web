@@ -16,18 +16,18 @@ import {
 } from '../../../components/ui/tooltip';
 import { useCalendarStore } from '../../../hooks/use-calendar-store';
 import { AppointmentStatusCode, EVENT_STATUS_COLORS } from '../../../lib/events';
-import { Appointment } from '../../../lib/interfaces/IEvent';
+import { IExamination } from '../../../lib/interfaces/examination-types/IExamination';
 import { cn } from '../../../lib/utils';
 
 const AppointmentEvent = ({
-    appointment,
+    examination,
     isMonthView
 }: {
-    appointment: Appointment;
+    examination: IExamination;
     isMonthView?: boolean;
 }) => {
-    const { location, status, resource, address } = appointment;
-    const background = EVENT_STATUS_COLORS[status as AppointmentStatusCode];
+    const { notes, status } = examination;
+    const background = EVENT_STATUS_COLORS[status ? 1 : (2 as AppointmentStatusCode)];
 
     const { selectedEvent } = useCalendarStore();
     return (
@@ -43,15 +43,15 @@ const AppointmentEvent = ({
                     >
                         <div
                             className={cn(
-                                'p-1 flex h-[100%] w-[100%] items-start justify-between',
-                                selectedEvent?.data?.appointment?.id === appointment.id
+                                'flex h-[100%] w-[100%] items-start justify-between p-1',
+                                selectedEvent?.data?.appointment?.examinationId ===
+                                    examination.examinationId
                                     ? 'border border-primary'
                                     : ''
                             )}
                         >
                             <div className="flex max-w-[calc(85%)] items-start justify-start gap-1 md:gap-2">
-                                <span>14:00</span>
-                                <span className="truncate">{resource}</span>
+                                <span className="truncate">{notes}</span>
                             </div>
 
                             <DropdownMenu>
@@ -85,9 +85,7 @@ const AppointmentEvent = ({
                 </TooltipTrigger>
                 <TooltipContent side="top">
                     <div className="z-10 flex w-fit max-w-32 flex-col gap-y-2">
-                        <p>{resource}</p>
-                        <p>{location}</p>
-                        <p>{address}</p>
+                        <p>{notes}</p>
                     </div>
                 </TooltipContent>
             </Tooltip>

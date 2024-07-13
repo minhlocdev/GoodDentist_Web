@@ -17,6 +17,8 @@ interface DatePickerProps {
 export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
     const [date, setDate] = React.useState<Date | undefined>(value);
 
+    const [month, setMonth] = React.useState<Date | undefined>(new Date());
+    
     const handleDateChange = (newDate: Date | undefined) => {
         setDate(newDate);
         onChange(newDate);
@@ -46,13 +48,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
                 <Calendar
                     mode="single"
                     captionLayout="dropdown-buttons"
+                    month={month}
+                    onMonthChange={(month) => setMonth(month)}
                     selected={date}
                     onSelect={handleDateChange}
                     initialFocus
                     locale={vi}
                     fromYear={1960}
                     toYear={2030}
-                    
                 />
             </PopoverContent>
         </Popover>

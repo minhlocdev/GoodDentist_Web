@@ -96,7 +96,7 @@ const LoginPage = () => {
             .PostLoginUser(values)
             .then((res) => {
                 if (res.status !== 200 || res?.data.isSuccess === false) {
-                    toast.error('Đăng nhập thất bại');
+                    toast.error('Sai tên đăng nhập hoặc mật khẩu');
                 }
                 if (res?.data !== null && res?.data.isSuccess === true) {
                     //TODO

@@ -1,12 +1,16 @@
-import { CalendarDays, List } from 'lucide-react';
+import { CalendarDays, List, LoaderCircle } from 'lucide-react';
 import { useCalendarStore } from '../../hooks/use-calendar-store';
+import { IClinic } from '../../lib/interfaces/clinics-types/IClinic';
 import { cn } from '../../lib/utils';
+import { clinicService } from '../../services/queries/clinicQuery';
 import { DatePicker } from '../ui/date-picker';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { SheetMenu } from './sheet-menu';
 import { UserNav } from './user-nav';
 
 export function CalendarNavbar() {
     const calendar = useCalendarStore();
+    const { data: clinics, isLoading } = clinicService.GetClinics();
     if (!calendar) return null;
 
     return (
@@ -83,6 +87,27 @@ export function CalendarNavbar() {
                             <List className="h-4 w-4" />
                         </button>
                     </div>
+                    <Select
+                        onValueChange={(value) => calendar.setClinic(value)}
+                        value={calendar.selectedClinicId ?? ''}
+                    >
+                        <SelectTrigger className="ml-5 min-w-[200px]">
+                            <SelectValue placeholder="Chọn phòng khám" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {!isLoading ? (
+                                clinics?.map((clinic: IClinic) => (
+                                    <SelectItem key={clinic.clinicId} value={clinic.clinicId}>
+                                        {clinic.clinicName}
+                                    </SelectItem>
+                                ))
+                            ) : (
+                                <div className="flex justify-center p-2">
+                                    <LoaderCircle className="animate-spin" />
+                                </div>
+                            )}
+                        </SelectContent>
+                    </Select>
                 </div>
                 <div className="flex flex-1 items-center justify-end space-x-2">
                     <UserNav />
@@ -157,6 +182,27 @@ export function CalendarNavbar() {
                         <List className="h-4 w-4" />
                     </button>
                 </div>
+                <Select
+                    onValueChange={(value) => calendar.setClinic(value)}
+                    value={calendar.selectedClinicId ?? ''}
+                >
+                    <SelectTrigger className="ml-5 w-fit">
+                        <SelectValue placeholder="Chọn phòng khám" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {!isLoading ? (
+                            clinics?.map((clinic: IClinic) => (
+                                <SelectItem key={clinic.clinicId} value={clinic.clinicId}>
+                                    {clinic.clinicName}
+                                </SelectItem>
+                            ))
+                        ) : (
+                            <div className="flex justify-center p-2">
+                                <LoaderCircle className="animate-spin" />
+                            </div>
+                        )}
+                    </SelectContent>
+                </Select>
             </div>
         </header>
     );

@@ -1,7 +1,7 @@
 import { IClinic } from "../clinics-types/IClinic";
 
 export interface IUser {
-    id: number;
+    userId: string;
     name: string
     userName: string;
     password?: string;
