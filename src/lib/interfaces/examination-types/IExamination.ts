@@ -1,3 +1,4 @@
+import { ICustomer } from "../customer-types/ICustomer";
 import { IMedicalRecord } from "../IMedicalRecord";
 import { IOrder } from "../IOrder";
 import { IPrescription } from "../IPrescription";
@@ -16,6 +17,7 @@ export interface IExamination {
     timeEnd: Date;
     notes?: string;
     status?: boolean;
+    customer?: ICustomer;
     dentist?: IUser;
     dentistSlot?: IDentistSlot;
     examinationProfile?: IExaminationProfile[];

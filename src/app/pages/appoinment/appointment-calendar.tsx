@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { useMemo } from 'react';
 import { DateLocalizer, EventProps, Formats, Views } from 'react-big-calendar';
@@ -19,19 +19,19 @@ const AppointmentCalendar = () => {
     const { data: dentists, isLoading } = userService.GetUsersByClinic(
         calendar.selectedClinicId ?? '',
         1,
-        4
+        10
     );
     const { data: examinations, isLoading: examLoading } =
         examinationService.GetExaminationByClinic(calendar?.selectedClinicId ?? '', 1, 200);
     const transformExaminationsToEvents = (examinations: IExamination[]): EventItem[] => {
         return examinations.map((examination) => ({
-            start: new Date(examination.timeStart),
-            end: new Date(examination.timeEnd),
+            start: parse(examination.timeStart.toString(), 'yyyy-MM-dd\'T\'HH:mm:ss', new Date()),
+            end: parse(examination.timeEnd.toString(), 'yyyy-MM-dd\'T\'HH:mm:ss', new Date()),
             data: {
                 appointment: examination
             },
             isDraggable: true,
-            dentistId: examination.dentistId
+            userId: examination.dentistId
         }));
     };
     const { formats } = useMemo(
@@ -61,6 +61,7 @@ const AppointmentCalendar = () => {
     const components: any = {
         event: ({ event }: EventProps<EventItem>) => {
             const data = event?.data;
+            
             if (data?.appointment)
                 return (
                     <AppointmentEvent

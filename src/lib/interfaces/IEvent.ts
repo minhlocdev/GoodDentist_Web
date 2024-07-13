@@ -5,5 +5,5 @@ export interface EventItem {
     end?: Date;
     data?: { appointment?: IExamination };
     isDraggable?: boolean;
-    dentistId?: string;
+    userId?: string;
 }

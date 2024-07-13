@@ -42,26 +42,26 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                         onClick={() => {
                                             navigate(
                                                 `/patient-record/` +
-                                                    `${calendar.selectedEvent?.data?.appointment?.resource}`
+                                                    `${calendar.selectedEvent?.data?.appointment?.examinationProfileId}`
                                             );
                                         }}
                                     >
                                         <AvatarImage src={'#'} alt="Avatar" />
                                         <AvatarFallback className="text-[10px] font-bold">
-                                            {calendar?.selectedEvent.data?.appointment?.resource}
+                                            {calendar?.selectedEvent.data?.appointment?.diagnosis}
                                         </AvatarFallback>
                                     </Avatar>
                                 </div>
                                 <div className="resource-name flex flex-col ">
-                                    <span className="text-md font-bold">69082816</span>
+                                    <span className="text-md font-bold">{calendar.selectedEvent?.data?.appointment?.examinationProfileId}</span>
                                     <a
                                         href={
                                             `/patient-record/` +
-                                            `${calendar.selectedEvent?.data?.appointment?.resource}`
+                                            `${calendar.selectedEvent?.data?.appointment?.examinationProfileId}`
                                         }
                                         className="text-md cursor-pointer font-bold text-primary hover:opacity-50"
                                     >
-                                        {calendar?.selectedEvent.data?.appointment?.resource}
+                                        {calendar?.selectedEvent.data?.appointment?.customer?.name}
                                     </a>
                                     <span className="text-[13px]">1999 Nam</span>
                                 </div>

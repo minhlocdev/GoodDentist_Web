@@ -83,7 +83,7 @@ export const CustomResource: React.FC<CustomResourceProps> = ({ name, photo }) =
                     </AvatarFallback>
                 </Avatar>
             </div>
-            <div className="resource-name text-lg text-neutral-600">{name}</div>
+            <div className="resource-name text-sm text-neutral-600">{name}</div>
         </div>
     );
 };
