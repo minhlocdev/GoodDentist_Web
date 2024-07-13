@@ -16,24 +16,34 @@ import { CustomResource, CustomTimeGutterHeader } from './customize-calendar';
 
 const AppointmentCalendar = () => {
     const calendar = useCalendarStore();
-    const { data: dentists, isLoading } = userService.GetUsersByClinic(
+    const { data: dentists, isLoading } = userService.GetDentistsByClinic(
         calendar.selectedClinicId ?? '',
         1,
-        10
+        10,
+        'roleId',
+        '2'
     );
     const { data: examinations, isLoading: examLoading } =
         examinationService.GetExaminationByClinic(calendar?.selectedClinicId ?? '', 1, 200);
+
+    const details = examinationService.GetExamination(
+        examinations?.map((ex) => ex.examinationId) ?? []
+    );
     const transformExaminationsToEvents = (examinations: IExamination[]): EventItem[] => {
         return examinations.map((examination) => ({
-            start: parse(examination.timeStart.toString(), 'yyyy-MM-dd\'T\'HH:mm:ss', new Date()),
-            end: parse(examination.timeEnd.toString(), 'yyyy-MM-dd\'T\'HH:mm:ss', new Date()),
+            start: parse(examination.timeStart.toString(), "yyyy-MM-dd'T'HH:mm:ss", new Date()),
+            end: parse(examination.timeEnd.toString(), "yyyy-MM-dd'T'HH:mm:ss", new Date()),
             data: {
                 appointment: examination
             },
             isDraggable: true,
-            userId: examination.dentistId
+            resourceId: examination.dentistId
         }));
     };
+    const transformedExaminations = useMemo(
+        () => transformExaminationsToEvents(examinations ?? []),
+        [examinations]
+    );
     const { formats } = useMemo(
         () => ({
             formats: {
@@ -53,15 +63,11 @@ const AppointmentCalendar = () => {
         }),
         []
     );
-    if (isLoading || examLoading) {
-        return <BackdropLoader />;
-    }
-    if (!calendar) return null;
 
     const components: any = {
         event: ({ event }: EventProps<EventItem>) => {
             const data = event?.data;
-            
+
             if (data?.appointment)
                 return (
                     <AppointmentEvent
@@ -75,11 +81,29 @@ const AppointmentCalendar = () => {
         timeGutterHeader: CustomTimeGutterHeader,
         resourceHeader: (props: any) => {
             if (dentists !== null && dentists !== undefined) {
-                const resource = dentists.find((r) => r.userId === props.resource.userId);
+                const resource = dentists.find((r) => r.userId === props.resource.id);
                 if (!resource) return null;
                 return <CustomResource name={resource.name} photo={resource.avatar as string} />;
             }
             return null;
+        }
+    };
+
+    const resources = dentists?.map((dentist) => ({
+        id: dentist.userId,
+        title: dentist.name,
+        avatar: dentist.avatar
+    }));
+
+    if (isLoading || examLoading) {
+        return <BackdropLoader />;
+    }
+
+    if (!calendar) return null;
+    const onSelectEvent = (e: EventItem) => {
+        const data = details.find((ex) => ex.data?.examinationId === e.data?.appointment?.examinationId);
+        if (data) {
+            calendar?.setEvent(data.data);
         }
     };
     return (
@@ -91,9 +115,9 @@ const AppointmentCalendar = () => {
         >
             <div className="relative h-[100%] w-[100%] flex-1 overflow-auto">
                 <BaseCalendar
-                    events={transformExaminationsToEvents(examinations ?? [])}
+                    events={transformedExaminations}
                     defaultView={calendar?.view}
-                    resources={calendar?.view === Views.DAY ? dentists : undefined}
+                    resources={calendar?.view === Views.DAY ? resources : undefined}
                     // Components
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                     components={components}
@@ -106,7 +130,7 @@ const AppointmentCalendar = () => {
                     step={15}
                     timeslots={1}
                     formats={formats as Formats}
-                    onSelectEvent={(e) => calendar.setEvent(e)}
+                    onSelectEvent={onSelectEvent}
                     onSelectSlot={(slotInfo) => {
                         calendar.setSlot(slotInfo);
                         calendar.setOpenDialog();

@@ -1,7 +1,8 @@
-import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query';
+import { keepPreviousData, useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { IExamination } from '../../lib/interfaces/examination-types/IExamination';
 import { IExaminationService } from '../../lib/interfaces/examination-types/IExaminationService';
-import { getExaminationsByClinic } from '../examination';
+import { getExamination, getExaminationsByClinic } from '../examination';
+import { getExaminationProfileByCustomer } from '../examination-profile';
 
 export const examinationService: IExaminationService = {
     GetExaminationByClinic: (
@@ -37,6 +38,29 @@ export const examinationService: IExaminationService = {
             },
             staleTime: 20000,
             placeholderData: keepPreviousData,
-            enabled: clinicId!==""
+            enabled: clinicId !== ''
+        }),
+
+    GetExamination: (examIds): UseQueryResult<IExamination>[] =>
+        useQueries({
+            queries: examIds.map((examId) => ({
+                queryKey: ['examination', examId],
+                queryFn: async () => {
+                    const response = await getExamination(examId);
+                    return response.data.result;
+                },
+                staleTime: Infinity
+            }))
+        }),
+
+    GetExaminationProfileByCustomer: (customerId) =>
+        useQuery({
+            queryKey: ['examination-profile', customerId],
+            queryFn: async () => {
+                const response = await getExaminationProfileByCustomer(customerId);
+                return response.data.result;
+            },
+            enabled: !!customerId,
+            staleTime: Infinity
         })
 };

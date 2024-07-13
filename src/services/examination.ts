@@ -14,7 +14,7 @@ export const getExaminationsByClinic = async (
 ): Promise<AxiosResponse<ApiResponse<IExamination[]>>> => {
     return await apiClient({
         method: 'get',
-        url: `/api/examinations/all-examinations-of-clinic`,
+        url: `/api/examinations/clinic`,
         params: {
             clinicId,
             pageNumber,
@@ -23,6 +23,18 @@ export const getExaminationsByClinic = async (
             filterValue,
             sortField,
             sortOrder
+        }
+    });
+};
+
+export const getExamination = async (
+    examId: number
+): Promise<AxiosResponse<ApiResponse<IExamination>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/api/examinations/examination/detail`,
+        params: {
+            examId
         }
     });
 };

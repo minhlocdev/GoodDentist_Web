@@ -5,5 +5,5 @@ export interface EventItem {
     end?: Date;
     data?: { appointment?: IExamination };
     isDraggable?: boolean;
-    userId?: string;
+    resourceId?: string;
 }

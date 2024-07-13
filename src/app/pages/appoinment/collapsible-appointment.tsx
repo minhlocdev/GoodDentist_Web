@@ -1,25 +1,19 @@
 import { format } from 'date-fns';
+import { useCalendarStore } from '../../../hooks/use-calendar-store';
 import CalendarCollapsible from './calendar-collapsible';
 
 const CollapseAppointment = () => {
+    const { selectedEvent } = useCalendarStore();
     return (
         <CalendarCollapsible
             title="Lịch hẹn"
             content={
-                <>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            {format(new Date(), 'dd-MM-yyyy')}
-                        </div>
-                        <div>ĐTT TIẾP</div>
+                <div className="grid grid-flow-row-dense grid-cols-2 gap-y-3 text-sm">
+                    <div className="font-bold text-neutral-700/90">
+                        {format(selectedEvent?.timeStart ?? new Date(), 'dd-MM-yyyy')}
                     </div>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            {format(new Date(), 'dd-MM-yyyy')}
-                        </div>
-                        <div>CHỈNH NHA CỐ ĐỊNH MẮC CÀI KIM LOẠI KHE 22</div>
-                    </div>
-                </>
+                    <div>{selectedEvent?.notes}</div>
+                </div>
             }
         />
     );

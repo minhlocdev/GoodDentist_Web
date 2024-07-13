@@ -1,23 +1,29 @@
-import { format } from 'date-fns';
+import { useCalendarStore } from '../../../hooks/use-calendar-store';
 import CalendarCollapsible from './calendar-collapsible';
 
 const CollapseMedicine = () => {
+    const { selectedEvent } = useCalendarStore();
     return (
         <CalendarCollapsible
             title="Đơn thuốc"
             content={
                 <>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            {format(new Date(), 'dd-MM-yyyy')}
-                        </div>
-                        <div>ĐTT TIẾP</div>
-                    </div>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            {format(new Date(), 'dd-MM-yyyy')}
-                        </div>
-                        <div>CHỈNH NHA CỐ ĐỊNH MẮC CÀI KIM LOẠI KHE 22</div>
+                    <div className="grid grid-cols-2 gap-2 text-[14px]">
+                        {selectedEvent?.prescriptions?.map((p) => (
+                            <>
+                                <div className="col-span-2 text-center font-bold text-neutral-700/90">
+                                    {p.note}
+                                </div>
+                                {p.medicinePrescriptions?.map((medicine) => (
+                                    <>
+                                        <div className="">{medicine?.medicine?.medicineName}</div>
+                                        <div className="font-bold text-primary">
+                                            {medicine?.medicine?.quantity} {medicine.medicine?.unit}
+                                        </div>
+                                    </>
+                                ))}
+                            </>
+                        ))}
                     </div>
                 </>
             }

@@ -27,5 +27,14 @@ export interface IUserService {
         sortField?: string,
         sortOrder?: string
     ) => UseQueryResult<IUser[]>;
+    GetDentistsByClinic: (
+        clinicId: string,
+        pageNumber: number,
+        rowsPerPage: number,
+        filterField?: string,
+        filterValue?: string,
+        sortField?: string,
+        sortOrder?: string
+    ) => UseQueryResult<IUser[]>;
     PutUser: () => UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser>;
 }

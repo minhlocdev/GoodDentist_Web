@@ -1,3 +1,5 @@
+import { IMedicinePrescription } from "./others/IMedicinePrescription";
+
 export interface IPrescription {
     prescriptionId: number;
     dateTime?: Date;
@@ -5,4 +7,5 @@ export interface IPrescription {
     status?: boolean;
     total?: number;
     examinationId?: number;
+    medicinePrescriptions?:IMedicinePrescription[]
 }

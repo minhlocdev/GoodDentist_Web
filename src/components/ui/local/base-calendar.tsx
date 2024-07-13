@@ -1,5 +1,6 @@
 import { format, getDay, parse, startOfWeek } from 'date-fns';
 import { vi } from 'date-fns/locale';
+import React from 'react';
 import {
     Calendar as BigCalendar,
     CalendarProps,
@@ -20,7 +21,7 @@ const localizer = dateFnsLocalizer({
 });
 
 // Define the Calendar component
-export default function BaseCalendar(props: Omit<CalendarProps, 'localizer'>) {
+const BaseCalendar = React.memo(function BaseCalendar(props: Omit<CalendarProps, 'localizer'>) {
     return (
         <BigCalendar
             {...props}
@@ -28,4 +29,6 @@ export default function BaseCalendar(props: Omit<CalendarProps, 'localizer'>) {
             views={[Views.DAY, Views.WEEK, Views.MONTH]}
         />
     );
-}
+});
+
+export default BaseCalendar;

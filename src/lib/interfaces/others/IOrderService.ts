@@ -1,3 +1,5 @@
+import { IService } from "../services-types/IService";
+
 export interface IOrderService {
     orderServiceId: number;
     orderId?: number;
@@ -5,4 +7,5 @@ export interface IOrderService {
     price?: number;
     quantity?: number;
     status?: boolean;
+    service?:IService
 }

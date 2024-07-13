@@ -18,9 +18,11 @@ export interface IExamination {
     notes?: string;
     status?: boolean;
     customer?: ICustomer;
+    customerId?:string;
+    customerName?:string;
     dentist?: IUser;
     dentistSlot?: IDentistSlot;
-    examinationProfile?: IExaminationProfile[];
+    examinationProfile?: IExaminationProfile;
     medicalRecords?: IMedicalRecord[];
     orders?: IOrder[];
     prescriptions?: IPrescription[];

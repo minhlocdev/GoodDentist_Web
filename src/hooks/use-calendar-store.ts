@@ -1,16 +1,16 @@
 import { SlotInfo, View } from 'react-big-calendar';
 import { create } from 'zustand';
-import { EventItem } from '../lib/interfaces/IEvent';
+import { IExamination } from '../lib/interfaces/examination-types/IExamination';
 
 interface useCalendarStoreProps {
     view: View;
     mode: 'calendar' | 'list';
     selectedDate: Date;
-    selectedEvent: EventItem | null;
+    selectedEvent: IExamination | undefined;
     dialogOpen: boolean;
     selectedSlot: SlotInfo | null;
     selectedClinicId: string | null;
-    setEvent: (e: EventItem | null) => void;
+    setEvent: (e: IExamination | undefined) => void;
     setDate: (date: Date | undefined) => void;
     setView: (newView: View) => void;
     setMode: (newMode: 'calendar' | 'list') => void;
@@ -23,7 +23,7 @@ export const useCalendarStore = create<useCalendarStoreProps>((set) => ({
     view: 'month',
     mode: 'calendar',
     selectedDate: new Date(),
-    selectedEvent: null,
+    selectedEvent: undefined,
     dialogOpen: false,
     selectedSlot: null,
     selectedClinicId: null,

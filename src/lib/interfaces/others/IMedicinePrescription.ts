@@ -1,3 +1,5 @@
+import { IMedicine } from '../IMedicine';
+
 export interface IMedicinePrescription {
     medicinePrescriptionId: number;
     medicineId?: number;
@@ -5,4 +7,5 @@ export interface IMedicinePrescription {
     quantity?: number;
     price?: number;
     status?: boolean;
+    medicine?: IMedicine;
 }

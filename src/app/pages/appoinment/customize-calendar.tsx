@@ -67,17 +67,11 @@ interface CustomResourceProps {
 }
 
 export const CustomResource: React.FC<CustomResourceProps> = ({ name, photo }) => {
-    const isPhotoLink = photo.startsWith('http');
-
     return (
         <div className="flex h-[100%] flex-1 items-center !justify-start gap-4 !bg-white pl-3">
             <div className="resource-photo">
                 <Avatar className="h-10 w-10 rounded-full bg-slate-100">
-                    {isPhotoLink ? (
                         <AvatarImage src={photo} alt="Avatar" />
-                    ) : (
-                        <AvatarImage src={`/avatardefault_92824.webp`} alt="Avatar" />
-                    )}
                     <AvatarFallback className="bg-transparent text-neutral-600">
                         {name.charAt(0).toUpperCase()}
                     </AvatarFallback>

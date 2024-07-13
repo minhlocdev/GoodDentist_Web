@@ -1,46 +1,38 @@
+import { format } from 'date-fns';
+import { useCalendarStore } from '../../../hooks/use-calendar-store';
 import CalendarCollapsible from './calendar-collapsible';
 
 const CollapseInfo = () => {
+    const { selectedEvent } = useCalendarStore();
     return (
         <CalendarCollapsible
             title="Thông tin cơ bản"
             content={
-                <>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            Điện thoại
-                        </div>
-                        <div>0983263601</div>
+                <div className="grid grid-flow-row-dense grid-cols-2 gap-y-3 text-sm">
+                    <div className="font-bold text-neutral-700/90">Điện thoại</div>
+                    <div className="break-all">
+                        {selectedEvent?.examinationProfile?.customer?.phoneNumber}
                     </div>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            Nghề nghiệp
-                        </div>
-                        <div></div>
+                    <div className="font-bold text-neutral-700/90">Ngày sinh</div>
+                    <div>
+                        {format(
+                            selectedEvent?.examinationProfile?.customer?.dob ?? new Date(),
+                            'dd-MM-yyyy'
+                        )}
                     </div>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            Địa chỉ
-                        </div>
-                        <div>Quận 3 - Quận 3 - Thành phố Hồ Chí Minh</div>
+                    <div className="font-bold text-neutral-700/90">Email</div>
+                    <div className="break-all">
+                        {selectedEvent?.examinationProfile?.customer?.email}
                     </div>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            Lí do khám
-                        </div>
-                        <div>Đau răng</div>
+                    <div className="font-bold text-neutral-700/90">Địa chỉ</div>
+                    <div className="break-all">
+                        {selectedEvent?.examinationProfile?.customer?.address}
                     </div>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            Tiền sử bệnh
-                        </div>
+                    <div className="font-bold text-neutral-700/90">Tiền sử bệnh</div>
+                    <div className="break-all">
+                        {selectedEvent?.examinationProfile?.customer?.address}
                     </div>
-                    <div className="flex gap-2 text-[14px]">
-                        <div className="w-[100px] min-w-[100px] font-bold text-neutral-700/90">
-                            Ghi chú
-                        </div>
-                    </div>
-                </>
+                </div>
             }
         />
     );

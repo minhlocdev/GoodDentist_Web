@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import CalendarCollapsible from './calendar-collapsible';
-
 const CollapsePayment = () => {
     return (
         <CalendarCollapsible

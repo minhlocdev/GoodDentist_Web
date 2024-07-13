@@ -88,7 +88,31 @@ export const getUsersByClinic = async (
 ): Promise<AxiosResponse<ApiResponse<IUser[]>>> => {
     return await apiClient({
         method: 'get',
-        url: `/api/users/all-users`,
+        url: `/api/users/all-users-by-clinic`,
+        params: {
+            clinicId,
+            pageNumber,
+            rowsPerPage,
+            filterField,
+            filterValue,
+            sortField,
+            sortOrder
+        }
+    });
+};
+
+export const getDentistsByClinic = async (
+    clinicId: string,
+    pageNumber: number,
+    rowsPerPage: number,
+    filterField?: string,
+    filterValue?: string,
+    sortField?: string,
+    sortOrder?: string
+): Promise<AxiosResponse<ApiResponse<IUser[]>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/api/users/all-dentists-by-clinic`,
         params: {
             clinicId,
             pageNumber,
