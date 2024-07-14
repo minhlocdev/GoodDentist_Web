@@ -1,7 +1,7 @@
 import { MenuIcon, PanelsTopLeft } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet';
-import Menu from './menu';
+import Menu from '../../admin-panel/menu';
+import { Button } from '../button';
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../sheet';
 
 export function SheetMenu() {
     return (

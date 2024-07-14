@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 import { getStaffMenuList } from '../../lib/menu-list';
 import { cn } from '../../lib/utils';
-import { CollapseMenuButton } from '../admin-panel/dropdown-menu-button';
 import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { CollapseMenuButton } from '../ui/local/dropdown-menu-button';
 
 interface MenuProbs {
     isOpen: boolean | undefined;

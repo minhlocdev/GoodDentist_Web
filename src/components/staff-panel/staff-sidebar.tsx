@@ -1,12 +1,12 @@
 import { PanelsTopLeft } from 'lucide-react';
 import { useStore } from 'zustand';
-import { SidebarToggle } from '../admin-panel/side-bar-toggle';
 
 import { useSidebarToggle } from '../../hooks/use-sidebar-toggle';
 import { cn } from '../../lib/utils';
 
 import { Button } from '../ui/button';
 import StaffMenu from './staff-menu';
+import { SidebarToggle } from '../ui/local/side-bar-toggle';
 
 export const StaffSidebar = () => {
     const sidebar = useStore(useSidebarToggle, (state) => state);

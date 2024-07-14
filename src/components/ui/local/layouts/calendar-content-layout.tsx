@@ -1,4 +1,4 @@
-import { CalendarNavbar } from './calendar-nav';
+import { CalendarNavbar } from '../calendar-nav';
 
 interface ContentLayoutProps {
     title: string;

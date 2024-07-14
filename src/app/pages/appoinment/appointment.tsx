@@ -1,4 +1,4 @@
-import { CalendarContentLayout } from '../../../components/admin-panel/calendar-content-layout';
+import { CalendarContentLayout } from '../../../components/ui/local/layouts/calendar-content-layout';
 import AppointmentCalendar from './appointment-calendar';
 import CalendarAside from './calendar-aside';
 

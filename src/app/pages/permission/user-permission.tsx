@@ -1,4 +1,4 @@
-import { ContentLayout } from '../../../components/admin-panel/content-layout';
+import { ContentLayout } from '../../../components/ui/local/layouts/content-layout';
 import UserPermissionTable from './permission-table';
 
 const UserPermission = () => {

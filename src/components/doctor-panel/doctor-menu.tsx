@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 import { getDoctorMenuList } from '../../lib/menu-list';
 import { cn } from '../../lib/utils';
-import { CollapseMenuButton } from '../admin-panel/dropdown-menu-button';
 import { Button } from '../ui/button';
+import { CollapseMenuButton } from '../ui/local/dropdown-menu-button';
 import { ScrollArea } from '../ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 

@@ -1,4 +1,4 @@
-import { ContentLayout } from '../../../components/admin-panel/content-layout';
+import { ContentLayout } from '../../../components/ui/local/layouts/content-layout';
 import { CustomerDataTable } from './customer-data-table';
 
 const CustomerPage = () => {
