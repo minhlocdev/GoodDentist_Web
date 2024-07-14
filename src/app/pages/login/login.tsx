@@ -24,9 +24,7 @@ import { userService } from '../../../services/queries/userQuery';
 
 const loginSchema = z.object({
     username: z.string().min(1, 'Please input username.'),
-    password: z.string().min(1, 'Please input password.')
-    username: z.string().min(1, 'Please input username.'),
-    password: z.string().min(1, 'Please input password.')
+    password: z.string().min(1, 'Please input password.'),
 });
 
 interface LoginFormProps {
@@ -53,7 +51,11 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
                         <FormItem>
                             <FormLabel>Tài khoản</FormLabel>
                             <FormControl className="border border-gray-500">
-                                <Input placeholder="Your username" {...field} disabled={isLoading}/>
+                                <Input
+                                    placeholder="Your username"
+                                    {...field}
+                                    disabled={isLoading}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -66,7 +68,12 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
                         <FormItem>
                             <FormLabel>Mật khẩu</FormLabel>
                             <FormControl className="border border-gray-500">
-                                <Input type="password" placeholder="Your password" {...field} disabled={isLoading}/>
+                                <Input
+                                    type="password"
+                                    placeholder="Your password"
+                                    {...field}
+                                    disabled={isLoading}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -84,28 +91,45 @@ const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
 };
 
 const LoginPage = () => {
-    const { accessToken, setAccessToken } = useAuth();
+    const { accessToken, setAccessToken, setUser } = useAuth();
     const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
-
     useEffect(() => {
         sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+        sessionStorage.removeItem('loginUser');
     }, [accessToken, navigate]);
 
     const handleLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
         setLoading(true);
         await userService
             .PostLoginUser(values)
-            .then((res) => {
+            .then(async (res) => {
                 if (res.status !== 200 || res?.data.isSuccess === false) {
                     toast.error('Sai tên đăng nhập hoặc mật khẩu');
                 }
                 if (res?.data !== null && res?.data.isSuccess === true) {
-                    //TODO
                     toast.success('Đăng nhập thành công');
+                    const token = res?.data?.accessToken as string;
                     sessionStorage.setItem(ACCESS_TOKEN_KEY, res?.data?.accessToken as string);
-                    setAccessToken(res?.data?.accessToken as string);
-                    navigate('/');
+                    await userService
+                        .GetLoginUser(token ?? '')
+                        .then((res) => {
+                            if (res.status !== 200 || res?.data.isSuccess === false) {
+                                toast.error('Có gì đó sai sai');
+                            }
+                            if (res?.data !== null && res?.data.isSuccess === true) {
+                                sessionStorage.setItem(
+                                    'loginUser',
+                                    JSON.stringify(res?.data?.result)
+                                );
+                                setUser(res?.data?.result);
+                                setAccessToken(token);
+                                navigate('/');
+                            }
+                        })
+                        .catch(() => {
+                            toast.error('Có gì đó sai sai');
+                        });
                 }
             })
             .catch(() => {
@@ -154,4 +178,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
