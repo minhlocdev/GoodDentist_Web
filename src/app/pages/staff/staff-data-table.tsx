@@ -100,7 +100,7 @@ export function StaffDataTable() {
     if (error) return <div className="text-center">Error loading users</div>;
     return (
         <div className="w-full">
-            <div className="flex items-center gap-x-3 py-4">
+            <div className="flex items-end gap-x-3 pb-4">
                 <Input
                     placeholder="Tìm theo email, số điện thoại, địa chỉ, v.v."
                     value={columnFilters.find((filter) => filter.id === 'search')?.value as string}
@@ -109,45 +109,54 @@ export function StaffDataTable() {
                     }
                     className="max-w-lg"
                 />
-                <Select
-                    defaultValue="all"
-                    onValueChange={(value) =>
-                        setColumnFilters([
-                            { id: 'status', value: value === 'all' ? null : value === 'true' }
-                        ])
-                    }
-                >
-                    <SelectTrigger className="w-[150px] min-w-[150px] p-2 md:w-fit">
-                        <SelectValue placeholder="Tình trạng làm việc" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">Tất cả</SelectItem>
-                        <SelectItem value="true">Đang làm việc</SelectItem>
-                        <SelectItem value="false">Đã nghỉ</SelectItem>
-                    </SelectContent>
-                </Select>
-                <Select
-                    defaultValue="all"
-                    onValueChange={(value) => setColumnFilters([{ id: 'clinic', value: value }])}
-                >
-                    <SelectTrigger className="ml-auto w-[150px] min-w-[150px] p-2 md:w-fit">
-                        <SelectValue placeholder="Chọn phòng khám" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">Tất cả</SelectItem>
-                        {!clinicLoading ? (
-                            clinics?.map((clinic: IClinic) => (
-                                <SelectItem key={clinic.clinicId} value={clinic.clinicId}>
-                                    {clinic.clinicName}
-                                </SelectItem>
-                            ))
-                        ) : (
-                            <div className="flex justify-center p-2">
-                                <LoaderCircle className="animate-spin" />
-                            </div>
-                        )}
-                    </SelectContent>
-                </Select>
+                <div className="flex flex-col gap-y-1">
+                    <span className="text-xs">Tình trạng làm việc</span>
+                    <Select
+                        defaultValue="all"
+                        onValueChange={(value) =>
+                            setColumnFilters([
+                                { id: 'status', value: value === 'all' ? null : value === 'true' }
+                            ])
+                        }
+                    >
+                        <SelectTrigger className="w-[150px] min-w-[150px] p-2 md:w-fit">
+                            <SelectValue placeholder="Tình trạng làm việc" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Tất cả</SelectItem>
+                            <SelectItem value="true">Đang làm việc</SelectItem>
+                            <SelectItem value="false">Đã nghỉ</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="ml-auto flex flex-col gap-y-1 ">
+                    <span className="text-xs">Chi nhánh</span>
+
+                    <Select
+                        defaultValue="all"
+                        onValueChange={(value) =>
+                            setColumnFilters([{ id: 'clinic', value: value }])
+                        }
+                    >
+                        <SelectTrigger className="w-[150px] min-w-[150px] p-2 md:w-fit">
+                            <SelectValue placeholder="Chọn phòng khám" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Tất cả</SelectItem>
+                            {!clinicLoading ? (
+                                clinics?.map((clinic: IClinic) => (
+                                    <SelectItem key={clinic.clinicId} value={clinic.clinicId}>
+                                        {clinic.clinicName}
+                                    </SelectItem>
+                                ))
+                            ) : (
+                                <div className="flex justify-center p-2">
+                                    <LoaderCircle className="animate-spin" />
+                                </div>
+                            )}
+                        </SelectContent>
+                    </Select>
+                </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline">

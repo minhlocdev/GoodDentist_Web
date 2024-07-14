@@ -14,14 +14,19 @@ import {
 interface CustomerComboBoxProps {
     customers?: ICustomer[];
     onSelect: (value: string) => void;
+    disabled?: boolean;
 }
 
-export function CustomerComboBox({ customers = [], onSelect }: CustomerComboBoxProps) {
+export function CustomerComboBox({
+    customers = [],
+    onSelect,
+    disabled = false
+}: CustomerComboBoxProps) {
     const handleSelect = (customer: ICustomer) => {
         onSelect(customer.userId);
     };
     return (
-        <Command>
+        <Command disablePointerSelection={disabled}>
             <CommandInput placeholder="Tìm theo tên, số điện thoại..." />
             {customers.length === 0 ? (
                 <CommandEmpty>Không có dữ liệu.</CommandEmpty>

@@ -1,10 +1,11 @@
 'use client';
 
 import { Toaster as Sonner } from 'sonner';
+import React from 'react';
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = React.memo(({ ...props }: ToasterProps) => {
     return (
         <Sonner
             className="toaster group"
@@ -23,6 +24,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
             {...props}
         />
     );
-};
+});
 
 export { Toaster };

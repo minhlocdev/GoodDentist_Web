@@ -46,12 +46,15 @@ export const StaffForm = ({ onCloseModal }: StaffFormProps) => {
                 clinicId: values.clinicId,
                 status: values.status,
                 avatar: values.avatar,
-                imageUrl: null,
+                imageUrl: null
             };
             await postUser.mutateAsync(newUser, {
-                onSuccess: async () => {
-                    toast.success('Tạo mới thành công');
-                    await queryClient.refetchQueries({ queryKey: ['users'] });
+                onSuccess: async (res) => {
+                    if (res.isSuccess) {
+                        toast.success('Tạo mới thành công');
+                        await queryClient.refetchQueries({ queryKey: ['users'] });
+                    }
+                    toast.error('Tạo mới thất bại');
                     onCloseModal();
                 },
                 onError: (error) => {

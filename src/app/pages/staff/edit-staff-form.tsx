@@ -73,10 +73,10 @@ export const EditStaffForm = ({ staff, onCloseModal }: StaffFormProps) => {
                     if (res.isSuccess) {
                         toast.success('Cập nhật thành công');
                         await queryClient.refetchQueries({ queryKey: ['users'] });
-                        onCloseModal();
                     } else {
                         toast.error('Cập nhật thất bại ' + res.message);
                     }
+                    onCloseModal();
                 },
                 onError: (error) => {
                     if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {

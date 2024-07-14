@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { ApiResponse } from '../lib/api';
+import { IDentistSlot } from '../lib/interfaces/others/IDentistSlot';
 import { ILoginUser } from '../lib/interfaces/user-types/ILoginUser';
 import { IPostUser } from '../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../lib/interfaces/user-types/IUser';
@@ -44,7 +45,9 @@ export const postLogin = async (
     });
 };
 
-export const getLoginUser = async (jwtToken:string): Promise<AxiosResponse<ApiResponse<IUser>>> => {
+export const getLoginUser = async (
+    jwtToken: string
+): Promise<AxiosResponse<ApiResponse<IUser>>> => {
     return await apiClient({
         method: 'get',
         url: '/api/login/users',
@@ -136,5 +139,37 @@ export const putUser = async (user: IPostUser): Promise<AxiosResponse<ApiRespons
         },
         url: '/api/users/user',
         data: user
+    });
+};
+
+export const getSlotsByDate = async (
+    clinicId: string,
+    dentistId: string,
+    selectedDate: Date
+): Promise<AxiosResponse<ApiResponse<IDentistSlot[]>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/dentist/date`,
+        params: {
+            clinicId,
+            dentistId,
+            selectedDate
+        }
+    });
+};
+
+export const getAllDentistSlotsByTime = async (
+    clinicId: string,
+    timeStart: Date,
+    timeEnd: Date
+): Promise<AxiosResponse<ApiResponse<IDentistSlot[]>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/dentist/time-start/time-end`,
+        params: {
+            clinicId,
+            timeStart,
+            timeEnd
+        }
     });
 };

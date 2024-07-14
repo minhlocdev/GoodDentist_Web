@@ -1,7 +1,22 @@
-import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query';
+import {
+    keepPreviousData,
+    useMutation,
+    UseMutationResult,
+    useQuery,
+    UseQueryResult
+} from '@tanstack/react-query';
+import { ApiResponse } from '../../lib/api';
 import { ICustomer } from '../../lib/interfaces/customer-types/ICustomer';
 import { ICustomerService } from '../../lib/interfaces/customer-types/ICustomerService';
-import { getCustomers, getCustomersByClinic, getTotalCustomer } from '../customer';
+import { IPostCustomer } from '../../lib/interfaces/customer-types/IPostCustomer';
+import {
+    deleteCustomer,
+    getCustomers,
+    getCustomersByClinic,
+    getTotalCustomer,
+    postCustomer,
+    putCustomer
+} from '../customer';
 
 export const customerService: ICustomerService = {
     GetCustomers: (
@@ -78,5 +93,27 @@ export const customerService: ICustomerService = {
             enabled: clinicId !== '',
             staleTime: 20000,
             placeholderData: keepPreviousData
+        }),
+
+    PostCustomer: (): UseMutationResult<ApiResponse<IPostCustomer>, Error, IPostCustomer> =>
+        useMutation<ApiResponse<IPostCustomer>, Error, IPostCustomer>({
+            mutationFn: async (customer: IPostCustomer): Promise<ApiResponse<IPostCustomer>> => {
+                const response = await postCustomer(customer);
+                return response.data;
+            }
+        }),
+    PutCustomer: (): UseMutationResult<ApiResponse<IPostCustomer>, Error, IPostCustomer> =>
+        useMutation<ApiResponse<IPostCustomer>, Error, IPostCustomer>({
+            mutationFn: async (customer: IPostCustomer): Promise<ApiResponse<IPostCustomer>> => {
+                const response = await putCustomer(customer);
+                return response.data;
+            }
+        }),
+    DeleteCustomer: (): UseMutationResult<ApiResponse<string>, Error, string> =>
+        useMutation<ApiResponse<string>, Error, string>({
+            mutationFn: async (customId: string) => {
+                const response = await deleteCustomer(customId);
+                return response.data;
+            }
         })
 };

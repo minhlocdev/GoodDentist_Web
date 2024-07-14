@@ -2,7 +2,6 @@ import { format, parse } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { useMemo } from 'react';
 import { DateLocalizer, EventProps, Formats, Views } from 'react-big-calendar';
-import BackdropLoader from '../../../components/ui/local/backdrop-loader';
 import BaseCalendar from '../../../components/ui/local/base-calendar';
 import { useCalendarStore } from '../../../hooks/use-calendar-store';
 import { EventItem } from '../../../lib/interfaces/IEvent';
@@ -16,15 +15,18 @@ import { CustomResource, CustomTimeGutterHeader } from './customize-calendar';
 
 const AppointmentCalendar = () => {
     const calendar = useCalendarStore();
-    const { data: dentists, isLoading } = userService.GetDentistsByClinic(
+    const { data: dentists } = userService.GetDentistsByClinic(
         calendar.selectedClinicId ?? '',
         1,
         10,
         'roleId',
         '2'
     );
-    const { data: examinations, isLoading: examLoading } =
-        examinationService.GetExaminationByClinic(calendar?.selectedClinicId ?? '', 1, 200);
+    const { data: examinations } = examinationService.GetExaminationByClinic(
+        calendar?.selectedClinicId ?? '',
+        1,
+        200
+    );
 
     const details = examinationService.GetExamination(
         examinations?.map((ex) => ex.examinationId) ?? []
@@ -94,11 +96,6 @@ const AppointmentCalendar = () => {
         title: dentist.name,
         avatar: dentist.avatar
     }));
-
-    if (isLoading || examLoading) {
-        return <BackdropLoader />;
-    }
-
     if (!calendar) return null;
     const onSelectEvent = (e: EventItem) => {
         const data = details.find(

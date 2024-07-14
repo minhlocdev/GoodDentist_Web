@@ -21,7 +21,6 @@ interface CalendarAsideProps {
 const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
     const calendar = useCalendarStore();
     const examDetail = calendar.selectedEvent;
-    console.log(examDetail)
     const navigate = useNavigate();
     if (calendar.selectedEvent) {
         return (

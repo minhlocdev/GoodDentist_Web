@@ -1,6 +1,7 @@
 import { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { ApiResponse } from '../../api';
+import { IDentistSlot } from '../others/IDentistSlot';
 import { ILoginUser } from './ILoginUser';
 import { IPostUser } from './IPostUser';
 import { IUser } from './IUser';
@@ -37,4 +38,14 @@ export interface IUserService {
         sortOrder?: string
     ) => UseQueryResult<IUser[]>;
     PutUser: () => UseMutationResult<ApiResponse<IPostUser>, Error, IPostUser>;
+    GetAllDentistSlotByTime: (
+        clinicId: string,
+        timeStart: Date,
+        timeEnd: Date
+    ) => UseQueryResult<IDentistSlot[]>;
+    GetDentistSlotByDate: (
+        clinicId: string,
+        dentistId: string,
+        selectedDate: Date
+    ) => UseQueryResult<IDentistSlot[]>;
 }

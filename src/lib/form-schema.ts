@@ -161,17 +161,28 @@ export const JobTranferSchema = z.object({
 });
 
 export const AppointmentFormSchema = z.object({
-    customerId: z.string(),
-    phoneNumber: z.string(),
-    dentistId: z.string(),
-    clinicId: z.string(),
-    mode: z.string(),
-    examinationProfileId: z.string().optional(),
-    dayStart: z.date(),
-    timeStart: z.string().time(),
-    duration: z.string(),
+    customerId: z.string().refine((value) => value.trim() !== '', {
+        message: 'Khách hàng là trường bắt buộc'
+    }),
+    phoneNumber: z.string().refine((value) => value.trim() !== '', {
+        message: 'Số điện thoại là trường bắt buộc'
+    }),
+    mode: z.string().refine((value) => value.trim() !== '', {
+        message: 'Chế độ là trường bắt buộc'
+    }),
+    examinationProfileId: z.number(),
+    dayStart: z.date().refine((value) => !isNaN(value.getTime()), {
+        message: 'Ngày bắt đầu không hợp lệ'
+    }),
+    timeStart: z.string(),
+    duration: z.string().refine((value) => value.trim() !== '', {
+        message: 'Thời lượng là trường bắt buộc'
+    }),
     notes: z.string().optional(),
-    status: z.number()
+    status: z.number().refine((value) => !isNaN(value), {
+        message: 'Trạng thái không hợp lệ'
+    }),
+    dentistSlotId: z.string()
 });
 
 export const CustomerFormSchema = z.object({

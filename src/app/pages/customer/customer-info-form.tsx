@@ -66,7 +66,7 @@ const CustomerInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                                 />
                             </FormControl>
                             <FormMessage>
-                                {errors.file && <p>{errors.file.message?.toString()}</p>}
+                                {errors && <p>{errors?.avatar?.message?.toString()}</p>}
                             </FormMessage>
                         </FormItem>
                     )}

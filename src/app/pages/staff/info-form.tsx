@@ -32,7 +32,6 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
         clearErrors,
         formState: { errors }
     } = useFormContext<FieldValues>();
-
     const [selectedProvince, setProvince] = useState(getValues('province'));
     const handleOnDrop = (acceptedFiles: FileList | null) => {
         if (acceptedFiles && acceptedFiles.length > 0) {
@@ -191,7 +190,8 @@ const BasicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                                             <SelectValue placeholder="Chọn vai trò" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="2">Nhân viên</SelectItem>
+                                            <SelectItem value="3">Nhân viên</SelectItem>
+                                            <SelectItem value="2">Bác sỹ</SelectItem>
                                             <SelectItem value="1">Admin</SelectItem>
                                         </SelectContent>
                                     </Select>

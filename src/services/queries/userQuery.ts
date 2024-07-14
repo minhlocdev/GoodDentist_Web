@@ -7,13 +7,16 @@ import {
 } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { ApiResponse } from '../../lib/api';
+import { IDentistSlot } from '../../lib/interfaces/others/IDentistSlot';
 import { ILoginUser } from '../../lib/interfaces/user-types/ILoginUser';
 import { IPostUser } from '../../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../../lib/interfaces/user-types/IUser';
 import { IUserService } from '../../lib/interfaces/user-types/IUserService';
 import {
+    getAllDentistSlotsByTime,
     getDentistsByClinic,
     getLoginUser,
+    getSlotsByDate,
     getTotalUser,
     getUsers,
     getUsersByClinic,
@@ -155,5 +158,30 @@ export const userService: IUserService = {
                 const response = await putUser(user);
                 return response.data;
             }
+        }),
+
+    GetAllDentistSlotByTime: (clinicId, timeStart, timeEnd): UseQueryResult<IDentistSlot[]> =>
+        useQuery<IDentistSlot[], Error>({
+            queryKey: ['slots-by-time', clinicId, timeStart, timeEnd],
+            queryFn: async (): Promise<IDentistSlot[]> => {
+                return await getAllDentistSlotsByTime(clinicId, timeStart, timeEnd).then(
+                    (res) => res.data.result
+                );
+            },
+            staleTime: 20000,
+            placeholderData: keepPreviousData,
+            enabled: clinicId !== ''
+        }),
+    GetDentistSlotByDate: (clinicId, dentistId, selectedDate): UseQueryResult<IDentistSlot[]> =>
+        useQuery<IDentistSlot[], Error>({
+            queryKey: ['slots-by-date', clinicId, dentistId, selectedDate],
+            queryFn: async (): Promise<IDentistSlot[]> => {
+                return await getSlotsByDate(clinicId, dentistId, selectedDate).then(
+                    (res) => res.data.result
+                );
+            },
+            staleTime: 20000,
+            placeholderData: keepPreviousData,
+            enabled: clinicId !== ''
         })
 };

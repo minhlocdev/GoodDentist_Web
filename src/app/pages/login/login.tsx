@@ -24,7 +24,7 @@ import { userService } from '../../../services/queries/userQuery';
 
 const loginSchema = z.object({
     username: z.string().min(1, 'Please input username.'),
-    password: z.string().min(1, 'Please input password.'),
+    password: z.string().min(1, 'Please input password.')
 });
 
 interface LoginFormProps {
@@ -108,7 +108,6 @@ const LoginPage = () => {
                     toast.error('Sai tên đăng nhập hoặc mật khẩu');
                 }
                 if (res?.data !== null && res?.data.isSuccess === true) {
-                    toast.success('Đăng nhập thành công');
                     const token = res?.data?.accessToken as string;
                     sessionStorage.setItem(ACCESS_TOKEN_KEY, res?.data?.accessToken as string);
                     await userService
@@ -118,13 +117,23 @@ const LoginPage = () => {
                                 toast.error('Có gì đó sai sai');
                             }
                             if (res?.data !== null && res?.data.isSuccess === true) {
-                                sessionStorage.setItem(
-                                    'loginUser',
-                                    JSON.stringify(res?.data?.result)
-                                );
-                                setUser(res?.data?.result);
-                                setAccessToken(token);
-                                navigate('/');
+                                if (res?.data.result.status) {
+                                    sessionStorage.setItem(
+                                        'loginUser',
+                                        JSON.stringify(res?.data?.result)
+                                    );
+                                    setUser(res?.data?.result);
+                                    setAccessToken(token);
+                                    toast.success('Đăng nhập thành công');
+                                    localStorage.setItem(
+                                        'clinic',
+                                        JSON.stringify(res?.data?.result.clinics)
+                                    );
+                                    navigate('/');
+                                } else
+                                    toast.warning(
+                                        'Tài khoản của bạn đã bị khóa. Xin hãy liên hệ 1900 1004 để được tư vấn'
+                                    );
                             }
                         })
                         .catch(() => {

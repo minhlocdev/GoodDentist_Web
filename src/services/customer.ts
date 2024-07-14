@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { ApiResponse } from '../lib/api';
 import { ICustomer } from '../lib/interfaces/customer-types/ICustomer';
+import { IPostCustomer } from '../lib/interfaces/customer-types/IPostCustomer';
 import apiClient from './api-client';
 
 export const getCustomers = async (
@@ -53,5 +54,38 @@ export const getCustomersByClinic = async (
             sortField,
             sortOrder
         }
+    });
+};
+
+export const postCustomer = async (
+    customer: IPostCustomer
+): Promise<AxiosResponse<ApiResponse<IPostCustomer>>> => {
+    return await apiClient({
+        method: 'post',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        data: customer,
+        url: '/customers/customer'
+    });
+};
+export const putCustomer = async (
+    customer: IPostCustomer
+): Promise<AxiosResponse<ApiResponse<IPostCustomer>>> => {
+    return await apiClient({
+        method: 'put',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        data: customer,
+        url: '/customers/customer'
+    });
+};
+export const deleteCustomer = async (
+    customerId: string
+): Promise<AxiosResponse<ApiResponse<string>>> => {
+    return await apiClient({
+        method: 'delete',
+        url: `/customers/customer/${customerId}`
     });
 };

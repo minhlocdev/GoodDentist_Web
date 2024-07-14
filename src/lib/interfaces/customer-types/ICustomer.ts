@@ -5,5 +5,6 @@ export interface ICustomer extends IUser {
     frontIdCard?: string;
     backIdCard?: string;
     anamnesis?: string;
+    examinationProfiles?: any[];
 }
 export const customers: ICustomer[] = [];

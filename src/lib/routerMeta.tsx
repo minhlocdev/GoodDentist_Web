@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from 'react';
+import NotFoundPage from '../app/pages/errors/404-page';
 import ExaminationProfile from '../app/pages/examination-profile/examination-profile';
 import UserPermission from '../app/pages/permission/user-permission';
 
@@ -8,7 +9,6 @@ const PendingAppointment = lazy(() => import('../app/pages/appoinment/pending-ap
 const ClinicChain = lazy(() => import('../app/pages/clinic-chain/clinic-chain'));
 const CustomerPage = lazy(() => import('../app/pages/customer/customer'));
 const DashboardPage = lazy(() => import('../app/pages/dashboard/dashboard'));
-const ErrorPage = lazy(() => import('../app/pages/errors/error-page'));
 const MedicincePage = lazy(() => import('../app/pages/medicine/medicine'));
 const ServicePage = lazy(() => import('../app/pages/service/service'));
 const StaffPage = lazy(() => import('../app/pages/staff/staff'));
@@ -123,7 +123,7 @@ const routerMeta: RouterMetaType = {
     },
     NotFound: {
         path: '/*',
-        element: <ErrorPage />,
+        element: <NotFoundPage />,
         isCommon: true
     }
 };

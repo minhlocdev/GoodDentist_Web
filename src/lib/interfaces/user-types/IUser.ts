@@ -1,4 +1,5 @@
 import { IClinic } from "../clinics-types/IClinic";
+import { IDentistSlot } from "../others/IDentistSlot";
 
 export interface IUser {
     userId: string;
@@ -14,6 +15,8 @@ export interface IUser {
     roleId?: number;
     avatar?: string | File;
     clinics?: IClinic[];
+    dentistSlotId?: number;
+    dentistSlots?:IDentistSlot[]
 }
 const users: IUser[] = [
     

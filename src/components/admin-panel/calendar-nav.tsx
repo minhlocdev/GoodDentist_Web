@@ -7,11 +7,12 @@ import { DatePicker } from '../ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { SheetMenu } from './sheet-menu';
 import { UserNav } from './user-nav';
+import { useAuth } from '../../hooks/use-auth';
 
 export function CalendarNavbar() {
+    const {user} = useAuth()
     const calendar = useCalendarStore();
     const { data: clinics, isLoading } = clinicService.GetClinics();
-    if (!calendar) return null;
 
     return (
         <header className="sticky top-0 z-10 w-full bg-background/95 shadow backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:shadow-secondary">
@@ -90,6 +91,7 @@ export function CalendarNavbar() {
                     <Select
                         onValueChange={(value) => calendar.setClinic(value)}
                         value={calendar.selectedClinicId ?? ''}
+                        disabled={user?.roleId!==1}
                     >
                         <SelectTrigger className="ml-5 min-w-[200px]">
                             <SelectValue placeholder="Chọn phòng khám" />
@@ -185,6 +187,7 @@ export function CalendarNavbar() {
                 <Select
                     onValueChange={(value) => calendar.setClinic(value)}
                     value={calendar.selectedClinicId ?? ''}
+                    disabled={user?.roleId!==1}
                 >
                     <SelectTrigger className="ml-5 w-fit">
                         <SelectValue placeholder="Chọn phòng khám" />

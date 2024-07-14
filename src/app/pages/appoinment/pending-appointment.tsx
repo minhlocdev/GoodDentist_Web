@@ -5,8 +5,7 @@ import CalendarAside from './calendar-aside';
 
 const PendingAppointment = () => {
     const calendar = useCalendarStore();
-
-    if (!calendar) return null;
+    console.log(calendar)
     return (
         <CalendarContentLayout title="Lịch hẹn lại và Booking">
             <div className="flex flex-col items-start justify-start overflow-hidden md:flex-row md:overflow-auto">

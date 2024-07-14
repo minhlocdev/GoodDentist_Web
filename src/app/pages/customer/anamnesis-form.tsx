@@ -10,13 +10,12 @@ interface AnamnesisFormProps {
 const AnamnesisForm: FC<AnamnesisFormProps> = ({ isPending = false }) => {
     const {
         control,
+        getValues,
         setValue,
         formState: { errors }
     } = useFormContext<FieldValues>();
 
-    const [anamnesis, setAnamnesis] = useState('');
-
-    console.log(anamnesis);
+    const [anamnesis, setAnamnesis] = useState(getValues('anamnesis') as string ??"");
 
     const medicalConditions = [
         'Chảy máu lâu',
