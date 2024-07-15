@@ -10,6 +10,7 @@ const AppointmentPage = () => {
                 <AppointmentCalendar />
             </div>
         </CalendarContentLayout>
+
     );
 };
 
