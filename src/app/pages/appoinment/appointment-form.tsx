@@ -90,8 +90,9 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
                         toast.success('Tạo mới thành công');
                         await queryClient.invalidateQueries({ queryKey: ['examination'] });
                         await queryClient.invalidateQueries({ queryKey: ['examinations'] });
+                    } else {
+                        toast.error('Tạo mới thất bại');
                     }
-                    toast.error('Tạo mới thất bại');
                 },
                 onError: (error) => {
                     if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {

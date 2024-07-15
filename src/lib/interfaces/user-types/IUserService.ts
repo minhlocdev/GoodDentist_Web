@@ -48,4 +48,11 @@ export interface IUserService {
         dentistId: string,
         selectedDate: Date
     ) => UseQueryResult<IDentistSlot[]>;
+    GetDentistSlotByDentist: (
+        dentistId: string,
+        pageNumber: number,
+        rowsPerPage: number,
+        sortField?: string,
+        sortOrder?: string
+    ) => UseQueryResult<IDentistSlot[]>;
 }

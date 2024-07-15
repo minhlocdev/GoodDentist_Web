@@ -44,7 +44,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                     onClick={() => {
                                         navigate(
                                             `/examination-profile/` +
-                                                `${examDetail?.examinationProfileId}`
+                                                `${examDetail?.customerId}`
                                         );
                                     }}
                                 >
@@ -66,7 +66,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                 </span>
                                 <a
                                     href={
-                                        `/examination-profile/` + `${examDetail?.examinationProfileId}`
+                                        `/examination-profile/` + `${examDetail?.customerId}`
                                     }
                                     className="text-md cursor-pointer font-bold text-primary hover:opacity-50"
                                 >

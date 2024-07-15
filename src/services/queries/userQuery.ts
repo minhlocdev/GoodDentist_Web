@@ -13,6 +13,7 @@ import { IPostUser } from '../../lib/interfaces/user-types/IPostUser';
 import { IUser } from '../../lib/interfaces/user-types/IUser';
 import { IUserService } from '../../lib/interfaces/user-types/IUserService';
 import {
+    getAllDentistSlotsByDentist,
     getAllDentistSlotsByTime,
     getDentistsByClinic,
     getLoginUser,
@@ -183,5 +184,34 @@ export const userService: IUserService = {
             staleTime: 20000,
             placeholderData: keepPreviousData,
             enabled: clinicId !== ''
+        }),
+    GetDentistSlotByDentist: (
+        dentistId: string,
+        pageNumber: number,
+        rowsPerPage: number,
+        sortField?: string,
+        sortOrder?: string
+    ): UseQueryResult<IDentistSlot[]> =>
+        useQuery<IDentistSlot[], Error>({
+            queryKey: [
+                'slots-by-dentist',
+                dentistId,
+                pageNumber,
+                rowsPerPage,
+                sortField,
+                sortOrder
+            ],
+            queryFn: async (): Promise<IDentistSlot[]> => {
+                return await getAllDentistSlotsByDentist(
+                    dentistId,
+                    pageNumber,
+                    rowsPerPage,
+                    sortField,
+                    sortOrder
+                ).then((res) => res.data.result);
+            },
+            staleTime: 20000,
+            placeholderData: keepPreviousData,
+            enabled: dentistId !== ''
         })
 };

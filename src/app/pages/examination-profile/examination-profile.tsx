@@ -1,5 +1,7 @@
+import { useParams } from 'react-router-dom';
 import ExaminationProfileLayout from '../../../components/ui/local/layouts/examination-profile-layout';
 import { TabsContent } from '../../../components/ui/tab';
+import { examinationService } from '../../../services/queries/examinationQuery';
 import Examinations from './examinations';
 import MedicalRecordProfile from './medical-record-profile';
 import MedicineProfile from './medicine-profile';
@@ -8,14 +10,21 @@ import TreatmentProfile from './treatment-profile';
 import UserProfile from './user-profile';
 
 const ExaminationProfile = () => {
+    const { code } = useParams();
+    const { data: examProfiles, isLoading } = examinationService.GetExaminationProfileByCustomer(
+        code! ?? ''
+    );
+    if (isLoading) {
+        return <div>...Loading</div>;
+    }
     return (
         <ExaminationProfileLayout title="Mary Jane">
             <div className="w-full">
                 <TabsContent value="basicinfo">
-                    <UserProfile />
+                    <UserProfile customer={examProfiles?.[0].customer} />
                 </TabsContent>
                 <TabsContent value="treatment">
-                    <TreatmentProfile />
+                    <TreatmentProfile examProfiles={examProfiles} />
                 </TabsContent>
                 <TabsContent value="medicine">
                     <MedicineProfile />
@@ -24,7 +33,7 @@ const ExaminationProfile = () => {
                     <MedicalRecordProfile />
                 </TabsContent>
                 <TabsContent value="examination">
-                    <Examinations />
+                    <Examinations examProfiles={examProfiles} />
                 </TabsContent>
                 <TabsContent value="payment">
                     <PaymentProfile />

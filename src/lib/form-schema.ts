@@ -237,3 +237,12 @@ export const CustomerFormSchema = z.object({
     status: z.boolean(),
     anamnesis: z.string().optional()
 });
+
+export const DentistSlotFormSchema = z.object({
+    dentistId: z.string(),
+    timeStart: z.date(),
+    timeEnd: z.date(),
+    status: z.boolean(),
+    roomId: z.number(),
+    clinicId: z.string()
+});

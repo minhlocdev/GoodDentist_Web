@@ -173,3 +173,23 @@ export const getAllDentistSlotsByTime = async (
         }
     });
 };
+
+export const getAllDentistSlotsByDentist = async (
+    dentistId: string,
+    pageNumber: number,
+    rowsPerPage: number,
+    sortField?: string,
+    sortOrder?: string
+): Promise<AxiosResponse<ApiResponse<IDentistSlot[]>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/dentist`,
+        params: {
+            dentistId,
+            pageNumber,
+            rowsPerPage,
+            sortField,
+            sortOrder
+        }
+    });
+};
