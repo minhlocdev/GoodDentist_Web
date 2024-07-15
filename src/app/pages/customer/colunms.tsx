@@ -140,7 +140,7 @@ export const columns: ColumnDef<ICustomer>[] = [
             const handleDelete = async () => {
                 await deleteCustomer.mutateAsync(customer.userId, {
                     onSuccess: async () => {
-                        toast.success('Tạo mới thành công');
+                        toast.success('Xóa thành công');
                         await queryClient.invalidateQueries({ queryKey: ['customers'] });
                     },
                     onError: (error) => {
@@ -150,7 +150,7 @@ export const columns: ColumnDef<ICustomer>[] = [
                         ) {
                             toast.error(error.response.data.message[0] as React.ReactNode);
                         } else {
-                            toast.error('Tạo mới thất bại');
+                            toast.error('Xóa thất bại');
                         }
                     }
                 });
