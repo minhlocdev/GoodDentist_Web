@@ -16,10 +16,10 @@ export default function Layout() {
             LayoutComponent = AdminPanelLayout;
             break;
         case 2:
-            LayoutComponent = StaffPanelLayout;
+            LayoutComponent = DoctorPanelLayout;
             break;
         case 3:
-            LayoutComponent = DoctorPanelLayout;
+            LayoutComponent = StaffPanelLayout;
             break;
         default:
             LayoutComponent = ErrorPage;

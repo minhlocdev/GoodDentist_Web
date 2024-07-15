@@ -191,13 +191,7 @@ export function getDoctorMenuList(pathname: string): Group[] {
                     icon: User,
                     submenus: []
                 },
-                {
-                    href: '/examination-profile',
-                    label: 'Quản lý hồ sơ khám bệnh',
-                    active: pathname.includes('/examination-profile'),
-                    icon: ClipboardPlusIcon,
-                    submenus: []
-                },
+
                 {
                     href: '/dentist-slots',
                     label: 'Quản lý lịch làm việc',
