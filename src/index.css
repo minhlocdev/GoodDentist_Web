@@ -49,6 +49,69 @@
     }
 }
 
+.rbc-row-resource {
+    height: 60px;
+}
+
+.rbc-header {
+    color: hsl(var(--ring));
+    font-size: 14px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 30px;
+}
+
+.rbc-month-row {
+    height: 100px;
+}
+
+.rbc-allday-cell {
+    display: none;
+}
+
+.rbc-time-header-cell .rbc-today {
+    background-color: hsl(var(--muted)) !important;
+}
+
+.rbc-time-slot {
+    color: #8c9ba4;
+    z-index: 10;
+}
+
+.rbc-time-slot:not(.rbc-today .rbc-time-slot) {
+    background-color: #ffffff;
+    z-index: 11;
+}
+
+/*Event Styles*/
+.rbc-event,
+.rbc-background-event {
+    z-index: 20;
+    padding: 0px !important;
+    border: none !important;
+    background-color: unset !important;
+}
+
+.rbc-event-label {
+    display: none !important;
+}
+
+.rbc-events-container {
+    width: 100% !important;
+}
+
+/*Timeslots Customization*/
+/* .rbc-day-slot .rbc-time-slot:after {
+    content: "";
+    width: 100%;
+    border-top: 1px solid #fbb3ec;
+    display: block;
+  } */
+.rdp-vhidden {
+    @apply hidden;
+}
 @layer base {
     * {
         @apply border-border;

@@ -1,5 +1,5 @@
-import { ContentLayout } from '../../../components/admin-panel/content-layout';
 import { DatePickerWithRange } from '../../../components/ui/date-range-picker';
+import { ContentLayout } from '../../../components/ui/local/layouts/content-layout';
 import IPayment, { payments } from '../../../lib/interfaces/IPayment';
 import AppointmentPieChart from './appointment-pie-chart';
 import { columns } from './column';

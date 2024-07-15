@@ -28,7 +28,6 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
         'Tháng trước'
     ];
 
-    console.log('date ', date);
     return (
         <div className={cn('grid gap-2', className)}>
             <Popover>
@@ -56,7 +55,7 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
                         )}
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto max-w-[500px] p-0" align="start">
+                <PopoverContent className="w-auto max-w-[550px] p-0" align="start">
                     <Calendar
                         initialFocus
                         mode="range"

@@ -5,8 +5,8 @@ import { useSidebarToggle } from '../../hooks/use-sidebar-toggle';
 import { cn } from '../../lib/utils';
 
 import { Button } from '../ui/button';
+import { SidebarToggle } from '../ui/local/side-bar-toggle';
 import Menu from './menu';
-import { SidebarToggle } from './side-bar-toggle';
 
 export const Sidebar = () => {
     const sidebar = useStore(useSidebarToggle, (state) => state);

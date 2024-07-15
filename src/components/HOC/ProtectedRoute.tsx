@@ -1,27 +1,21 @@
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import routerMeta from '../../lib/routerMeta';
+import { useAuth } from '../../hooks/use-auth';
 
 interface IProtectedRoute {
-    children: JSX.Element;
+    children: ReactNode;
     path: string;
 }
 const ProtectedRoute = ({ children, path }: IProtectedRoute) => {
-    //TODO: user Authen
-    const isLogin = true;
-
-    if (
-        !isLogin &&
-        (path === routerMeta.Dashboard.path ||
-            path === routerMeta.Staff.path ||
-            path === routerMeta.Service.path)
-    ) {
-        return <Navigate to={routerMeta.SignIn.path} replace={true} />;
+    const { accessToken } = useAuth();
+    const isLogin = !!accessToken;
+    if (!isLogin) {
+        return <Navigate to={"/login"} replace={true} />;
     }
 
-    if (isLogin && (path === routerMeta.SignUp.path || path === routerMeta.SignIn.path)) {
-        return <Navigate to={routerMeta.Dashboard.path} replace={true} />;
+    if (isLogin && path === "/login") {
+        return <Navigate to={'/'} replace={true} />;
     }
-
     return children;
 };
 export default ProtectedRoute;

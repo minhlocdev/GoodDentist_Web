@@ -1,23 +1,20 @@
-import { useRouteError } from 'react-router-dom';
-import { ErrorWithStatus } from '../../../lib/interfaces/IErrorStatus';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/ui/button';
 
 export default function ErrorPage() {
-    const error = useRouteError();
-    const errorMessage =
-        (error as ErrorWithStatus).statusText ??
-        (error as ErrorWithStatus).message ??
-        'Unknown error';
+    const navigate = useNavigate();
 
     return (
         <div
             id="error-page"
-            className="flex h-screen flex-col items-center justify-center bg-gray-100"
+            className="flex h-screen flex-col items-center justify-center bg-gray-100 gap-y-3"
         >
-            <h1 className="mb-4 text-4xl font-bold text-red-600">Oops!</h1>
-            <p className="mb-2 text-lg text-gray-700">Sorry, an unexpected error has occurred.</p>
+            <h1 className="mb-4 text-4xl font-bold text-red-600">Ối!</h1>
+            <p className="mb-2 text-lg text-gray-700">Xin lỗi vì lỗi không mong muốn.</p>
             <p className="text-base text-gray-500">
-                <i>{errorMessage}</i>
+                <i>Trang này không tồn tại hoặc tài khoản của bạn đã hết hạn</i>
             </p>
+            <Button onClick={() => navigate('/login', { replace: true })}>Quay lại đăng nhập</Button>
         </div>
     );
 }
