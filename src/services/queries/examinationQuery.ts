@@ -10,7 +10,12 @@ import { ApiResponse } from '../../lib/api';
 import { IExamination } from '../../lib/interfaces/examination-types/IExamination';
 import { IExaminationService } from '../../lib/interfaces/examination-types/IExaminationService';
 import { IPostExamination } from '../../lib/interfaces/examination-types/IPostExamination';
-import { getExamination, getExaminationsByClinic, postExamination } from '../examination';
+import {
+    getExamination,
+    getExaminationsByClinic,
+    postExamination,
+    putExamination
+} from '../examination';
 import { getExaminationProfileByCustomer } from '../examination-profile';
 
 export const examinationService: IExaminationService = {
@@ -73,12 +78,24 @@ export const examinationService: IExaminationService = {
             staleTime: Infinity
         }),
 
-    PostExamination: (): UseMutationResult<ApiResponse<IPostExamination>, Error, IPostExamination> =>
+    PostExamination: (): UseMutationResult<
+        ApiResponse<IPostExamination>,
+        Error,
+        IPostExamination
+    > =>
         useMutation({
             mutationFn: async (
                 examination: IPostExamination
             ): Promise<ApiResponse<IPostExamination>> => {
                 const response = await postExamination(examination);
+                return response.data;
+            }
+        }),
+
+    PutExamination: (): UseMutationResult<ApiResponse<string>, Error, IPostExamination> =>
+        useMutation({
+            mutationFn: async (examination: IPostExamination): Promise<ApiResponse<string>> => {
+                const response = await putExamination(examination);
                 return response.data;
             }
         })

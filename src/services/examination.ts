@@ -53,3 +53,13 @@ export const postExamination = async (
         }
     });
 };
+
+export const putExamination = async (
+    examination: IPostExamination
+): Promise<AxiosResponse<ApiResponse<string>>> => {
+    return await apiClient({
+        method: 'put',
+        url: `/api/examinations/examination`,
+        data: examination,
+    });
+};

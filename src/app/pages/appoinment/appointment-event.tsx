@@ -1,10 +1,14 @@
 import { DotsVerticalIcon } from '@radix-ui/react-icons';
+import { format } from 'date-fns';
+import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from '../../../components/ui/dropdown-menu';
@@ -15,7 +19,7 @@ import {
     TooltipTrigger
 } from '../../../components/ui/tooltip';
 import { useCalendarStore } from '../../../hooks/use-calendar-store';
-import { AppointmentStatusCode, EVENT_STATUS_COLORS } from '../../../lib/events';
+import { AppointmentStatusNames, EVENT_STATUS_COLORS } from '../../../lib/events';
 import { IExamination } from '../../../lib/interfaces/examination-types/IExamination';
 import { cn } from '../../../lib/utils';
 
@@ -26,9 +30,9 @@ const AppointmentEvent = ({
     examination: IExamination;
     isMonthView?: boolean;
 }) => {
-    const { notes, status } = examination;
-    const background = EVENT_STATUS_COLORS[status ? 1 : (2 as AppointmentStatusCode)];
-
+    const { notes, status, timeStart, timeEnd } = examination;
+    const [selectedStatus, setStatus] = useState(status!);
+    const background = EVENT_STATUS_COLORS[status as keyof typeof EVENT_STATUS_COLORS];
     const { selectedEvent } = useCalendarStore();
     return (
         <TooltipProvider disableHoverableContent>
@@ -60,14 +64,29 @@ const AppointmentEvent = ({
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-30" side="top">
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem>KH chưa đến</DropdownMenuItem>
-                                        <DropdownMenuItem>Khách hàng đến</DropdownMenuItem>
-                                        <DropdownMenuItem>Điều trị</DropdownMenuItem>
-                                        <DropdownMenuItem>Đã xong</DropdownMenuItem>
-                                        <DropdownMenuItem>Hủy lịch hẹn</DropdownMenuItem>
-                                        <DropdownMenuItem>Hẹn lại sau</DropdownMenuItem>
-                                    </DropdownMenuGroup>
+                                    <DropdownMenuRadioGroup
+                                        value={selectedStatus.toString()}
+                                        onValueChange={(value) => setStatus(Number(value))}
+                                    >
+                                        <DropdownMenuRadioItem value="1">
+                                            KH chưa đến
+                                        </DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="2">
+                                            Khách hàng đến
+                                        </DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="3">
+                                            Điều trị
+                                        </DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="4">
+                                            Đã xong
+                                        </DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="5">
+                                            Hủy lịch hẹn
+                                        </DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="6">
+                                            Hẹn lại sau
+                                        </DropdownMenuRadioItem>
+                                    </DropdownMenuRadioGroup>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem className="text-primary">
@@ -82,9 +101,13 @@ const AppointmentEvent = ({
                         </div>
                     </div>
                 </TooltipTrigger>
-                <TooltipContent side="top">
+                <TooltipContent>
                     <div className="z-10 flex w-fit max-w-32 flex-col gap-y-2">
+                        <p>
+                            {format(timeStart, 'HH:mm')}-{format(timeEnd, 'HH:mm')}
+                        </p>
                         <p>{notes}</p>
+                        <p>{AppointmentStatusNames[status! - 1]}</p>
                     </div>
                 </TooltipContent>
             </Tooltip>

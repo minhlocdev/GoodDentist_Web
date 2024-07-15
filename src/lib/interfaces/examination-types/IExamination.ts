@@ -15,7 +15,7 @@ export interface IExamination {
     timeStart: Date;
     timeEnd: Date;
     notes?: string;
-    status?: boolean;
+    status?: number;
     customer?: ICustomer;
     customerId?: string;
     customerName?: string;

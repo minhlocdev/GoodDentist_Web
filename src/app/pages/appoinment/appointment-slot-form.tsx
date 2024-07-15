@@ -13,10 +13,9 @@ interface SlotFormProps {
     dentistSlot: IDentistSlot[] | undefined;
 }
 
-const SlotForm = ({ dentistSlot }: SlotFormProps) => {
+const SlotForm = ({ dentistSlot}: SlotFormProps) => {
     const [, setSlotId] = useState<number | null>(null);
     const { control } = useFormContext<FieldValues>();
-
     const handleButtonClick = (
         field: ControllerRenderProps<FieldValues, 'dentistSlotId'>,
         slotId: number
@@ -44,14 +43,24 @@ const SlotForm = ({ dentistSlot }: SlotFormProps) => {
                                 <>
                                     {dentistSlot.length === 0 ? (
                                         <p className="text-center text-sm">
-                                            Không có lịch làm việc vào giờ này
+                                            Không có ai làm việc vào giờ này
                                         </p>
                                     ) : (
                                         <div className="flex flex-col gap-x-3 gap-y-2">
                                             {dentistSlot.map((slot) => (
                                                 <CalendarCollapsible
                                                     key={slot.dentistSlotId}
-                                                    title={slot.dentist?.name ?? ''}
+                                                    title={
+                                                        <div className="flex gap-x-2">
+                                                            <span className="max-w-full truncate">
+                                                                {slot.dentist?.name ?? ''}
+                                                            </span>
+                                                            <span className="text-[12px]">
+                                                                {format(slot.timeStart!, 'HH:mmm')}-
+                                                                {format(slot.timeEnd!, 'HH:mmm')}
+                                                            </span>
+                                                        </div>
+                                                    }
                                                     content={
                                                         <>
                                                             <div className="grid grid-cols-2 gap-y-1 break-words text-xs">
@@ -133,7 +142,7 @@ const SlotForm = ({ dentistSlot }: SlotFormProps) => {
                                                                     {field.value ===
                                                                     slot.dentistSlotId
                                                                         ? 'Hủy chọn'
-                                                                        : 'Chọn bác sỹ này'}
+                                                                        : 'Chọn'}
                                                                 </Button>
                                                             </div>
                                                         </>

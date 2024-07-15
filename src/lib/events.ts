@@ -6,15 +6,21 @@ export const VIEW_OPTIONS = [
     { id: Views.WEEK, label: 'Week' },
     { id: Views.MONTH, label: 'Month' }
 ];
-
-export enum AppointmentStatusCode {
-    Pending = 1,
-    CheckedIn = 2
-}
+export const AppointmentStatusNames = [
+    'Chưa đến',
+    'Đã đến',
+    'Đang điều trị',
+    'Đã xong',
+    'Hủy lịch hẹn',
+    'Hẹn lại sau'
+];
 
 export const EVENT_STATUS_COLORS = {
-    1: '#bee2fa',
-    2: '#c7edca'
+    1: '#bee2fa', // Chưa đến
+    2: '#c7edca', // Đã đến
+    3: '#fbd38d', // Đang điều trị
+    4: '#c4c4c4', // Đã xong
+    5: '#f7acac', // Hủy lịch hẹn
+    6: '#9cd9e5' // Hẹn lại sau
 };
-
 export const EVENTS: EventItem[] = [];

@@ -33,8 +33,16 @@ const AppointmentCalendar = () => {
     );
     const transformExaminationsToEvents = (examinations: IExamination[]): EventItem[] => {
         return examinations.map((examination) => ({
-            start: parse(examination.timeStart.toString(), "yyyy-MM-dd'T'HH:mm:ss", new Date()),
-            end: parse(examination.timeEnd.toString(), "yyyy-MM-dd'T'HH:mm:ss", new Date()),
+            start: parse(
+                (examination.timeStart ?? new Date()).toString(),
+                "yyyy-MM-dd'T'HH:mm:ss",
+                new Date()
+            ),
+            end: parse(
+                (examination.timeEnd ?? new Date()).toString(),
+                "yyyy-MM-dd'T'HH:mm:ss",
+                new Date()
+            ),
             data: {
                 appointment: examination
             },
@@ -46,7 +54,6 @@ const AppointmentCalendar = () => {
         () => transformExaminationsToEvents(examinations ?? []),
         [examinations]
     );
-    console.log(transformedExaminations);
     const { formats } = useMemo(
         () => ({
             formats: {

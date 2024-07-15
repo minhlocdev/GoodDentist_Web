@@ -8,7 +8,7 @@ import {
 } from '../../../components/ui/collapsible';
 import { cn } from '../../../lib/utils';
 interface CollapsibleSectionProps {
-    title: string;
+    title: ReactNode;
     content: ReactNode;
 }
 const CalendarCollapsible: React.FC<CollapsibleSectionProps> = ({ title, content }) => {

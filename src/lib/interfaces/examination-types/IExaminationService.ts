@@ -22,4 +22,5 @@ export interface IExaminationService {
         Error,
         IPostExamination
     >;
+    PutExamination: () => UseMutationResult<ApiResponse<string>, Error, IPostExamination>;
 }
