@@ -1,3 +1,4 @@
+import { addMinutes, set } from 'date-fns';
 import { ChevronsUpDown, PlusIcon } from 'lucide-react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { Button } from '../../../components/ui/button';
@@ -40,12 +41,35 @@ const AppointmentInfoForm = ({
     timeRange,
     handleTimeRange
 }: AppointmentInfoFormProps) => {
-    const { control, setValue } = useFormContext<FieldValues>();
+    const { control, setValue, getValues } = useFormContext<FieldValues>();
+
     const handleChange = (field: 'timeStart' | 'timeEnd', value: Date) => {
         handleTimeRange({ ...timeRange, [field]: value });
     };
+
+    const handleDayStartChange = (date: Date) => {
+        const tmpTimeStart = set(date, {
+            hours: timeRange.timeStart.getHours(),
+            minutes: timeRange.timeStart.getMinutes()
+        });
+        handleChange('timeStart', tmpTimeStart);
+
+        const duration = Number(getValues('duration'));
+        handleChange('timeEnd', addMinutes(tmpTimeStart, duration));
+    };
+
+    const handleTimeStartChange = (value: string) => {
+        const [hours, minutes] = value.split(':').map(Number);
+        const tmpTimeStart = set(timeRange.timeStart, { hours, minutes });
+        handleChange('timeStart', tmpTimeStart);
+
+        const duration = Number(getValues('duration'));
+        handleChange('timeEnd', addMinutes(tmpTimeStart, duration));
+    };
+
+    console.log(timeRange);
     return (
-        <div className="col-span-1 grid grid-flow-row grid-cols-1 gap-x-2 gap-y-4 border-r border-neutral-300 pr-3 md:col-span-9 md:grid-cols-2">
+        <div className="col-span-1 grid grid-cols-1 gap-x-2 gap-y-4 border-r border-neutral-300 pr-3 md:col-span-9 md:grid-cols-2">
             <div className="flex w-full items-end">
                 <div className="w-full">
                     <FormField
@@ -150,9 +174,13 @@ const AppointmentInfoForm = ({
                                 </FormLabel>
                                 <FormControl>
                                     <Select
-                                        onValueChange={field.onChange}
+                                        onValueChange={(value) => {
+                                            field.onChange(value);
+                                            setValue('examinationProfileId', 0);
+                                        }}
                                         value={(field.value as string) ?? 'new'}
                                         defaultValue="new"
+                                        disabled={getValues('customerId') === ''}
                                     >
                                         <SelectTrigger>
                                             <SelectValue />
@@ -160,6 +188,47 @@ const AppointmentInfoForm = ({
                                         <SelectContent>
                                             <SelectItem value="new">Khám mới</SelectItem>
                                             <SelectItem value="old">Tái khám</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                <div className="w-full">
+                    <FormField
+                        control={control}
+                        name="examinationProfileId"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-col gap-y-1">
+                                <FormLabel>
+                                    Hồ sơ khám<span className="text-red-500">*</span>
+                                </FormLabel>
+                                <FormControl>
+                                    <Select
+                                        onValueChange={(value) => {
+                                            field.onChange(Number(value));
+                                        }}
+                                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+                                        value={field.value ? field.value.toString() : '0'}
+                                        disabled={getValues('mode') === 'new'}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="0">Mã tự động</SelectItem>
+                                            {customers
+                                                ?.find((c) => c.userId === getValues('customerId'))
+                                                ?.examinationProfiles?.map((ex) => (
+                                                    <SelectItem
+                                                        key={ex.examinationProfileId}
+                                                        value={ex.examinationProfileId.toString()}
+                                                    >
+                                                        {ex.diagnosis}
+                                                    </SelectItem>
+                                                ))}
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -183,7 +252,7 @@ const AppointmentInfoForm = ({
                                     <DatePicker
                                         value={field.value as Date}
                                         onChange={(value) => {
-                                            handleChange('timeStart', value!);
+                                            handleDayStartChange(value!);
                                             field.onChange(value);
                                         }}
                                     />
@@ -199,10 +268,14 @@ const AppointmentInfoForm = ({
                         name="timeStart"
                         render={({ field }) => (
                             <FormItem className="flex flex-col gap-y-1">
+                                <FormLabel></FormLabel>
                                 <FormControl>
                                     <TimePickerPopover
                                         value={field.value as string}
-                                        onChange={field.onChange}
+                                        onChange={(value) => {
+                                            handleTimeStartChange(value);
+                                            field.onChange(value);
+                                        }}
                                         minTime="08:00"
                                         maxTime="19:30"
                                         step={900}
@@ -219,9 +292,17 @@ const AppointmentInfoForm = ({
                         name="duration"
                         render={({ field }) => (
                             <FormItem className="flex flex-col justify-end gap-y-1">
+                                <FormLabel></FormLabel>
                                 <FormControl>
                                     <Select
-                                        onValueChange={field.onChange}
+                                        onValueChange={(value) => {
+                                            const tmpTimeStart = addMinutes(
+                                                timeRange.timeStart,
+                                                Number(value)
+                                            );
+                                            field.onChange(value);
+                                            handleChange('timeEnd', tmpTimeStart);
+                                        }}
                                         value={field.value as string}
                                     >
                                         <SelectTrigger>
@@ -237,18 +318,6 @@ const AppointmentInfoForm = ({
                                                 <SelectItem value="90">1 giờ 30 phút</SelectItem>
                                                 <SelectItem value="105">1 giờ 45 phút</SelectItem>
                                                 <SelectItem value="120">2 giờ</SelectItem>
-                                                <SelectItem value="135">2 giờ 15 phút</SelectItem>
-                                                <SelectItem value="150">2 giờ 30 phút</SelectItem>
-                                                <SelectItem value="165">2 giờ 45 phút</SelectItem>
-                                                <SelectItem value="180">3 giờ</SelectItem>
-                                                <SelectItem value="195">3 giờ 15 phút</SelectItem>
-                                                <SelectItem value="210">3 giờ 30 phút</SelectItem>
-                                                <SelectItem value="225">3 giờ 45 phút</SelectItem>
-                                                <SelectItem value="240">4 giờ</SelectItem>
-                                                <SelectItem value="255">4 giờ 15 phút</SelectItem>
-                                                <SelectItem value="270">4 giờ 30 phút</SelectItem>
-                                                <SelectItem value="285">4 giờ 45 phút</SelectItem>
-                                                <SelectItem value="300">5 giờ</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>

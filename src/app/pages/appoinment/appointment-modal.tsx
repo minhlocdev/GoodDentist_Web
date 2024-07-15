@@ -12,8 +12,7 @@ const AppointmentModal: React.FC = () => {
                 <DialogHeader>
                     <DialogTitle>Đặt lịch hẹn</DialogTitle>
                 </DialogHeader>
-                {/* Add content for your dialog here */}
-                <ScrollArea className='max-h-80 md:max-h-[500px]'>
+                <ScrollArea className="max-h-80 md:max-h-[500px]">
                     <AppointmentForm />
                 </ScrollArea>
             </DialogContent>

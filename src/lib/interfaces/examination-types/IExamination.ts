@@ -1,11 +1,10 @@
-import { ICustomer } from "../customer-types/ICustomer";
-import { IMedicalRecord } from "../IMedicalRecord";
-import { IOrder } from "../IOrder";
-import { IPrescription } from "../IPrescription";
-import { IDentistSlot } from "../others/IDentistSlot";
-import { IExaminationProfile } from "../others/IExaminationProfile";
-import { IUser } from "../user-types/IUser";
-
+import { ICustomer } from '../customer-types/ICustomer';
+import { IMedicalRecord } from '../IMedicalRecord';
+import { IOrder } from '../IOrder';
+import { IPrescription } from '../IPrescription';
+import { IDentistSlot } from '../others/IDentistSlot';
+import { IExaminationProfile } from '../others/IExaminationProfile';
+import { IUser } from '../user-types/IUser';
 
 export interface IExamination {
     examinationId: number;
@@ -18,8 +17,8 @@ export interface IExamination {
     notes?: string;
     status?: boolean;
     customer?: ICustomer;
-    customerId?:string;
-    customerName?:string;
+    customerId?: string;
+    customerName?: string;
     dentist?: IUser;
     dentistSlot?: IDentistSlot;
     examinationProfile?: IExaminationProfile;

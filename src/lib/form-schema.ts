@@ -182,7 +182,7 @@ export const AppointmentFormSchema = z.object({
     status: z.number().refine((value) => !isNaN(value), {
         message: 'Trạng thái không hợp lệ'
     }),
-    dentistSlotId: z.string()
+    dentistSlotId: z.number()
 });
 
 export const CustomerFormSchema = z.object({

@@ -100,6 +100,7 @@ export const CustomerForm = ({ customer, onCloseModal }: CustomerFormProps) => {
     }
     async function put(values: z.infer<typeof CustomerFormSchema>) {
         const newCustomer: IPostCustomer = {
+            userId: customer?.userId ?? '',
             name: values.name,
             dob: values.dob,
             phoneNumber: values.phoneNumber,

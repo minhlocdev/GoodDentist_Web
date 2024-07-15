@@ -43,7 +43,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                     className="h-20 w-20 cursor-pointer rounded-full bg-slate-100 hover:bg-white hover:opacity-50"
                                     onClick={() => {
                                         navigate(
-                                            `/patient-record/` +
+                                            `/examination-profile/` +
                                                 `${examDetail?.examinationProfileId}`
                                         );
                                     }}
@@ -66,7 +66,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                 </span>
                                 <a
                                     href={
-                                        `/patient-record/` + `${examDetail?.examinationProfileId}`
+                                        `/examination-profile/` + `${examDetail?.examinationProfileId}`
                                     }
                                     className="text-md cursor-pointer font-bold text-primary hover:opacity-50"
                                 >

@@ -1,8 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from 'react';
 import NotFoundPage from '../app/pages/errors/404-page';
-import ExaminationProfile from '../app/pages/examination-profile/examination-profile';
-import UserPermission from '../app/pages/permission/user-permission';
 
 const AppointmentPage = lazy(() => import('../app/pages/appoinment/appointment'));
 const PendingAppointment = lazy(() => import('../app/pages/appoinment/pending-appointment'));
@@ -12,6 +10,11 @@ const DashboardPage = lazy(() => import('../app/pages/dashboard/dashboard'));
 const MedicincePage = lazy(() => import('../app/pages/medicine/medicine'));
 const ServicePage = lazy(() => import('../app/pages/service/service'));
 const StaffPage = lazy(() => import('../app/pages/staff/staff'));
+const DentistSlot = lazy(() => import('../app/pages/dentists-slots/dentist-slot'));
+const ExaminationProfile = lazy(
+    () => import('../app/pages/examination-profile/examination-profile')
+);
+const UserPermission = lazy(() => import('../app/pages/permission/user-permission'));
 
 export interface IRouterMeta {
     name?: string;
@@ -71,6 +74,12 @@ const routerMeta: RouterMetaType = {
         name: 'Medicines',
         path: '/medicines',
         element: <MedicincePage />,
+        isCommon: true
+    },
+    DentistSlot: {
+        name: 'Dentist Slots',
+        path: '/dentist-slots',
+        element: <DentistSlot />,
         isCommon: true
     },
     RevenueStatistical: {

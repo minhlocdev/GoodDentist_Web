@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
+import { AxiosError } from 'axios';
+import { addHours, format, subDays } from 'date-fns';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 import { Button } from '../../../components/ui/button';
 import { DialogClose, DialogFooter } from '../../../components/ui/dialog';
@@ -10,7 +12,9 @@ import { floorToNearestFifteen } from '../../../lib/calendar-utils';
 import { AppointmentFormSchema } from '../../../lib/form-schema';
 import { ICustomer } from '../../../lib/interfaces/customer-types/ICustomer';
 import { IPostExamination } from '../../../lib/interfaces/examination-types/IPostExamination';
+import { queryClient } from '../../../lib/queryClient';
 import { customerService } from '../../../services/queries/customerQuery';
+import { examinationService } from '../../../services/queries/examinationQuery';
 import { userService } from '../../../services/queries/userQuery';
 import AppointmentInfoForm from './appointment-info-form';
 import SlotForm from './appointment-slot-form';
@@ -21,9 +25,14 @@ interface AppointmentFormProps {
 const AppointmentForm = ({ customer }: AppointmentFormProps) => {
     const { selectedSlot, view, selectedClinicId } = useCalendarStore();
 
+    const postExam = examinationService.PostExamination();
+
     const [timeRange, setTimeRange] = useState({
-        timeStart: new Date(),
-        timeEnd: new Date()
+        timeStart: selectedSlot?.start ?? new Date(),
+        timeEnd:
+            view === 'month'
+                ? subDays(selectedSlot?.end ?? new Date(), 1)
+                : selectedSlot?.end ?? new Date()
     });
 
     const handleTimeChange = (newTimeRange: { timeStart: Date; timeEnd: Date }) => {
@@ -36,8 +45,7 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
             customerId: customer?.userId.toString() ?? '',
             phoneNumber: customer?.phoneNumber ?? '',
             mode: 'new',
-            examinationProfileId:
-                (customer?.examinationProfiles?.[0]?.examinationProfileId as number) ?? 0,
+            examinationProfileId: 0,
             dayStart: selectedSlot?.start,
             timeStart:
                 view === 'month'
@@ -59,25 +67,40 @@ const AppointmentForm = ({ customer }: AppointmentFormProps) => {
 
     const { data: dentistSlot } = userService.GetAllDentistSlotByTime(
         selectedClinicId ?? '',
-        selectedSlot?.start ?? new Date(),
-        selectedSlot?.end ?? new Date()
+        addHours(timeRange.timeStart, 7),
+        addHours(timeRange.timeEnd, 7)
     );
     async function onSubmit(values: z.infer<typeof AppointmentFormSchema>) {
         try {
-            await Promise.resolve(values);
             const newExam: IPostExamination = {
                 examinationId: 0,
                 examinationProfileId: values.examinationProfileId ?? 0,
                 customerId: values.customerId,
                 notes: values.notes,
-                diagnosis: '',
-                dentistSlotId: 0,
-                timeEnd: new Date(),
-                timeStart: new Date(),
+                diagnosis: '.',
+                dentistSlotId: values.dentistSlotId ?? 0,
+                timeEnd: addHours(timeRange.timeEnd, 7),
+                timeStart: addHours(timeRange.timeStart, 7),
                 mode: values.mode,
                 status: 1
             };
-            console.log(newExam);
+            await postExam.mutateAsync(newExam, {
+                onSuccess: async (res) => {
+                    if (res.isSuccess) {
+                        toast.success('Tạo mới thành công');
+                        await queryClient.invalidateQueries({ queryKey: ['examination'] });
+                        await queryClient.invalidateQueries({ queryKey: ['examinations'] });
+                    }
+                    toast.error('Tạo mới thất bại');
+                },
+                onError: (error) => {
+                    if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {
+                        toast.error(error.response.data.message[0] as React.ReactNode);
+                    } else {
+                        toast.error('Tạo mới thất bại');
+                    }
+                }
+            });
         } catch (error) {
             console.error(error);
         }

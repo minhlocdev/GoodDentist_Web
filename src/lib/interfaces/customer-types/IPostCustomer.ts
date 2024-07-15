@@ -1,6 +1,7 @@
 import { IExaminationProfile } from '../others/IExaminationProfile';
 
 export interface IPostCustomer {
+    userId?: string;
     name: string;
     dob?: Date;
     gender?: 'Nam' | 'Nữ' | 'Khác';

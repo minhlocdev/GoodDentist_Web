@@ -1,10 +1,11 @@
-import { AxiosResponse } from "axios";
-import { ApiResponse } from "../lib/api";
-import apiClient from "./api-client";
-import { IExamination } from "../lib/interfaces/examination-types/IExamination";
+import { AxiosResponse } from 'axios';
+import { ApiResponse } from '../lib/api';
+import { IExamination } from '../lib/interfaces/examination-types/IExamination';
+import { IPostExamination } from '../lib/interfaces/examination-types/IPostExamination';
+import apiClient from './api-client';
 
 export const getExaminationsByClinic = async (
-    clinicId:string,
+    clinicId: string,
     pageNumber: number,
     rowsPerPage: number,
     filterField?: string,
@@ -35,6 +36,20 @@ export const getExamination = async (
         url: `/api/examinations/examination/detail`,
         params: {
             examId
+        }
+    });
+};
+
+export const postExamination = async (
+    examination: IPostExamination
+): Promise<AxiosResponse<ApiResponse<IPostExamination>>> => {
+    return await apiClient({
+        method: 'post',
+        url: `/api/examinations/examination`,
+        data: examination,
+        params: {
+            mode: examination.mode,
+            customerId: examination.customerId
         }
     });
 };

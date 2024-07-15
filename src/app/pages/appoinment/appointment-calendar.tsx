@@ -46,6 +46,7 @@ const AppointmentCalendar = () => {
         () => transformExaminationsToEvents(examinations ?? []),
         [examinations]
     );
+    console.log(transformedExaminations);
     const { formats } = useMemo(
         () => ({
             formats: {
@@ -69,7 +70,6 @@ const AppointmentCalendar = () => {
     const components: any = {
         event: ({ event }: EventProps<EventItem>) => {
             const data = event?.data;
-
             if (data?.appointment)
                 return (
                     <AppointmentEvent
@@ -96,6 +96,7 @@ const AppointmentCalendar = () => {
         title: dentist.name,
         avatar: dentist.avatar
     }));
+
     if (!calendar) return null;
     const onSelectEvent = (e: EventItem) => {
         const data = details.find(

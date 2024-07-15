@@ -1,9 +1,9 @@
-import { IClinic } from "../clinics-types/IClinic";
-import { IDentistSlot } from "../others/IDentistSlot";
+import { IClinic } from '../clinics-types/IClinic';
+import { IDentistSlot } from '../others/IDentistSlot';
 
 export interface IUser {
     userId: string;
-    name: string
+    name: string;
     userName: string;
     password?: string;
     dob?: Date;
@@ -16,10 +16,9 @@ export interface IUser {
     avatar?: string | File;
     clinics?: IClinic[];
     dentistSlotId?: number;
-    dentistSlots?:IDentistSlot[]
+    dentistSlots?: IDentistSlot[];
+    clinicId?: string;
 }
-const users: IUser[] = [
-    
-];
+const users: IUser[] = [];
 
 export default users;
