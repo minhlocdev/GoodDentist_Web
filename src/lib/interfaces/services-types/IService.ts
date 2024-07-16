@@ -5,3 +5,4 @@ export interface IService {
     price?: number;
     status?: boolean;
 }
+export const services: IService[] = [];

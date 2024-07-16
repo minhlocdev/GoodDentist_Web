@@ -34,7 +34,9 @@ const ClinicInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                                     <Input placeholder="Tên phòng khám" {...field} />
                                 </FormControl>
                                 <FormMessage>
-                                    {errors.name && <p>{errors.name.message?.toString()}</p>}
+                                    {errors.clinicName && (
+                                        <p>{errors.clinicName.message?.toString()}</p>
+                                    )}
                                 </FormMessage>
                             </FormItem>
                         )}
