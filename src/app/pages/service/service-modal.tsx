@@ -27,7 +27,7 @@ export const ServiceModal = ({ service }: ServiceModalProps) => {
             </DialogTrigger>
             <DialogContent className="max-w-[50vw]">
                 <DialogHeader>
-                    <DialogTitle>{service ? 'Cập nhật' : 'Thêm mới'} khách hàng</DialogTitle>
+                    <DialogTitle>{service ? 'Cập nhật' : 'Thêm mới'} dịch vụ</DialogTitle>
                 </DialogHeader>
                 <ServiceForm service={service} onCloseModal={() => setOpen(false)} />
             </DialogContent>
