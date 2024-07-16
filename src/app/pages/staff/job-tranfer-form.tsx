@@ -68,7 +68,6 @@ const JobTranferForm = ({ user, open, setOpen }: JobTranferProps) => {
                     } else {
                         toast.error(res.message);
                     }
-                    
                 },
                 onError: (error) => {
                     toast.error('Cập nhật thất bại');

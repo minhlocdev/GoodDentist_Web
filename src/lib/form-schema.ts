@@ -246,3 +246,32 @@ export const DentistSlotFormSchema = z.object({
     roomId: z.number(),
     clinicId: z.string()
 });
+
+export const ClinicFormSchema = z.object({
+    clinicName: z
+        .string({
+            required_error: 'Tên là bắt buộc'
+        })
+        .min(2, {
+            message: 'Tên phải có ít nhất 2 ký tự.'
+        }),
+    phoneNumber: z
+        .string({
+            required_error: 'Số điện thoại là bắt buộc'
+        })
+        .min(10, {
+            message: 'Số điện thoại phải có ít nhất 10 chữ số.'
+        })
+        .regex(/^[0-9]+$/, {
+            message: 'Số điện thoại phải là số.'
+        }),
+    email: z.string().email({
+        message: 'Email là bắt buộc và phải là địa chỉ email hợp lệ.'
+    }),
+    province: z.string().optional(),
+    district: z.string().optional(),
+    address: z.string({
+        required_error: 'Địa chỉ là bắt buộc.'
+    }),
+    status: z.boolean()
+});

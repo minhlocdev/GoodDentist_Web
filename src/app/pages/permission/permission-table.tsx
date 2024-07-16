@@ -48,11 +48,13 @@ const UserPermissionTable = () => {
                     <div className="col-span-1 border-s-2 border-white">Xóa</div>
                 </div>
                 <Collapsible>
-                    <CollapsibleTrigger className="px-2 py-3 w-full col-span-9 text-left bg-neutral-200 border border-neutral-300 hover:bg-blue-200 cursor-pointer transition-colors">
+                    <CollapsibleTrigger className="col-span-9 w-full cursor-pointer border border-neutral-300 bg-neutral-200 px-2 py-3 text-left transition-colors hover:bg-blue-200">
                         Trang chủ
                     </CollapsibleTrigger>
                     <CollapsibleContent className="grid w-full grid-cols-9 text-center">
-                        <div className="col-span-5 ps-10 text-left flex items-center">Trang chủ</div>
+                        <div className="col-span-5 flex items-center ps-10 text-left">
+                            Trang chủ
+                        </div>
                         <div className="col-span-1 border-s-2 border-neutral-300 py-2 ">
                             <Checkbox />
                         </div>
@@ -68,11 +70,13 @@ const UserPermissionTable = () => {
                     </CollapsibleContent>
                 </Collapsible>
                 <Collapsible>
-                    <CollapsibleTrigger className="px-2 py-3 w-full col-span-9 text-left bg-neutral-200 border border-neutral-300 hover:bg-blue-200 cursor-pointer transition-colors">
+                    <CollapsibleTrigger className="col-span-9 w-full cursor-pointer border border-neutral-300 bg-neutral-200 px-2 py-3 text-left transition-colors hover:bg-blue-200">
                         Quản lý khách hàng
                     </CollapsibleTrigger>
                     <CollapsibleContent className="grid w-full grid-cols-9 text-center">
-                        <div className="col-span-5 ps-10 text-left flex items-center">Trang chủ</div>
+                        <div className="col-span-5 flex items-center ps-10 text-left">
+                            Trang chủ
+                        </div>
                         <div className="col-span-1 border-s-2 border-neutral-300 py-2 ">
                             <Checkbox />
                         </div>
@@ -88,11 +92,13 @@ const UserPermissionTable = () => {
                     </CollapsibleContent>
                 </Collapsible>
                 <Collapsible>
-                    <CollapsibleTrigger className="px-2 py-3 w-full col-span-9 text-left bg-neutral-200 border border-neutral-300 hover:bg-blue-200 cursor-pointer transition-colors">
+                    <CollapsibleTrigger className="col-span-9 w-full cursor-pointer border border-neutral-300 bg-neutral-200 px-2 py-3 text-left transition-colors hover:bg-blue-200">
                         Quản lý lịch hẹn
                     </CollapsibleTrigger>
                     <CollapsibleContent className="grid w-full grid-cols-9 text-center">
-                        <div className="col-span-5 ps-10 text-left flex items-center">Trang chủ</div>
+                        <div className="col-span-5 flex items-center ps-10 text-left">
+                            Trang chủ
+                        </div>
                         <div className="col-span-1 border-s-2 border-neutral-300 py-2 ">
                             <Checkbox />
                         </div>
@@ -108,11 +114,13 @@ const UserPermissionTable = () => {
                     </CollapsibleContent>
                 </Collapsible>
                 <Collapsible>
-                    <CollapsibleTrigger className="px-2 py-3 w-full col-span-9 text-left bg-neutral-200 border border-neutral-300 hover:bg-blue-200 cursor-pointer transition-colors">
+                    <CollapsibleTrigger className="col-span-9 w-full cursor-pointer border border-neutral-300 bg-neutral-200 px-2 py-3 text-left transition-colors hover:bg-blue-200">
                         Quản lý kho
                     </CollapsibleTrigger>
                     <CollapsibleContent className="grid w-full grid-cols-9 text-center">
-                        <div className="col-span-5 ps-10 text-left flex items-center">Trang chủ</div>
+                        <div className="col-span-5 flex items-center ps-10 text-left">
+                            Trang chủ
+                        </div>
                         <div className="col-span-1 border-s-2 border-neutral-300 py-2 ">
                             <Checkbox />
                         </div>

@@ -18,7 +18,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
     const [date, setDate] = React.useState<Date | undefined>(value);
 
     const [month, setMonth] = React.useState<Date | undefined>(new Date());
-    
+
     const handleDateChange = (newDate: Date | undefined) => {
         setDate(newDate);
         onChange(newDate);

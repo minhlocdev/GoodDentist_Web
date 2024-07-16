@@ -18,7 +18,7 @@ const ExaminationProfile = () => {
         return <div>...Loading</div>;
     }
     return (
-        <ExaminationProfileLayout title={examProfiles?.[0].customer?.name ?? ""}>
+        <ExaminationProfileLayout title={examProfiles?.[0].customer?.name ?? ''}>
             <div className="w-full">
                 <TabsContent value="basicinfo">
                     <UserProfile customer={examProfiles?.[0].customer} />

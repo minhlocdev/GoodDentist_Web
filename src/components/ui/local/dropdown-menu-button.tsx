@@ -1,6 +1,7 @@
 import { DropdownMenuArrow } from '@radix-ui/react-dropdown-menu';
 import { ChevronDown, Dot, LucideIcon } from 'lucide-react';
 import { useState } from 'react';
+import { cn } from '../../../lib/utils';
 import { Button } from '../button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../collapsible';
 import {
@@ -12,7 +13,6 @@ import {
     DropdownMenuTrigger
 } from '../dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../tooltip';
-import { cn } from '../../../lib/utils';
 
 interface Submenu {
     href: string;
