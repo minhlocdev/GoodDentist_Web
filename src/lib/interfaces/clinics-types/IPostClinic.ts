@@ -1,10 +1,9 @@
-export interface IClinic {
-    clinicId: string;
+export interface IPostClinic {
+    clinicId?: string;
     clinicName: string;
     phoneNumber?: string;
     address?: string;
     email?: string;
     status?: boolean;
+    service?: [];
 }
-
-export const clinics: IClinic[] = [];
