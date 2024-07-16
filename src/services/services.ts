@@ -61,7 +61,7 @@ export const putService = async (
             'Content-Type': 'application/json'
         },
         data: service,
-        url: 'api/services/service'
+        url: '/api/services/service'
     });
 };
 export const deleteService = async (

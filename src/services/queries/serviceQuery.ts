@@ -46,7 +46,7 @@ export const serviceService: IServiceService = {
 
     GetTotalService: (): UseQueryResult<number> =>
         useQuery({
-            queryKey: ['total-customers'],
+            queryKey: ['total-services'],
             queryFn: async (): Promise<number> => {
                 return await getTotalService().then((res) => res.data.result);
             }
