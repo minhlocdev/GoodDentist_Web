@@ -250,7 +250,7 @@ export const DentistSlotFormSchema = z.object({
 export const ClinicFormSchema = z.object({
     clinicName: z
         .string({
-            required_error: 'Tên là bắt buộc'
+            required_error: 'Tên phòng khám là bắt buộc'
         })
         .min(2, {
             message: 'Tên phải có ít nhất 2 ký tự.'
@@ -273,5 +273,26 @@ export const ClinicFormSchema = z.object({
     address: z.string({
         required_error: 'Địa chỉ là bắt buộc.'
     }),
+    status: z.boolean()
+});
+
+export const ServiceFormSchema = z.object({
+    serviceName: z
+        .string({
+            required_error: 'Tên dịch vụ là bắt buộc'
+        })
+        .min(2, {
+            message: 'Tên phải có ít nhất 2 ký tự.'
+        }),
+    description: z.string({
+        required_error: 'Mô tả là bắt buộc.'
+    }),
+    price: z
+        .number({
+            required_error: 'Giá dịch vụ là bắt buộc.'
+        })
+        .min(1, {
+            message: 'Giá dịch vụ phải lớn hơn 0.'
+        }),
     status: z.boolean()
 });

@@ -10,49 +10,34 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from '../../../components/ui/tooltip';
-import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
+import { IService } from '../../../lib/interfaces/services-types/IService';
 import { queryClient } from '../../../lib/queryClient';
-import { clinicService } from '../../../services/queries/clinicQuery';
-import { ClinicModal } from './clinic-modal';
+import { serviceService } from '../../../services/queries/serviceQuery';
+import { ServiceModal } from './service-modal';
 
-export const columns: ColumnDef<IClinic>[] = [
+export const columns: ColumnDef<IService>[] = [
     {
-        accessorKey: 'clinicName',
+        accessorKey: 'serviceName',
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                 >
-                    Tên phòng khám
+                    Tên dịch vụ
                     <CaretSortIcon className="h-4 w-4" />
                 </Button>
             );
         }
     },
     {
-        accessorKey: 'address',
-        header: 'Địa chỉ'
+        accessorKey: 'description',
+        header: 'Mô tả'
     },
     {
-        accessorKey: 'phoneNumber',
-        header: 'Số điện thoại',
-        cell: ({ row }) => <div className="capitalize">{row.getValue('phoneNumber')}</div>
-    },
-    {
-        accessorKey: 'email',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-                >
-                    Email
-                    <CaretSortIcon className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
-        cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>
+        accessorKey: 'price',
+        header: 'Giá',
+        cell: ({ row }) => <div className="lowercase">{row.getValue('price')}</div>
     },
     {
         accessorKey: 'status',
@@ -63,13 +48,13 @@ export const columns: ColumnDef<IClinic>[] = [
         id: 'actions',
         enableHiding: false,
         cell: ({ row }) => {
-            const clinic: IClinic = row.original;
-            const deleteClinic = clinicService.DeleteClinic();
+            const service: IService = row.original;
+            const deleteService = serviceService.DeleteService();
             const handleDelete = async () => {
-                await deleteClinic.mutateAsync(clinic.clinicId, {
+                await deleteService.mutateAsync(service.serviceId, {
                     onSuccess: async () => {
                         toast.success('Xóa thành công');
-                        await queryClient.invalidateQueries({ queryKey: ['clinics'] });
+                        await queryClient.invalidateQueries({ queryKey: ['services'] });
                     },
                     onError: (error) => {
                         if (
@@ -89,7 +74,7 @@ export const columns: ColumnDef<IClinic>[] = [
                         <Tooltip delayDuration={100}>
                             <TooltipTrigger className="z-10 w-full">
                                 <div className="flex flex-row items-center">
-                                    <ClinicModal clinic={clinic} />
+                                    <ServiceModal service={service} />
                                 </div>
                             </TooltipTrigger>
                             <TooltipContent side="bottom">

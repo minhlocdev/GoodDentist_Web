@@ -30,7 +30,7 @@ import {
 } from '../../../components/ui/table';
 import { useExaminationStore } from '../../../hooks/use-examination-store';
 import { cn } from '../../../lib/utils';
-import { servicesService } from '../../../services/queries/serviceQuery';
+import { serviceService } from '../../../services/queries/serviceQuery';
 import { columnsService } from './columns';
 
 interface TreatmentServiceTableProps {
@@ -45,7 +45,7 @@ const TreatmentServiceTable: React.FC<TreatmentServiceTableProps> = ({ onDialogC
         pageIndex: 0,
         pageSize: 5
     });
-    const { data: servicesData } = servicesService.GetServices(1, 200);
+    const { data: servicesData } = serviceService.GetServices(1, 200);
     const initialRowSelection = React.useMemo<RowSelectionState>(() => {
         const selection: RowSelectionState = {};
         servicesData?.forEach((service, index) => {

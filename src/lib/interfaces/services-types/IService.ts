@@ -6,3 +6,4 @@ export interface IService {
     status?: boolean | number;
     quantity?: number;
 }
+export const services: IService[] = [];
