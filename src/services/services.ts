@@ -72,3 +72,28 @@ export const deleteService = async (
         url: `/api/services/service/?serviceID=${serviceId}`
     });
 };
+
+export const getAllServices = async (): Promise<AxiosResponse<ApiResponse<IService[]>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/api/services/all-services`,
+        params: {
+            pageNumber: 1,
+            rowsPerPage: 1000
+        }
+    });
+};
+
+export const getAllServicesByClinicId = async (
+    clinicId: string
+): Promise<AxiosResponse<ApiResponse<IService[]>>> => {
+    return await apiClient({
+        method: 'get',
+        url: `/api/services/clinic`,
+        params: {
+            clinicId: clinicId,
+            pageNumber: 1,
+            rowsPerPage: 1000
+        }
+    });
+};
