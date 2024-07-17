@@ -97,9 +97,7 @@ const ClinicChainTable = () => {
                     <div>
                         <ClinicModal />
                         <Button variant="link">
-                            <a href="/clinic-chain/report" target="_blank">
-                                Thiết lập dịch vụ &gt;&gt;
-                            </a>
+                            <a href="/clinic-chain/clinic-service">Thiết lập dịch vụ &gt;&gt;</a>
                         </Button>
                     </div>
                 </div>
