@@ -9,7 +9,15 @@ import { ApiResponse } from '../../lib/api';
 import { IPostService } from '../../lib/interfaces/services-types/IPostService';
 import { IService } from '../../lib/interfaces/services-types/IService';
 import { IServiceService } from '../../lib/interfaces/services-types/IServiceService';
-import { deleteService, getServices, getTotalService, postService, putService } from '../services';
+import {
+    deleteService,
+    getAllServices,
+    getAllServicesByClinicId,
+    getServices,
+    getTotalService,
+    postService,
+    putService
+} from '../services';
 
 export const serviceService: IServiceService = {
     GetServices: (
@@ -67,11 +75,36 @@ export const serviceService: IServiceService = {
                 return response.data;
             }
         }),
+
     DeleteService: (): UseMutationResult<ApiResponse<number>, Error, number> =>
         useMutation<ApiResponse<number>, Error, number>({
             mutationFn: async (serviceId: number) => {
                 const response = await deleteService(serviceId);
                 return response.data;
             }
-        })
+        }),
+
+    GetAllServices: (): UseQueryResult<IService[]> => {
+        return useQuery<IService[], Error>({
+            queryKey: ['services'],
+            queryFn: async (): Promise<IService[]> => {
+                const response = await getAllServices();
+                return response.data.result;
+            },
+            staleTime: 20000,
+            placeholderData: keepPreviousData
+        });
+    },
+
+    GetAllServicesByClinicId: (clinicId): UseQueryResult<IService[]> => {
+        return useQuery<IService[], Error>({
+            queryKey: ['services', clinicId],
+            queryFn: async (): Promise<IService[]> => {
+                const response = await getAllServicesByClinicId(clinicId);
+                return response.data.result;
+            },
+            enabled: !!clinicId,
+            staleTime: Infinity
+        });
+    }
 };

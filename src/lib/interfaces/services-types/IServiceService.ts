@@ -16,4 +16,6 @@ export interface IServiceService {
     PostService: () => UseMutationResult<ApiResponse<IPostService>, Error, IPostService>;
     PutService: () => UseMutationResult<ApiResponse<IPostService>, Error, IPostService>;
     DeleteService: () => UseMutationResult<ApiResponse<number>, Error, number>;
+    GetAllServices: () => UseQueryResult<IService[]>;
+    GetAllServicesByClinicId: (clinicId: string) => UseQueryResult<IService[]>;
 }
