@@ -296,3 +296,37 @@ export const ServiceFormSchema = z.object({
         }),
     status: z.boolean()
 });
+
+export const MedicineFormSchema = z.object({
+    medicineName: z
+        .string({
+            required_error: 'Tên thuốc là bắt buộc'
+        })
+        .min(2, {
+            message: 'Tên phải có ít nhất 2 ký tự.'
+        }),
+    description: z.string({
+        required_error: 'Mô tả là bắt buộc.'
+    }),
+    price: z
+        .number({
+            required_error: 'Giá là bắt buộc.'
+        })
+        .min(1, {
+            message: 'Giá phải lớn hơn 0.'
+        }),
+    quantity: z
+        .number({
+            required_error: 'Số lượng là bắt buộc.'
+        })
+        .min(1, {
+            message: 'Số lượng phải lớn hơn 0.'
+        }),
+    type: z.string({
+        required_error: 'Loại thuốc là bắt buộc'
+    }),
+    unit: z.string({
+        required_error: 'Đơn vị thuốc là bắt buộc'
+    }),
+    status: z.boolean()
+});
