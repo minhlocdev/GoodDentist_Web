@@ -15,6 +15,7 @@ const ExaminationProfile = lazy(
     () => import('../app/pages/examination-profile/examination-profile')
 );
 const UserPermission = lazy(() => import('../app/pages/permission/user-permission'));
+const ClinicServicePage = lazy(() => import('../app/pages/clinic-service/clinic-service'));
 
 export interface IRouterMeta {
     name?: string;
@@ -128,6 +129,12 @@ const routerMeta: RouterMetaType = {
         name: 'Profile',
         path: '/profile/:username/*',
         element: <StaffPage />,
+        isCommon: true
+    },
+    ClinicService: {
+        name: 'Clinic Service',
+        path: '/clinic-chain/clinic-service',
+        element: <ClinicServicePage />,
         isCommon: true
     },
     NotFound: {
