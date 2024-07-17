@@ -1,21 +1,24 @@
 'use client';
 
 import { CalendarIcon } from '@radix-ui/react-icons';
-import { addDays, format } from 'date-fns';
+import { endOfMonth, format, startOfMonth } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import * as React from 'react';
 import { DateRange } from 'react-day-picker';
-
 import { handleTagClick } from '../../lib/calendar-utils';
 import { cn } from '../../lib/utils';
 import { Button } from './button';
 import { Calendar } from './calendar';
 import { Popover, PopoverContent, PopoverTrigger } from './pop-over';
 
-export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivElement>) {
+interface DatePickerWithRangeProps extends React.HTMLAttributes<HTMLDivElement> {
+    onDateChange?: (dateRange: DateRange | undefined) => void;
+}
+
+export function DatePickerWithRange({ className, onDateChange }: DatePickerWithRangeProps) {
     const [date, setDate] = React.useState<DateRange | undefined>({
-        from: new Date(Date.now()),
-        to: addDays(new Date(Date.now()), 20)
+        from: startOfMonth(new Date()),
+        to: endOfMonth(new Date())
     });
 
     const tags = [
@@ -27,6 +30,13 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
         'Tháng này',
         'Tháng trước'
     ];
+
+    const handleDateChange = (selectedDate: DateRange | undefined) => {
+        setDate(selectedDate);
+        if (onDateChange) {
+            onDateChange(selectedDate);
+        }
+    };
 
     return (
         <div className={cn('grid gap-2', className)}>
@@ -61,7 +71,7 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
                         mode="range"
                         defaultMonth={date?.from}
                         selected={date}
-                        onSelect={setDate}
+                        onSelect={handleDateChange}
                         numberOfMonths={2}
                         locale={vi}
                     />
@@ -71,7 +81,7 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
                             <div
                                 key={index}
                                 className="w-fit cursor-pointer rounded-md bg-blue-200 px-2 text-sm font-light text-primary hover:bg-blue-100"
-                                onClick={() => setDate(handleTagClick(tag))}
+                                onClick={() => handleDateChange(handleTagClick(tag))}
                             >
                                 {tag}
                             </div>

@@ -38,7 +38,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
     return (
         <div className="flex flex-col gap-y-2 rounded-sm border border-neutral-200 bg-white p-4">
-            <strong className="font-medium text-gray-700">Doanh thu theo nhóm thủ thuật</strong>
+            <strong className="font-medium text-gray-700">Doanh thu theo nhóm dịch vụ</strong>
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>

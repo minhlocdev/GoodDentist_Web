@@ -1,16 +1,16 @@
 import { ColumnDef } from '@tanstack/react-table';
-import IPayment from '../../../lib/interfaces/IPayment';
+import IServiceIncome from '../../../lib/interfaces/dashboard-types/IServiceIncome';
 
-export const columns: ColumnDef<IPayment>[] = [
+export const columns: ColumnDef<IServiceIncome>[] = [
     {
-        accessorKey: 'method',
-        header: 'Thủ thuật'
+        accessorKey: 'serviceName',
+        header: 'Dịch vụ'
     },
     {
-        accessorKey: 'amount',
+        accessorKey: 'total',
         header: () => <div className="text-right">Doanh thu</div>,
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue('amount'));
+            const amount = parseFloat(row.getValue('total'));
             const formatted = new Intl.NumberFormat('vn-VN', {
                 style: 'currency',
                 currency: 'VND'
