@@ -12,7 +12,45 @@ import {
 
 export const CustomTimeGutterHeader = () => (
     <div className="custom-rbc-time-header-gutter flex flex-col items-center justify-center gap-2 p-1">
-        <Info className="h-[18px] w-[18px] text-neutral-600" />
+        <Popover>
+            <PopoverTrigger asChild>
+                <Info className="h-[18px] w-[18px] text-neutral-600" />
+            </PopoverTrigger>
+            <PopoverContent
+                className="w-fit bg-neutral-800 bg-opacity-85 p-4 shadow-sm"
+                side="right"
+                align="start"
+                sideOffset={10}
+            >
+                <div className="flex flex-col gap-1 text-white">
+                    <div className="text-white">Màu sắc lịch hẹn:</div>
+                    <div className="flex gap-x-4">
+                        <div className="h-6 w-12 rounded-md bg-[#ffd54f]"></div>
+                        <div className=""> : Khách hàng chưa đến</div>
+                    </div>
+                    <div className="flex gap-x-4">
+                        <div className="h-6 w-12 rounded-md bg-[#9ee0b0]"></div>
+                        <div className=""> : Khách hàng đã đến</div>
+                    </div>
+                    <div className="flex gap-x-4">
+                        <div className="h-6 w-12 rounded-md bg-[#ffc266]"></div>
+                        <div className=""> : Khách hàng đang điều trị</div>
+                    </div>
+                    <div className="flex gap-x-4">
+                        <div className="h-6 w-12 rounded-md bg-[#a6a6a6]"></div>
+                        <div className=""> : Khách hàng đã khám xong</div>
+                    </div>
+                    <div className="flex gap-x-4">
+                        <div className="h-6 w-12 rounded-md bg-[#f08080]"></div>
+                        <div className=""> : Lịch hẹn đã bị hủy</div>
+                    </div>
+                    <div className="flex gap-x-4">
+                        <div className="h-6 w-12 rounded-md bg-[#7cd9e5]"></div>
+                        <div className=""> : Khách hàng chưa đến</div>
+                    </div>
+                </div>
+            </PopoverContent>
+        </Popover>
         <Popover>
             <PopoverTrigger asChild>
                 <Settings className="h-[18px] w-[18px] text-neutral-600" />
@@ -71,7 +109,7 @@ export const CustomResource: React.FC<CustomResourceProps> = ({ name, photo }) =
         <div className="flex h-[100%] flex-1 items-center !justify-start gap-4 !bg-white pl-3">
             <div className="resource-photo">
                 <Avatar className="h-10 w-10 rounded-full bg-slate-100">
-                        <AvatarImage src={photo} alt="Avatar" />
+                    <AvatarImage src={photo} alt="Avatar" />
                     <AvatarFallback className="bg-transparent text-neutral-600">
                         {name.charAt(0).toUpperCase()}
                     </AvatarFallback>

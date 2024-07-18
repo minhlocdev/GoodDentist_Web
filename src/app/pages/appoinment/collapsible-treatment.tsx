@@ -17,7 +17,9 @@ const CollapseTreatment = () => {
                                 {o.orderServices?.map((service) => (
                                     <>
                                         <div className="">{service.service?.serviceName}</div>
-                                        <div className="text-primary font-bold">{service.price}đ</div>
+                                        <div className="font-bold text-primary">
+                                            {service.price}đ
+                                        </div>
                                     </>
                                 ))}
                             </>

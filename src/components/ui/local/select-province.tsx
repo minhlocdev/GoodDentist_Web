@@ -1,6 +1,13 @@
 import React from 'react';
 import { provinceDistrictService } from '../../../services/queries/provinceDistrictQuery';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../select';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from '../select';
 
 interface SelectProvinceProps {
     selectedProvince: string;
@@ -8,7 +15,8 @@ interface SelectProvinceProps {
 }
 
 const SelectProvince: React.FC<SelectProvinceProps> = ({ selectedProvince, onSelectProvince }) => {
-    const { data: provinceData, isLoading: isLoadingProvinces } = provinceDistrictService.GetProvince();
+    const { data: provinceData, isLoading: isLoadingProvinces } =
+        provinceDistrictService.GetProvince();
 
     if (isLoadingProvinces) {
         return <div>Loading provinces...</div>;
@@ -21,14 +29,15 @@ const SelectProvince: React.FC<SelectProvinceProps> = ({ selectedProvince, onSel
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    {provinceData && Object.keys(provinceData).map(key => (
-                        <SelectItem
-                            key={provinceData[key].code}
-                            value={provinceData[key].name_with_type}
-                        >
-                            {provinceData[key].name_with_type}
-                        </SelectItem>
-                    ))}
+                    {provinceData &&
+                        Object.keys(provinceData).map((key) => (
+                            <SelectItem
+                                key={provinceData[key].code}
+                                value={provinceData[key].name_with_type}
+                            >
+                                {provinceData[key].name_with_type}
+                            </SelectItem>
+                        ))}
                 </SelectGroup>
             </SelectContent>
         </Select>

@@ -21,7 +21,7 @@ export function ExaminationProfileNavbar({ title }: ExaminationProfileNavbarProp
                     </div>
                 </div>
             </div>
-            <ScrollArea className="max-w-full w-fit overflow-x-auto whitespace-nowrap rounded-md">
+            <ScrollArea className="w-fit max-w-full overflow-x-auto whitespace-nowrap rounded-md">
                 <div className="mx-4 flex items-center sm:mx-8">
                     <TabsList className="h-[calc(20px+2rem)] w-fit">
                         <TabsTrigger value="basicinfo">Thông tin khách hàng</TabsTrigger>

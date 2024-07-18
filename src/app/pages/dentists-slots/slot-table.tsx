@@ -43,7 +43,7 @@ const DentistSlotTable = () => {
     const { data: dentistSlots, isLoading } = userService.GetDentistSlotByDentist(
         user?.userId ?? '',
         pagination.pageIndex + 1,
-        200
+        pagination.pageSize
     );
     const defaultData = React.useMemo(() => [], []);
     const table = useReactTable({

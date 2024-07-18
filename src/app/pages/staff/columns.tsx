@@ -179,7 +179,7 @@ export const columns: ColumnDef<IUser>[] = [
             const user = row.original;
             const updatedUser: IPostUser = {
                 ...user,
-                clinicId: user?.clinics?.[0]?.clinicId ?? "",
+                clinicId: user?.clinics?.[0]?.clinicId ?? '',
                 status: true
             };
             if (user?.clinics?.length !== 0) {

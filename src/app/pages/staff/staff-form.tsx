@@ -53,8 +53,9 @@ export const StaffForm = ({ onCloseModal }: StaffFormProps) => {
                     if (res.isSuccess) {
                         toast.success('Tạo mới thành công');
                         await queryClient.refetchQueries({ queryKey: ['users'] });
+                    } else {
+                        toast.error('Tạo mới thất bại' + res.message);
                     }
-                    toast.error('Tạo mới thất bại');
                     onCloseModal();
                 },
                 onError: (error) => {

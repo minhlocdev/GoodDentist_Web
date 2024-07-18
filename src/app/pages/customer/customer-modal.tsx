@@ -20,7 +20,7 @@ export const CustomerModal = ({ customer }: CustomerModalProps) => {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 {customer ? (
-                    <SquarePen className="h-5 w-5 text-primary" />
+                    <SquarePen className="h-5 w-5 cursor-pointer text-primary" />
                 ) : (
                     <Button>Thêm mới</Button>
                 )}

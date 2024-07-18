@@ -3,5 +3,7 @@ export interface IService {
     serviceName: string;
     description?: string;
     price?: number;
-    status?: boolean;
+    status?: boolean | number;
+    quantity?: number;
 }
+export const services: IService[] = [];

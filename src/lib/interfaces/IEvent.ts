@@ -1,4 +1,4 @@
-import { IExamination } from "./examination-types/IExamination";
+import { IExamination } from './examination-types/IExamination';
 
 export interface EventItem {
     start?: Date;

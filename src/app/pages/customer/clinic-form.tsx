@@ -1,3 +1,4 @@
+import { LoaderCircle } from 'lucide-react';
 import { FC } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { FormControl, FormItem, FormLabel, FormMessage } from '../../../components/ui/form';
@@ -10,7 +11,6 @@ import {
 } from '../../../components/ui/select';
 import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
 import { clinicService } from '../../../services/queries/clinicQuery';
-import { LoaderCircle } from 'lucide-react';
 
 interface ClinicFormProps {
     isPending?: boolean;

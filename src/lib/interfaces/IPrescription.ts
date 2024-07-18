@@ -1,4 +1,4 @@
-import { IMedicinePrescription } from "./others/IMedicinePrescription";
+import { IMedicinePrescription } from './others/IMedicinePrescription';
 
 export interface IPrescription {
     prescriptionId: number;
@@ -7,5 +7,5 @@ export interface IPrescription {
     status?: boolean;
     total?: number;
     examinationId?: number;
-    medicinePrescriptions?:IMedicinePrescription[]
+    medicinePrescriptions?: IMedicinePrescription[];
 }

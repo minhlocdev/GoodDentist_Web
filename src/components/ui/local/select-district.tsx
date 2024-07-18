@@ -21,7 +21,7 @@ const SelectDistrict: React.FC<SelectDistrictProps> = ({
     onSelectDistrict
 }) => {
     const { data: districtData, isLoading } = provinceDistrictService.GetDistrict(selectedProvince);
-    
+
     if (isLoading) {
         return <div>Loading...</div>;
     }

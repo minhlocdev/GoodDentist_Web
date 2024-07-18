@@ -8,7 +8,7 @@ const AppointmentModal: React.FC = () => {
 
     return (
         <Dialog open={dialogOpen} onOpenChange={setOpenDialog}>
-            <DialogContent className="w-[90%] max-w-[800px] md:min-w-[900px]">
+            <DialogContent className="w-[90%] max-w-[1000px] md:min-w-[900px]">
                 <DialogHeader>
                     <DialogTitle>Đặt lịch hẹn</DialogTitle>
                 </DialogHeader>

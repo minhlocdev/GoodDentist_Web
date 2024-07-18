@@ -18,6 +18,7 @@ export interface IUser {
     dentistSlotId?: number;
     dentistSlots?: IDentistSlot[];
     clinicId?: string;
+    createdDate?: Date;
 }
 const users: IUser[] = [];
 

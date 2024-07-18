@@ -4,8 +4,7 @@ export interface IClinic {
     phoneNumber?: string;
     address?: string;
     email?: string;
-    status?: number;
+    status?: boolean;
 }
 
-export const clinics: IClinic[] = [
-];
+export const clinics: IClinic[] = [];

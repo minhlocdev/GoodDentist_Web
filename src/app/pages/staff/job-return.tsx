@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRightLeft, LoaderCircle } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 import { Button } from '../../../components/ui/button';
 import {
@@ -29,10 +30,9 @@ import {
 import { JobReturnSchema } from '../../../lib/form-schema';
 import { IClinic } from '../../../lib/interfaces/clinics-types/IClinic';
 import { IPostUser } from '../../../lib/interfaces/user-types/IPostUser';
+import { queryClient } from '../../../lib/queryClient';
 import { clinicService } from '../../../services/queries/clinicQuery';
 import { userService } from '../../../services/queries/userQuery';
-import { toast } from 'sonner';
-import { queryClient } from '../../../lib/queryClient';
 
 interface JobTranferProps {
     user: IPostUser;
@@ -59,7 +59,7 @@ const JobReturnForm = ({ user, open, setOpen }: JobTranferProps) => {
             const updatedUser: IPostUser = {
                 ...user,
                 clinicId: values.clinicId,
-                status: true,
+                status: true
             };
             await putUser(updatedUser, {
                 onSuccess: async (res) => {
@@ -69,7 +69,6 @@ const JobReturnForm = ({ user, open, setOpen }: JobTranferProps) => {
                     } else {
                         toast.error(res.message);
                     }
-                    
                 },
                 onError: (error) => {
                     toast.error('Cập nhật thất bại');

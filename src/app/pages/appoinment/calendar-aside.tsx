@@ -43,8 +43,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                     className="h-20 w-20 cursor-pointer rounded-full bg-slate-100 hover:bg-white hover:opacity-50"
                                     onClick={() => {
                                         navigate(
-                                            `/examination-profile/` +
-                                                `${examDetail?.customerId}`
+                                            `/examination-profile/` + `${examDetail?.customerId}`
                                         );
                                     }}
                                 >
@@ -65,9 +64,7 @@ const CalendarAside: React.FC<CalendarAsideProps> = ({ mode }) => {
                                     Mã hồ sơ {examDetail?.examinationProfileId}
                                 </span>
                                 <a
-                                    href={
-                                        `/examination-profile/` + `${examDetail?.customerId}`
-                                    }
+                                    href={`/examination-profile/` + `${examDetail?.customerId}`}
                                     className="text-md cursor-pointer font-bold text-primary hover:opacity-50"
                                 >
                                     {examDetail?.examinationProfile?.customer?.name}

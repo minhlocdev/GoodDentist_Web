@@ -5,8 +5,8 @@ import { useSidebarToggle } from '../../hooks/use-sidebar-toggle';
 import { cn } from '../../lib/utils';
 
 import { Button } from '../ui/button';
-import DoctorMenu from './doctor-menu';
 import { SidebarToggle } from '../ui/local/side-bar-toggle';
+import DoctorMenu from './doctor-menu';
 
 export const DoctorSidebar = () => {
     const sidebar = useStore(useSidebarToggle, (state) => state);
