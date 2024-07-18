@@ -1,53 +1,82 @@
-import { ChevronDown } from 'lucide-react';
-import { Button } from '../../../components/ui/button';
 import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger
-} from '../../../components/ui/collapsible';
-import { IExaminationProfile } from '../../../lib/interfaces/others/IExaminationProfile';
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger
+} from '../../../components/ui/accordion';
+import { useExaminationStore } from '../../../hooks/use-examination-store';
+import TreatDiagTable from './treament-diag-table';
+import TreatOrderTable from './treatment-orders-table';
 
-interface TreatmentProfileProps {
-    examProfiles?: IExaminationProfile[];
-}
-
-const TreatmentProfile = ({ examProfiles }: TreatmentProfileProps) => {
-    console.log(examProfiles);
+const TreatmentProfile = () => {
+    const { examProfilesData } = useExaminationStore();
     return (
         <div className="mb-2 flex w-full flex-col justify-between gap-y-6">
             <h1 className="text-lg font-semibold">Khám và điều trị</h1>
-            <Collapsible className="flex-1">
-                {examProfiles?.map((exam) => (
-                    <>
-                        <CollapsibleTrigger
+            <Accordion type="single" collapsible className="w-full">
+                {examProfilesData?.map((exam) => (
+                    <AccordionItem
+                        key={exam.examinationProfileId.toString()}
+                        value={exam.examinationProfileId.toString()}
+                    >
+                        <AccordionTrigger
                             key={exam.examinationProfileId}
-                            className="mb-1 w-full flex-1 [&[data-state=open]>div>div>svg]:rotate-180"
-                            asChild
+                            className="w-full flex-1 [&[data-state=open]>div>div>svg]:rotate-180"
                         >
-                            <Button variant={'secondary'} className="h-10 w-full justify-start">
-                                <div className="flex w-full items-center justify-between">
-                                    <div className="flex items-center font-semibold">
-                                        <p>
-                                            Ngày khám {exam.date} - {exam.diagnosis}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <ChevronDown
-                                            size={18}
-                                            className="transition-transform duration-200"
-                                        />
-                                    </div>
+                            <div className="flex w-full items-center justify-between rounded-md bg-neutral-200 px-4 py-3">
+                                <div className="flex items-center font-semibold">
+                                    <p>
+                                        Ngày khám {exam.date} - {exam.diagnosis}
+                                    </p>
                                 </div>
-                            </Button>
-                        </CollapsibleTrigger>
-
-                        <CollapsibleContent className="flex flex-col gap-y-2 overflow-hidden px-2 data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                            Yes. Free to use for personal and commercial projects. No attribution
-                            required.
-                        </CollapsibleContent>
-                    </>
+                            </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="flex flex-col gap-y-2 overflow-hidden border border-neutral-200 bg-white px-2 data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                            <Accordion type={'multiple'}>
+                                <AccordionItem value={'tongquat'}>
+                                    <AccordionTrigger>
+                                        <div className="w-full border-b p-3 text-left uppercase">
+                                            Khám tổng quát
+                                        </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        <div className="flex gap-x-4 px-5">
+                                            <h3>Bác sỹ khám</h3>
+                                            <p>BS {exam.dentist?.name}</p>
+                                        </div>
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem value={'dieutri'}>
+                                    <AccordionTrigger>
+                                        <div className="w-full border-b p-3 text-left uppercase">
+                                            Chuẩn đoán và điều trị
+                                        </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        <div className="flex gap-x-4 px-5">
+                                            <h3>Chuẩn đoán chung</h3>
+                                            <p>{exam.diagnosis}</p>
+                                        </div>
+                                        <div className="mt-3 w-full flex-1 px-5">
+                                            <TreatDiagTable
+                                                examinations={exam.examinations ?? []}
+                                            />
+                                        </div>
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+                            <div className="flex w-full justify-between">
+                                <div className="w-full border-b p-3 text-left font-semibold uppercase">
+                                    Kế hoạch điều trị
+                                </div>
+                            </div>
+                            <div className="mt-3 w-full flex-1 px-5">
+                                <TreatOrderTable examinations={exam.examinations} />
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
                 ))}
-            </Collapsible>
+            </Accordion>
         </div>
     );
 };

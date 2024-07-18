@@ -1,7 +1,7 @@
-import { UseQueryResult, keepPreviousData, useQuery } from "@tanstack/react-query";
-import { IClinicService } from "../../lib/interfaces/clinics-types/IClinicService";
-import { IClinic } from "../../lib/interfaces/clinics-types/IClinic";
-import { getClinics } from "../clinics";
+import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-query';
+import { IClinic } from '../../lib/interfaces/clinics-types/IClinic';
+import { IClinicService } from '../../lib/interfaces/clinics-types/IClinicService';
+import { getClinics } from '../clinics';
 
 export const clinicService: IClinicService = {
     GetClinics: (): UseQueryResult<IClinic[]> => {

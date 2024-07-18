@@ -1,7 +1,7 @@
-import { AxiosResponse } from "axios";
-import { ApiResponse } from "../lib/api";
-import { IExaminationProfile } from "../lib/interfaces/others/IExaminationProfile";
-import apiClient from "./api-client";
+import { AxiosResponse } from 'axios';
+import { ApiResponse } from '../lib/api';
+import { IExaminationProfile } from '../lib/interfaces/others/IExaminationProfile';
+import apiClient from './api-client';
 
 export const getExaminationProfileByCustomer = async (
     customerId: string

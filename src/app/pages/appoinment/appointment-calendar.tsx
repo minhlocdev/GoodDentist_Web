@@ -109,9 +109,7 @@ const AppointmentCalendar = () => {
         const data = details.find(
             (ex) => ex.data?.examinationId === e.data?.appointment?.examinationId
         );
-        if (data) {
-            calendar.setEvent(data.data ?? null);
-        }
+        calendar.setEvent(data?.data ?? null);
     };
     return (
         <div

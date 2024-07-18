@@ -15,12 +15,12 @@ export const AppointmentStatusNames = [
     'Hẹn lại sau'
 ];
 
-export const EVENT_STATUS_COLORS = {
-    1: '#bee2fa', // Chưa đến
-    2: '#c7edca', // Đã đến
-    3: '#fbd38d', // Đang điều trị
-    4: '#c4c4c4', // Đã xong
-    5: '#f7acac', // Hủy lịch hẹn
-    6: '#9cd9e5' // Hẹn lại sau
-};
+export const EVENT_STATUS_COLORS = [
+    '#ffd54f', // Chưa đến (a yellow color)
+    '#9ee0b0', // Đã đến (a lighter green)
+    '#ffc266', // Đang điều trị (a lighter orange)
+    '#a6a6a6', // Đã xong (a darker gray)
+    '#f08080', // Hủy lịch hẹn (a lighter red)
+    '#7cd9e5' // Hẹn lại sau (a lighter teal)
+];
 export const EVENTS: EventItem[] = [];

@@ -5,6 +5,6 @@ export interface IMedicine {
     quantity?: number;
     description?: string;
     price?: number;
-    unit?:string;
+    unit?: string;
     status?: boolean;
 }

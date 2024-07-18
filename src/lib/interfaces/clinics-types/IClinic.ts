@@ -7,5 +7,4 @@ export interface IClinic {
     status?: number;
 }
 
-export const clinics: IClinic[] = [
-];
+export const clinics: IClinic[] = [];

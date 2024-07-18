@@ -6,6 +6,6 @@ import apiClient from './api-client';
 export const getClinics = async (): Promise<AxiosResponse<ApiResponse<IClinic[]>>> => {
     return await apiClient({
         method: 'get',
-        url: '/api/clinics',
+        url: '/api/clinics'
     });
 };

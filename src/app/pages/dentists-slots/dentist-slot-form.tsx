@@ -42,9 +42,7 @@ const DentistSlotForm = ({ slot, onCloseModal }: DentistSlotFormProps) => {
     }
     return (
         <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                 
-            </form>
+            <form onSubmit={form.handleSubmit(onSubmit)}></form>
         </FormProvider>
     );
 };

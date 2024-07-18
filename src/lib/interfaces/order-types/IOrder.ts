@@ -1,4 +1,4 @@
-import { IOrderService } from "./others/IOrderService";
+import { IOrderService } from '../others/IOrderService';
 
 export interface IOrder {
     orderId: number;
@@ -7,5 +7,5 @@ export interface IOrder {
     dateTime?: Date;
     price?: number;
     status?: boolean;
-    orderServices?: IOrderService[]
+    orderServices?: IOrderService[];
 }

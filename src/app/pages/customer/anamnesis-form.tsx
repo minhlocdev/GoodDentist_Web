@@ -15,7 +15,7 @@ const AnamnesisForm: FC<AnamnesisFormProps> = ({ isPending = false }) => {
         formState: { errors }
     } = useFormContext<FieldValues>();
 
-    const [anamnesis, setAnamnesis] = useState(getValues('anamnesis') as string ??"");
+    const [anamnesis, setAnamnesis] = useState((getValues('anamnesis') as string) ?? '');
 
     const medicalConditions = [
         'Chảy máu lâu',

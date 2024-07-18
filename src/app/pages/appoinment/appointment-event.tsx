@@ -32,7 +32,7 @@ const AppointmentEvent = ({
 }) => {
     const { notes, status, timeStart, timeEnd } = examination;
     const [selectedStatus, setStatus] = useState(status!);
-    const background = EVENT_STATUS_COLORS[status as keyof typeof EVENT_STATUS_COLORS];
+    const background = EVENT_STATUS_COLORS[status! - 1 ?? 0];
     const { selectedEvent } = useCalendarStore();
     return (
         <TooltipProvider disableHoverableContent>

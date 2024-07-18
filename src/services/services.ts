@@ -16,3 +16,10 @@ export const getServices = async (
         url: '/api/services/all-services'
     });
 };
+
+export const getTotalService = async (): Promise<AxiosResponse<ApiResponse<number>>> => {
+    return await apiClient({
+        method: 'get',
+        url: '/api/General?type=Service'
+    });
+};

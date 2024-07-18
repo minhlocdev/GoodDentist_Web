@@ -33,13 +33,14 @@ export const columns: ColumnDef<ICustomer>[] = [
         },
         accessorKey: 'examinationProfiles',
         cell: ({ row }) => {
+            const customer: ICustomer = row.original;
             const examinationProfiles: number[] = row.getValue('examinationProfiles');
             return (
                 <div className="flex w-full flex-col items-center justify-center gap-y-1 text-center">
                     {examinationProfiles.map((profileId, index) => (
-                        <div key={index} className="text-sm">
-                            {profileId}
-                        </div>
+                        <Button variant={'link'} key={index} className="text-sm">
+                            <a href={`/examination-profile/${customer.userId}`}>{profileId}</a>
+                        </Button>
                     ))}
                 </div>
             );

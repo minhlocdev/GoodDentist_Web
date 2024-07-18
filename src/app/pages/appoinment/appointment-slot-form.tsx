@@ -13,7 +13,7 @@ interface SlotFormProps {
     dentistSlot: IDentistSlot[] | undefined;
 }
 
-const SlotForm = ({ dentistSlot}: SlotFormProps) => {
+const SlotForm = ({ dentistSlot }: SlotFormProps) => {
     const [, setSlotId] = useState<number | null>(null);
     const { control } = useFormContext<FieldValues>();
     const handleButtonClick = (

@@ -60,6 +60,6 @@ export const putExamination = async (
     return await apiClient({
         method: 'put',
         url: `/api/examinations/examination`,
-        data: examination,
+        data: examination
     });
 };

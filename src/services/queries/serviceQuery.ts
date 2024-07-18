@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { IService } from '../../lib/interfaces/services-types/IService';
-import { getServices } from '../services';
+import { getServices, getTotalService } from '../services';
 
 export const servicesService = {
     GetServices: (pageNumber: number, rowsPerPage: number): UseQueryResult<IService[]> =>
@@ -11,5 +11,12 @@ export const servicesService = {
             },
             staleTime: 20000,
             placeholderData: keepPreviousData
+        }),
+    GetTotalService: (): UseQueryResult<number> =>
+        useQuery({
+            queryKey: ['total-services'],
+            queryFn: async (): Promise<number> => {
+                return await getTotalService().then((res) => res.data.result);
+            }
         })
 };

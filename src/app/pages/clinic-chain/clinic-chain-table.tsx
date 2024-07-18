@@ -13,7 +13,7 @@ import {
 } from '../../../components/ui/table';
 import { clinicService } from '../../../services/queries/clinicQuery';
 const ClinicChainTable = () => {
-    const {data} = clinicService.GetClinics();
+    const { data } = clinicService.GetClinics();
 
     const [rowSelection, setRowSelection] = React.useState({});
 
