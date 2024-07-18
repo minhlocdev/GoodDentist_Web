@@ -30,7 +30,7 @@ export const ServiceForm = ({ service, onCloseModal }: ServiceFormProps) => {
                   serviceName: service.serviceName,
                   description: service.description,
                   price: service.price,
-                  status: service?.status
+                  status: service?.status as boolean
               }
             : {
                   status: true

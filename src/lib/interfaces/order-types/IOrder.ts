@@ -8,5 +8,4 @@ export interface IOrder {
     price?: number;
     status?: boolean;
     orderServices?: IOrderService[];
-    orderServices?: IOrderService[];
 }

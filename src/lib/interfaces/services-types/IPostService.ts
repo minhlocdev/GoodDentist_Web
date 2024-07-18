@@ -3,5 +3,6 @@ export interface IPostService {
     serviceName?: string;
     description?: string;
     price?: number;
-    status?: boolean;
+    status?: boolean | number;
+    quantity?: number;
 }
