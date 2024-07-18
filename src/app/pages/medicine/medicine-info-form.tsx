@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { FC } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { FormControl, FormItem, FormLabel, FormMessage } from '../../../components/ui/form';

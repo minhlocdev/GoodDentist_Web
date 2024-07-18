@@ -5,6 +5,7 @@ import { IUser } from '../user-types/IUser';
 export interface IDentistSlot {
     dentistSlotId: number;
     dentistId?: string;
+    clinicId?: string;
     timeStart?: Date;
     timeEnd?: Date;
     roomId?: number;

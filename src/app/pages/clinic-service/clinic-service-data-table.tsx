@@ -35,8 +35,7 @@ const ClinicServiceDataTable = () => {
                     <div className="bg-neutral-700 px-2 py-3 text-sm font-semibold text-white shadow-md">
                         Phòng khám
                     </div>
-                    {clinics &&
-                        clinics.map((clinic) => (
+                    {clinics?.map((clinic) => (
                             <div
                                 key={clinic.clinicId}
                                 className={cn(
@@ -60,8 +59,7 @@ const ClinicServiceDataTable = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {services &&
-                            services.map((service) => {
+                        {services?.map((service) => {
                                 const isServiceInClinic = clinicServices?.some(
                                     (clinicService) => clinicService.serviceId === service.serviceId
                                 );

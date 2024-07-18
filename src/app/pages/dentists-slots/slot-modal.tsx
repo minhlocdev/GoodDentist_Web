@@ -25,7 +25,7 @@ export const SlotModal = ({ slot }: SlotModalProps) => {
                 <DialogHeader>
                     <DialogTitle>{slot ? 'Cập nhật' : 'Thêm mới'} lịch làm việc</DialogTitle>
                 </DialogHeader>
-                <DentistSlotForm slot={slot} onCloseModal={() => setOpen(false)} />
+                <DentistSlotForm />
             </DialogContent>
         </Dialog>
     );

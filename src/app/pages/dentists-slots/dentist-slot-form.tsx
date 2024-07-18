@@ -1,49 +1,140 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { FormProvider, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { AxiosError } from 'axios';
+import { addHours, format, setHours, setMilliseconds, setMinutes, setSeconds } from 'date-fns';
+import { Circle, Square, Triangle } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { Button } from '../../../components/ui/button';
+import { Calendar } from '../../../components/ui/calendar';
+import { Checkbox } from '../../../components/ui/checkbox';
+import { DialogClose, DialogFooter } from '../../../components/ui/dialog';
 import { useAuth } from '../../../hooks/use-auth';
-import { DentistSlotFormSchema } from '../../../lib/form-schema';
 import { IDentistSlot } from '../../../lib/interfaces/others/IDentistSlot';
+import { IPostDentistSlot } from '../../../lib/interfaces/others/IPostDentistSlot';
+import { queryClient } from '../../../lib/queryClient';
+import { slotService } from '../../../services/queries/slotQuery';
 
-interface DentistSlotFormProps {
-    slot?: IDentistSlot;
-    onCloseModal: () => void;
-}
-
-const DentistSlotForm = ({ slot, onCloseModal }: DentistSlotFormProps) => {
-    const { user } = useAuth();
-    const form = useForm<z.infer<typeof DentistSlotFormSchema>>({
-        resolver: zodResolver(DentistSlotFormSchema),
-        defaultValues: slot
-            ? {
-                  timeEnd: slot?.timeEnd ?? new Date(),
-                  timeStart: slot?.timeStart ?? new Date(),
-                  roomId: slot?.roomId,
-                  clinicId: user?.clinics?.[0].clinicId,
-                  dentistId: user?.userId,
-                  status: true
-              }
-            : {
-                  status: true
-              },
-        shouldFocusError: true,
-        shouldUnregister: false,
-        shouldUseNativeValidation: false
-    });
-
-    async function onSubmit(values: z.infer<typeof DentistSlotFormSchema>) {
-        try {
-            await Promise.resolve(values);
-            console.log(values);
-            onCloseModal();
-        } catch (error) {
-            console.error(error);
-        }
+const slotTimes = [
+    {
+        label: '08:00-12:00',
+        startHour: 8,
+        startMinute: 0,
+        endHour: 12,
+        endMinute: 0,
+        icon: <Square fill="blue" className="h-4 w-4 text-primary" />
+    },
+    {
+        label: '13:00-17:00',
+        startHour: 13,
+        startMinute: 0,
+        endHour: 17,
+        endMinute: 0,
+        icon: <Circle fill="red" className="h-4 w-4 text-red-500" />
+    },
+    {
+        label: '17:00-19:30',
+        startHour: 17,
+        startMinute: 0,
+        endHour: 19,
+        endMinute: 30,
+        icon: <Triangle fill="yellow" className="h-4 w-4 text-yellow-200" />
     }
+];
+
+const DentistSlotForm = () => {
+    const { user } = useAuth();
+    const [selectedDate, setDate] = useState<Date | undefined>(new Date());
+    const [selectedSlots, setSelectedSlots] = useState<IDentistSlot[]>([]);
+    const postDentistSlot = slotService.PostDentistSlot();
+    const handleDateChange = (newDate: Date | undefined) => {
+        setDate(newDate);
+        setSelectedSlots([]);
+    };
+
+    const handleSlotChange = (slotIndex: number) => {
+        if (!selectedDate) return;
+
+        const slotTime = slotTimes[slotIndex];
+        const newSlot: IDentistSlot = {
+            dentistSlotId: slotIndex,
+            dentistId: user?.roleId === 2 ? user?.userId : '',
+            clinicId: user?.clinics?.[0].clinicId,
+            timeStart: setHours(setMinutes(selectedDate, slotTime.startMinute), slotTime.startHour),
+            timeEnd: setHours(setMinutes(selectedDate, slotTime.endMinute), slotTime.endHour),
+            status: true
+        };
+
+        const updatedSlots = selectedSlots.some((slot) => slot.dentistSlotId === slotIndex)
+            ? selectedSlots.filter((slot) => slot.dentistSlotId !== slotIndex)
+            : [...selectedSlots, newSlot];
+
+        setSelectedSlots(updatedSlots);
+    };
+
+    const onSubmit = async () => {
+        const newPostSlots: IPostDentistSlot[] = selectedSlots.map((slot) => ({
+            dentistId: user?.roleId === 2 ? user?.userId : '',
+            clinicId: user?.clinics?.[0].clinicId,
+            timeStart: setMilliseconds(setSeconds(addHours(slot.timeStart!, 7), 0), 0),
+            timeEnd: setMilliseconds(setSeconds(addHours(slot.timeEnd!, 7), 0), 0),
+            status: true,
+            roomId: 1
+        }));
+
+        await postDentistSlot.mutateAsync(newPostSlots, {
+            onSuccess: async (res) => {
+                if (res.isSuccess) {
+                    toast.success('Tạo mới thành công');
+                    await queryClient.refetchQueries({ queryKey: ['slots-by-dentist'] });
+                } else {
+                    toast.error('Tạo mới thất bại' + res.message);
+                }
+            },
+            onError: (error) => {
+                if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {
+                    toast.error(error.response.data.message[0] as React.ReactNode);
+                } else {
+                    toast.error('Tạo mới thất bại');
+                }
+            }
+        });
+    };
+
     return (
-        <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}></form>
-        </FormProvider>
+        <div className="flex gap-3 p-4">
+            <div className="border">
+                <Calendar mode="single" selected={selectedDate} onSelect={handleDateChange} />
+            </div>
+            <div className="flex flex-1 flex-col gap-3">
+                <div className="bg-neutral-600 py-2 text-center font-semibold text-white">
+                    {format(selectedDate ?? new Date(), 'dd MMMM, yyyy')}
+                </div>
+                <div className="flex flex-col gap-y-6">
+                    {slotTimes.map((slot, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                            {slot.icon} {slot.label}
+                            <Checkbox
+                                checked={selectedSlots.some((s) => s.dentistSlotId === index)}
+                                onCheckedChange={() => handleSlotChange(index)}
+                            />
+                        </div>
+                    ))}
+                </div>
+                <DialogFooter className="flex flex-row justify-between border-t border-neutral-300 p-5">
+                    <Button
+                        className="flex-1"
+                        onClick={onSubmit}
+                        disabled={postDentistSlot?.isPending}
+                    >
+                        Thêm mới
+                    </Button>
+                    <DialogClose className="flex-1">
+                        <Button variant={'secondary'} className="w-full hover:bg-neutral-200">
+                            Hủy bỏ
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
+            </div>
+        </div>
     );
 };
 
