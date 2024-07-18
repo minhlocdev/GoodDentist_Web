@@ -89,6 +89,7 @@ const SelectServiceTable = () => {
     }, [allServices]);
 
     const onPostOrder = async () => {
+        console.log('post');
         const updatedServices = selectedServices!.map((service) => ({
             ...service,
             status: 1
@@ -122,6 +123,7 @@ const SelectServiceTable = () => {
         });
     };
     const onPutOrder = async () => {
+        console.log('put');
         const updatedServices = allServices!.map((service) => ({
             ...service,
             status: 1
@@ -153,9 +155,6 @@ const SelectServiceTable = () => {
             }
         });
     };
-
-    console.log('all', allServices);
-    console.log('select', selectedServices);
     return (
         <div className="flex flex-col items-center gap-x-3 ">
             <div className="flex w-full flex-1 flex-col gap-y-3 py-4 ">
@@ -255,16 +254,16 @@ const SelectServiceTable = () => {
                     type="submit"
                     className="flex-1"
                     onClick={async () => {
-                        orders ? await onPutOrder() : await onPostOrder();
+                        orders!.length > 0 ? await onPutOrder() : await onPostOrder();
                     }}
                     disabled={postOrder.isPending}
                 >
                     {postOrder.isPending ? (
                         <LoaderCircle className="animate-spin" />
-                    ) : !orders ? (
-                        'Lưu thông tin'
-                    ) : (
+                    ) : orders ? (
                         'Cập nhật'
+                    ) : (
+                        'Lưu thông tin'
                     )}
                 </Button>
                 <DialogClose className="flex-1">

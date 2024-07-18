@@ -7,6 +7,13 @@ import { Button } from '../../../components/ui/button';
 import { Calendar } from '../../../components/ui/calendar';
 import { Checkbox } from '../../../components/ui/checkbox';
 import { DialogClose, DialogFooter } from '../../../components/ui/dialog';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from '../../../components/ui/select';
 import { useAuth } from '../../../hooks/use-auth';
 import { IDentistSlot } from '../../../lib/interfaces/others/IDentistSlot';
 import { IPostDentistSlot } from '../../../lib/interfaces/others/IPostDentistSlot';
@@ -44,6 +51,7 @@ const DentistSlotForm = () => {
     const { user } = useAuth();
     const [selectedDate, setDate] = useState<Date | undefined>(new Date());
     const [selectedSlots, setSelectedSlots] = useState<IDentistSlot[]>([]);
+    const [roomId, setRoomId] = useState<string>();
     const postDentistSlot = slotService.PostDentistSlot();
     const handleDateChange = (newDate: Date | undefined) => {
         setDate(newDate);
@@ -77,7 +85,7 @@ const DentistSlotForm = () => {
             timeStart: setMilliseconds(setSeconds(addHours(slot.timeStart!, 7), 0), 0),
             timeEnd: setMilliseconds(setSeconds(addHours(slot.timeEnd!, 7), 0), 0),
             status: true,
-            roomId: 1
+            roomId: Number(roomId) ?? "0"
         }));
 
         await postDentistSlot.mutateAsync(newPostSlots, {
@@ -134,6 +142,24 @@ const DentistSlotForm = () => {
                     </DialogClose>
                 </DialogFooter>
             </div>
+            <Select onValueChange={setRoomId} value={roomId}>
+                <SelectTrigger>
+                    <SelectValue placeholder="Chọn phòng" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="1">CitiDental - 101</SelectItem>
+                    <SelectItem value="2">CitiDental - 102</SelectItem>
+                    <SelectItem value="3">CitiDental - 103</SelectItem>
+                    <SelectItem value="11">CitiDental - 104</SelectItem>
+                    <SelectItem value="4">Sunshine Dental - 101</SelectItem>
+                    <SelectItem value="5">Sunshine Dental - 102</SelectItem>
+                    <SelectItem value="6">Sunshine Dental - 103</SelectItem>
+                    <SelectItem value="7">Sunshine Dental - 104</SelectItem>
+                    <SelectItem value="8">Dr.Hung Dental - 101</SelectItem>
+                    <SelectItem value="9">Dr.Hung Dental - 102</SelectItem>
+                    <SelectItem value="10">Dr.Hung Dental - 103</SelectItem>
+                </SelectContent>
+            </Select>
         </div>
     );
 };
