@@ -106,7 +106,7 @@ const MedicineInfoForm: FC<BasicInfoProps> = ({ isPending = false }) => {
                                         <SelectItem value="Chai">Chai</SelectItem>
                                         <SelectItem value="Lọ">Lọ</SelectItem>
                                         <SelectItem value="Túi">Túi</SelectItem>
-                                        <SelectItem value="Ống thuốc"></SelectItem>
+                                        <SelectItem value="Ống thuốc">Ống thuốc</SelectItem>
                                         <SelectItem value="Mililiter">Mililiter</SelectItem>
                                         <SelectItem value="Miligram">Miligram</SelectItem>
                                         <SelectItem value="Gram">Gram</SelectItem>
