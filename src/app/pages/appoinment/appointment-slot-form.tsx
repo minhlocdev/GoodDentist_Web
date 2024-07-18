@@ -52,9 +52,6 @@ const SlotForm = ({ dentistSlot }: SlotFormProps) => {
                                                     key={slot.dentistSlotId}
                                                     title={
                                                         <div className="flex gap-x-2">
-                                                            <span className="max-w-full truncate">
-                                                                {slot.dentist?.name ?? ''}
-                                                            </span>
                                                             <span className="text-[12px]">
                                                                 {format(slot.timeStart!, 'HH:mmm')}-
                                                                 {format(slot.timeEnd!, 'HH:mmm')}
@@ -64,6 +61,12 @@ const SlotForm = ({ dentistSlot }: SlotFormProps) => {
                                                     content={
                                                         <>
                                                             <div className="grid grid-cols-2 gap-y-1 break-words text-xs">
+                                                                <div className="font-bold text-neutral-700/90 ">
+                                                                    Họ tên
+                                                                </div>
+                                                                <div>
+                                                                    {slot.dentist?.name ?? ''}
+                                                                </div>
                                                                 <div className="font-bold text-neutral-700/90 ">
                                                                     Email
                                                                 </div>
