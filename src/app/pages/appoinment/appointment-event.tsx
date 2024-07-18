@@ -22,6 +22,10 @@ import { useCalendarStore } from '../../../hooks/use-calendar-store';
 import { AppointmentStatusNames, EVENT_STATUS_COLORS } from '../../../lib/events';
 import { IExamination } from '../../../lib/interfaces/examination-types/IExamination';
 import { cn } from '../../../lib/utils';
+import { examinationService } from '../../../services/queries/examinationQuery';
+import { toast } from 'sonner';
+import { queryClient } from '../../../lib/queryClient';
+import { AxiosError } from 'axios';
 
 const AppointmentEvent = ({
     examination,
@@ -34,6 +38,29 @@ const AppointmentEvent = ({
     const [selectedStatus, setStatus] = useState(status!);
     const background = EVENT_STATUS_COLORS[status! - 1 ?? 0];
     const { selectedEvent } = useCalendarStore();
+const putExam = examinationService.PutExamination()
+    const handleUpdate= async(status: number)=>{
+        const newExam = {...examination, status: status}
+
+        await putExam.mutateAsync(newExam, {
+            onSuccess: async (res) => {
+                if (res.isSuccess) {
+                    toast.success('Cập nhật thành công');
+                    await queryClient.refetchQueries({ queryKey: ['examinations'] });
+                } else {
+                    toast.error('Cập nhật thất bại' + res.message);
+                }
+            },
+            onError: (error) => {
+                if (error instanceof AxiosError && error.response?.data?.statusCode === 400) {
+                    toast.error(error.response.data.message[0] as React.ReactNode);
+                } else {
+                    toast.error('Tạo mới thất bại');
+                }
+            }
+        })
+    }
+
     return (
         <TooltipProvider disableHoverableContent>
             <Tooltip delayDuration={100}>
@@ -68,22 +95,22 @@ const AppointmentEvent = ({
                                         value={selectedStatus.toString()}
                                         onValueChange={(value) => setStatus(Number(value))}
                                     >
-                                        <DropdownMenuRadioItem value="1">
+                                        <DropdownMenuRadioItem value="1"  onClick={()=>handleUpdate(0)}>
                                             KH chưa đến
                                         </DropdownMenuRadioItem>
-                                        <DropdownMenuRadioItem value="2">
+                                        <DropdownMenuRadioItem value="2" onClick={()=>handleUpdate(1)}>
                                             Khách hàng đến
                                         </DropdownMenuRadioItem>
-                                        <DropdownMenuRadioItem value="3">
+                                        <DropdownMenuRadioItem value="3"  onClick={()=>handleUpdate(2)}>
                                             Điều trị
                                         </DropdownMenuRadioItem>
-                                        <DropdownMenuRadioItem value="4">
+                                        <DropdownMenuRadioItem value="4"  onClick={()=>handleUpdate(3)}>
                                             Đã xong
                                         </DropdownMenuRadioItem>
-                                        <DropdownMenuRadioItem value="5">
+                                        <DropdownMenuRadioItem value="5"  onClick={()=>handleUpdate(4)}>
                                             Hủy lịch hẹn
                                         </DropdownMenuRadioItem>
-                                        <DropdownMenuRadioItem value="6">
+                                        <DropdownMenuRadioItem value="6"  onClick={()=>handleUpdate(5)}>
                                             Hẹn lại sau
                                         </DropdownMenuRadioItem>
                                     </DropdownMenuRadioGroup>
